@@ -15,6 +15,7 @@ import { ReactComponent as SvgDecoratorBlob2 } from "treact/images/dot-pattern.s
 import DesignIllustration from "treact/images/design-illustration.svg";
 
 /* Start styled components */
+
 const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col lg:flex-row md:items-center max-w-screen-xl mx-auto py-20 md:py-24`;
 const LeftColumn = tw.div`relative lg:w-6/12 lg:pr-12 flex-shrink-0 text-center lg:text-left`;
@@ -57,6 +58,7 @@ const StyledModal = styled(ReactModalAdapter)`
   }
 `;
 const CloseModalButton = tw.button`absolute top-0 right-0 mt-8 mr-8 hocus:text-primary-500`;
+
 /* End styled components */
 
 const properties = {
@@ -64,7 +66,7 @@ const properties = {
   description:
     "It's time to reclaim control and face your finances. Monitor your income, track your spending and save money. Try it today, it's free!",
   primaryButtonText: "Get Started",
-  primaryButtonUrl: "#",
+  primaryButtonUrl: "/register",
   watchVideoButtonText: "Watch Video",
   watchVideoYoutubeUrl: "https://www.youtube.com/embed/_GuOjXYl5ew",
   imageSrc: DesignIllustration,

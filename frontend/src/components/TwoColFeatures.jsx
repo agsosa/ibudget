@@ -10,6 +10,8 @@ import { PrimaryButton as PrimaryButtonBase } from "treact/components/misc/Butto
 import StatsIllustrationSrc from "treact/images/stats-illustration.svg";
 import { ReactComponent as SvgDotPattern } from "treact/images/dot-pattern.svg";
 
+/* Start styled components */
+
 const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto py-20 md:py-24`;
 const Column = tw.div`w-full max-w-md mx-auto md:max-w-none md:mx-0`;
@@ -45,6 +47,8 @@ const PrimaryButton = tw(
 const DecoratorBlob = styled(SvgDotPattern)(() => [
   tw`w-20 h-20 absolute right-0 bottom-0 transform translate-x-1/2 translate-y-1/2 fill-current text-primary-500 -z-10`,
 ]);
+
+/* End styled components */
 
 const properties = {
   subheading: "How it works",
