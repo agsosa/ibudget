@@ -38,9 +38,9 @@ export default () => {
           <LinksContainer>
             <LinkStyle to="/">Home</LinkStyle>
 
-            <LinkStyle to="/contact-us">Contact Us</LinkStyle>
-
             <LinkStyle to="/how-it-works">How it Works</LinkStyle>
+
+            <LinkStyle to="/contact-us">Contact Us</LinkStyle>
 
             <LinkStyle to="/privacy-policy">Privacy Policy</LinkStyle>
 
