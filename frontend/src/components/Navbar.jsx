@@ -27,7 +27,7 @@ const NavLinks = tw.div`inline-block`;
 const NavLink = tw(Link)`
   text-lg my-2 lg:text-sm lg:mx-6 lg:my-0 text-black
   font-semibold tracking-wide transition duration-300
-  pb-1 border-b-2 border-transparent hover:border-primary-500 hocus:text-primary-500
+  pb-1 border-b-2 border-transparent hocus:text-primary-500
 `;
 
 const PrimaryLink = tw(NavLink)`
@@ -35,6 +35,10 @@ const PrimaryLink = tw(NavLink)`
   px-8 py-3 rounded bg-primary-500 text-gray-100
   hocus:bg-primary-700 hocus:text-gray-200 focus:shadow-outline
   border-b-0
+`;
+
+const SecondaryLink = tw(NavLink)`
+  border-primary-500
 `;
 
 const LogoLink = styled(NavLink)`
@@ -110,7 +114,7 @@ export default () => {
       <NavLink to="/">Home</NavLink>
       <NavLink to="/how-it-works">How it Works</NavLink>
       <NavLink to="/contact-us">Contact Us</NavLink>
-      <NavLink to="/login">Log In</NavLink>
+      <SecondaryLink to="/login">Log In</SecondaryLink>
 
       <PrimaryLink css={tw`rounded-full`} to="/register">
         Get Started
