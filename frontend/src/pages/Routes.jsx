@@ -7,6 +7,7 @@ import RegisterPage from "pages/RegisterPage";
 import HowItWorksPage from "pages/HowItWorksPage";
 import Navbar from "components/Navbar";
 import Footer from "components/Footer";
+import ScrollToTop from "components/ScrollToTop";
 import ContactUsPage from "./ContactUsPage";
 import PrivacyPolicyPage from "./PrivacyPolicyPage";
 import TermsOfServicePage from "./TermsOfServicePage";
@@ -14,6 +15,7 @@ import TermsOfServicePage from "./TermsOfServicePage";
 function Routes() {
   return (
     <Router>
+      <ScrollToTop />
       <Navbar />
       <Switch>
         <Route path="/login">
