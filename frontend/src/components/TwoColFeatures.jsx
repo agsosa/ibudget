@@ -1,7 +1,9 @@
 import React from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { css } from "styled-components/macro"; //eslint-disable-line
+
 import {
   SectionHeading,
   Subheading as SubheadingBase,
@@ -41,7 +43,8 @@ const Value = tw.div`font-bold text-lg sm:text-xl lg:text-2xl text-secondary-500
 const Key = tw.div`font-medium text-primary-700`;
 
 const PrimaryButton = tw(
-  PrimaryButtonBase
+  PrimaryButtonBase,
+  Link
 )`mt-8 md:mt-10 text-sm inline-block mx-auto md:mx-0`;
 
 const DecoratorBlob = styled(SvgDotPattern)(() => [
@@ -61,7 +64,7 @@ const properties = {
   description:
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
   primaryButtonText: "Learn More",
-  primaryButtonUrl: "https://timerse.com",
+  primaryButtonUrl: "/how-it-works",
   imageSrc: StatsIllustrationSrc,
   imageCss: null,
   imageContainerCss: null,
@@ -116,7 +119,7 @@ export default () => {
                 </Statistic>
               ))}
             </Statistics>
-            <PrimaryButton as="a" href={properties.primaryButtonUrl}>
+            <PrimaryButton to={properties.primaryButtonUrl}>
               {properties.primaryButtonText}
             </PrimaryButton>
           </TextContent>
