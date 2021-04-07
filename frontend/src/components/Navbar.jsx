@@ -10,6 +10,7 @@ import useAnimatedNavToggler from "treact/helpers/useAnimatedNavToggler";
 import logo from "treact/images/logo.svg";
 import { ReactComponent as MenuIcon } from "feather-icons/dist/icons/menu.svg";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
+import { APP_NAME } from "lib/Config";
 
 /* Start styled components */
 
@@ -123,7 +124,7 @@ export default () => {
   const defaultLogoLink = (
     <LogoLink to="/">
       <img src={logo} alt="logo" />
-      Treact
+      {APP_NAME}
     </LogoLink>
   );
 
