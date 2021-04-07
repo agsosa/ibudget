@@ -1,11 +1,14 @@
+import "./style.css";
+import "tailwindcss/dist/base.css";
+import "bulma/css/bulma.min.css";
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+import Routes from "pages/Routes";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Routes />
   </React.StrictMode>,
   document.getElementById("root")
 );
