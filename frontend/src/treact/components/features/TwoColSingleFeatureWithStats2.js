@@ -47,11 +47,11 @@ const DecoratorBlob = styled(SvgDotPattern)((props) => [
 ]);
 
 export default ({
-  subheading = "Our Track Record",
+  subheading = "How it works",
   heading = (
     <>
-      We have been doing this <wbr /> since{" "}
-      <span tw="text-primary-500">1999.</span>
+      Effective financial management in <wbr />
+      <span tw="text-primary-500">one app</span>
     </>
   ),
   description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
