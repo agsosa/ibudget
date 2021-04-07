@@ -1,5 +1,7 @@
 /*
   Component to animate children components (fade in). Supports react-router.
+  Usage: Wrap child components to be animated
+  TODO: Test without react router
 */
 
 import * as React from "react";
