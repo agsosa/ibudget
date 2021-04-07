@@ -1,12 +1,12 @@
-import Footer from "treact/components/footers/MiniCenteredFooter";
-import Hero from "treact/components/hero/TwoColumnWithVideo";
-import Stats from "treact/components/features/TwoColSingleFeatureWithStats2";
-import Features from "treact/components/features/ThreeColWithSideImage";
+import Footer from "components/Footer";
+import Header from "components/Header";
+import Stats from "components/TwoColFeatures";
+import Features from "components/ThreeColFeatures";
 
 function LandingPage() {
   return (
     <>
-      <Hero />
+      <Header />
       <Stats />
       <Features />
       <Footer />
