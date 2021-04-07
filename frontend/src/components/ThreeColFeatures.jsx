@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
 import { css } from "styled-components/macro"; //eslint-disable-line
+
 import {
   SectionHeading,
   Subheading as SubheadingBase,
@@ -9,7 +10,6 @@ import {
 import { SectionDescription } from "treact/components/misc/Typography";
 
 import { ReactComponent as SvgDecoratorBlob3 } from "treact/images/svg-decorator-blob-3.svg";
-
 import SupportIconImage from "treact/images/support-icon.svg";
 import ShieldIconImage from "treact/images/shield-icon.svg";
 import CustomizeIconImage from "treact/images/customize-icon.svg";
@@ -17,6 +17,7 @@ import FastIconImage from "treact/images/fast-icon.svg";
 import ReliableIconImage from "treact/images/reliable-icon.svg";
 import SimpleIconImage from "treact/images/simple-icon.svg";
 
+/* Start styled components */
 const Container = tw.div`relative`;
 
 const ThreeColumnContainer = styled.div`
@@ -57,9 +58,10 @@ const Card = styled.div`
 const DecoratorBlob = styled(SvgDecoratorBlob3)`
   ${tw`pointer-events-none absolute right-0 bottom-0 w-64 opacity-25 transform translate-x-32 translate-y-48 `}
 `;
+/* End styled components */
 
 /*
- * This componets has an array of object denoting the cards defined below. Each object in the cards array can have the key (Change it according to your need, you can also add more objects to have more cards in this feature component) or you can directly pass this using the cards prop:
+ *  properties.cards is an array of objects:
  *  1) imageSrc - the image shown at the top of the card
  *  2) title - the title of the card
  *  3) description - the description of the card
@@ -105,10 +107,7 @@ export default () => {
               </span>
               <span className="textContainer">
                 <span className="title">{card.title}</span>
-                <p className="description">
-                  {card.description ||
-                    "Lorem ipsum donor amet siti ceali ut enim ad minim veniam, quis nostrud."}
-                </p>
+                <p className="description">{card.description}</p>
               </span>
             </Card>
           </Column>
