@@ -1,3 +1,8 @@
+/*
+  Component to automatically scroll to top on React Router path name change
+  Add inside <Router></Router> tags
+*/
+
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
