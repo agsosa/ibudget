@@ -5,10 +5,13 @@ import DashboardPage from "pages/DashboardPage";
 import LoginPage from "pages/LoginPage";
 import RegisterPage from "pages/RegisterPage";
 import HowItWorksPage from "pages/HowItWorksPage";
+import Navbar from "components/Navbar";
+import Footer from "components/Footer";
 
 function Routes() {
   return (
     <Router>
+      <Navbar />
       <Switch>
         <Route path="/login">
           <LoginPage />
@@ -26,6 +29,7 @@ function Routes() {
           <HomePage />
         </Route>
       </Switch>
+      <Footer />
     </Router>
   );
 }
