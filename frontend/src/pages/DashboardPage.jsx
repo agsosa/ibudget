@@ -1,85 +1,16 @@
+import ThreeColSlider from "components/dashboard/Articles";
+import Pricing from "components/dashboard/Test";
+
 function DashboardPage() {
   return (
     <>
-      <nav className="navbar" role="navigation" aria-label="main navigation">
-        <div className="navbar-brand">
-          <a className="navbar-item" href="https://bulma.io">
-            <img
-              src="https://bulma.io/images/bulma-logo.png"
-              width="112"
-              height="28"
-              alt="Logo"
-            />
-          </a>
-
-          <a
-            href="/"
-            role="button"
-            className="navbar-burger"
-            aria-label="menu"
-            aria-expanded="false"
-            data-target="navbarBasicExample"
-          >
-            <span aria-hidden="true" />
-            <span aria-hidden="true" />
-            <span aria-hidden="true" />
-          </a>
+      <Pricing />
+      <div className="container">
+        <div className="notification is-primary">
+          <p className="title">Hi, Alejandro</p>
+          <p className="subtitle">test</p>
         </div>
-
-        <div id="navbarBasicExample" className="navbar-menu">
-          <div className="navbar-start">
-            <a href="/" className="navbar-item">
-              Home
-            </a>
-
-            <a href="/" className="navbar-item">
-              Documentation
-            </a>
-
-            <div className="navbar-item has-dropdown is-hoverable">
-              <a href="/" className="navbar-link">
-                More
-              </a>
-
-              <div className="navbar-dropdown">
-                <a href="/" className="navbar-item">
-                  About
-                </a>
-                <a href="/" className="navbar-item">
-                  Jobs
-                </a>
-                <a href="/" className="navbar-item">
-                  Contact
-                </a>
-                <hr href="/" className="navbar-divider" />
-                <a href="/" className="navbar-item">
-                  Report an issue
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="navbar-end">
-          <div className="navbar-item">
-            <div className="buttons">
-              <a href="/" className="button is-primary">
-                <strong>Sign up</strong>
-              </a>
-              <a href="/" className="button is-light">
-                Log in
-              </a>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      <section className="hero is-primary">
-        <div className="hero-body">
-          <p className="title">Primary hero</p>
-          <p className="subtitle">Primary subtitle</p>
-        </div>
-      </section>
+      </div>
 
       <section className="section">
         <nav className="level is-mobile">
@@ -109,11 +40,40 @@ function DashboardPage() {
           </div>
         </nav>
 
-        <div className="container">
-          <div className="notification is-primary">
-            This container is <strong>centered</strong> on desktop and larger
-            viewports.
+        <div className="card">
+          <header className="card-header">
+            <p className="card-header-title">Component</p>
+            <button
+              className="card-header-icon"
+              aria-label="more options"
+              type="button"
+            >
+              <span className="icon">
+                <i className="fas fa-angle-down" aria-hidden="true" />
+              </span>
+            </button>
+          </header>
+          <div className="card-content">
+            <div className="content">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
+              nec iaculis mauris.
+              <a href="/">@bulmaio</a>. <a href="/">#css</a>
+              <a href="/">#responsive</a>
+              <br />
+              <time dateTime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+            </div>
           </div>
+          <footer className="card-footer">
+            <a href="/" className="card-footer-item">
+              Save
+            </a>
+            <a href="/" className="card-footer-item">
+              Edit
+            </a>
+            <a href="/" className="card-footer-item">
+              Delete
+            </a>
+          </footer>
         </div>
 
         <article className="panel is-primary">
@@ -165,6 +125,8 @@ function DashboardPage() {
           </a>
         </article>
       </section>
+
+      <ThreeColSlider />
 
       <footer className="footer">
         <div className="content has-text-centered">
