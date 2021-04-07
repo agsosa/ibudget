@@ -1,19 +1,18 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
-//eslint-disable-next-line
-import { css } from "styled-components/macro";
+import { css } from "styled-components/macro"; //eslint-disable-line
 
-import Header from "../headers/light.js";
+import Header from "treact/components/headers/light";
 
-import ReactModalAdapter from "../../helpers/ReactModalAdapter.js";
-import ResponsiveVideoEmbed from "../../helpers/ResponsiveVideoEmbed.js";
+import ReactModalAdapter from "treact/helpers/ReactModalAdapter";
+import ResponsiveVideoEmbed from "treact/helpers/ResponsiveVideoEmbed";
 
 import { ReactComponent as PlayIcon } from "feather-icons/dist/icons/play-circle.svg";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
-import { ReactComponent as SvgDecoratorBlob1 } from "../../images/svg-decorator-blob-1.svg";
-import { ReactComponent as SvgDecoratorBlob2 } from "../../images/dot-pattern.svg";
-import DesignIllustration from "../../images/design-illustration.svg";
+import { ReactComponent as SvgDecoratorBlob1 } from "treact/images/svg-decorator-blob-1.svg";
+import { ReactComponent as SvgDecoratorBlob2 } from "treact/images/dot-pattern.svg";
+import DesignIllustration from "treact/images/design-illustration.svg";
 
 const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col lg:flex-row md:items-center max-w-screen-xl mx-auto py-20 md:py-24`;
@@ -58,17 +57,20 @@ const StyledModal = styled(ReactModalAdapter)`
 `;
 const CloseModalButton = tw.button`absolute top-0 right-0 mt-8 mr-8 hocus:text-primary-500`;
 
-export default ({
-  heading = "Take control of your financial future",
-  description = "It's time to reclaim control and face your finances. Monitor your income, track your spending and save money. Try it today, it's free!",
-  primaryButtonText = "Get Started",
-  primaryButtonUrl = "#",
-  watchVideoButtonText = "Watch Video",
-  watchVideoYoutubeUrl = "https://www.youtube.com/embed/_GuOjXYl5ew",
-  imageSrc = DesignIllustration,
-  imageCss = null,
-  imageDecoratorBlob = false,
-}) => {
+const properties = {
+  heading: "Take control of your financial future",
+  description:
+    "It's time to reclaim control and face your finances. Monitor your income, track your spending and save money. Try it today, it's free!",
+  primaryButtonText: "Get Started",
+  primaryButtonUrl: "#",
+  watchVideoButtonText: "Watch Video",
+  watchVideoYoutubeUrl: "https://www.youtube.com/embed/_GuOjXYl5ew",
+  imageSrc: DesignIllustration,
+  imageCss: null,
+  imageDecoratorBlob: false,
+};
+
+export default () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const toggleModal = () => setModalIsOpen(!modalIsOpen);
@@ -79,24 +81,30 @@ export default ({
       <Container>
         <TwoColumn>
           <LeftColumn>
-            <Heading>{heading}</Heading>
-            <Paragraph>{description}</Paragraph>
+            <Heading>{properties.heading}</Heading>
+            <Paragraph>{properties.description}</Paragraph>
             <Actions>
-              <PrimaryButton as="a" href={primaryButtonUrl}>
-                {primaryButtonText}
+              <PrimaryButton as="a" href={properties.primaryButtonUrl}>
+                {properties.primaryButtonText}
               </PrimaryButton>
               <WatchVideoButton onClick={toggleModal}>
                 <span className="playIconContainer">
                   <PlayIcon className="playIcon" />
                 </span>
-                <span className="playText">{watchVideoButtonText}</span>
+                <span className="playText">
+                  {properties.watchVideoButtonText}
+                </span>
               </WatchVideoButton>
             </Actions>
           </LeftColumn>
           <RightColumn>
             <IllustrationContainer>
-              <img css={imageCss} src={imageSrc} alt="Hero" />
-              {imageDecoratorBlob && <DecoratorBlob2 />}
+              <img
+                css={properties.imageCss}
+                src={properties.imageSrc}
+                alt="Hero"
+              />
+              {properties.imageDecoratorBlob && <DecoratorBlob2 />}
             </IllustrationContainer>
           </RightColumn>
         </TwoColumn>
@@ -106,13 +114,16 @@ export default ({
           className="mainHeroModal"
           isOpen={modalIsOpen}
           onRequestClose={toggleModal}
-          shouldCloseOnOverlayClick={true}
+          shouldCloseOnOverlayClick
         >
           <CloseModalButton onClick={toggleModal}>
             <CloseIcon tw="w-6 h-6" />
           </CloseModalButton>
           <div className="content">
-            <ResponsiveVideoEmbed url={watchVideoYoutubeUrl} tw="w-full" />
+            <ResponsiveVideoEmbed
+              url={properties.watchVideoYoutubeUrl}
+              tw="w-full"
+            />
           </div>
         </StyledModal>
       </Container>
