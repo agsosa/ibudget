@@ -46,7 +46,7 @@ function AnimatedSlideInComponent({
       exit={{ opacity: 0 }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ type: "just", duration: 0.8 }}
+      transition={{ type: "just", duration: 1 }}
       ref={ref}
     >
       {children}
