@@ -3,8 +3,6 @@ import styled from "styled-components";
 import tw from "twin.macro";
 import { css } from "styled-components/macro"; //eslint-disable-line
 
-import Header from "treact/components/headers/light";
-
 import ReactModalAdapter from "treact/helpers/ReactModalAdapter";
 import ResponsiveVideoEmbed from "treact/helpers/ResponsiveVideoEmbed";
 
@@ -81,7 +79,6 @@ export default () => {
 
   return (
     <>
-      <Header />
       <Container>
         <TwoColumn>
           <LeftColumn>
