@@ -1,3 +1,7 @@
+/*
+  Component to display features (three columns)
+*/
+
 import React from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
@@ -63,45 +67,53 @@ const DecoratorBlob = styled(SvgDecoratorBlob3)`
 /* End styled components */
 
 /*
- *  properties.cards is an array of objects:
+ *  cards is an array of objects:
  *  1) imageSrc - the image shown at the top of the card
  *  2) title - the title of the card
  *  3) description - the description of the card
  *  If a key for a particular card is not provided, a default value is used
  */
-const properties = {
-  cards: [
-    {
-      imageSrc: ShieldIconImage,
-      title: "Secure",
-      description:
-        "We strictly only deal with vendors that provide top notch security.",
-    },
-    { imageSrc: SupportIconImage, title: "24/7 Support" },
-    { imageSrc: CustomizeIconImage, title: "Customizable" },
-    { imageSrc: ReliableIconImage, title: "Reliable" },
-    { imageSrc: FastIconImage, title: "Fast" },
-    { imageSrc: SimpleIconImage, title: "Easy" },
-  ],
-  heading: "Amazing Features",
-  subheading: "Features",
-  description:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-};
+
+const exampleDesc = `This is just an example.`;
+
+const cards = [
+  {
+    imageSrc: ShieldIconImage,
+    title: "Secure",
+    description:
+      "We strictly only deal with vendors that provide top notch security.",
+  },
+  {
+    imageSrc: SupportIconImage,
+    title: "24/7 Support",
+    description: exampleDesc,
+  },
+  {
+    imageSrc: CustomizeIconImage,
+    title: "Customizable",
+    description: exampleDesc,
+  },
+  { imageSrc: ReliableIconImage, title: "Reliable", description: exampleDesc },
+  { imageSrc: FastIconImage, title: "Fast", description: exampleDesc },
+  { imageSrc: SimpleIconImage, title: "Easy", description: exampleDesc },
+];
 
 export default () => {
   return (
     <Container>
       <ThreeColumnContainer>
-        {properties.subheading && (
-          <Subheading>{properties.subheading}</Subheading>
-        )}
-        <Heading>{properties.heading}</Heading>
-        {properties.description && (
-          <Description>{properties.description}</Description>
-        )}
+        <Subheading>Features</Subheading>
+
+        <Heading>Amazing Features</Heading>
+
+        <Description>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </Description>
+
         <VerticalSpacer />
-        {properties.cards.map((card) => (
+
+        {cards.map((card) => (
           <Column key={card.title}>
             <Card>
               <span className="imageContainer">
