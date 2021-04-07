@@ -4,6 +4,7 @@ import HomePage from "pages/HomePage";
 import DashboardPage from "pages/DashboardPage";
 import LoginPage from "pages/LoginPage";
 import RegisterPage from "pages/RegisterPage";
+import HowItWorksPage from "pages/HowItWorksPage";
 
 function Routes() {
   return (
@@ -14,6 +15,9 @@ function Routes() {
         </Route>
         <Route path="/register">
           <RegisterPage />
+        </Route>
+        <Route path="/how-it-works">
+          <HowItWorksPage />
         </Route>
         <Route path="/dashboard">
           <DashboardPage />
