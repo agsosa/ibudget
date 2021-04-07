@@ -1,4 +1,4 @@
-import ThreeColSlider from "components/dashboard/Articles";
+import Articles from "components/dashboard/Articles";
 import Pricing from "components/dashboard/Test";
 
 function DashboardPage() {
@@ -126,7 +126,7 @@ function DashboardPage() {
         </article>
       </section>
 
-      <ThreeColSlider />
+      <Articles />
 
       <footer className="footer">
         <div className="content has-text-centered">
