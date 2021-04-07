@@ -1,3 +1,7 @@
+/*
+  Component to animate children components (fade in). Supports react-router.
+*/
+
 import * as React from "react";
 
 import { motion, AnimatePresence } from "framer-motion";

@@ -58,7 +58,7 @@ const properties = {
   heading: (
     <>
       Effective financial management in <wbr />
-      <span tw="text-primary-500">one app</span>
+      <span tw="text-primary-500">one place</span>
     </>
   ),
   description:
