@@ -7,7 +7,7 @@ import Header, {
   LogoLink,
   NavLinks,
   NavLink as NavLinkBase,
-} from "../../../components/Navbar.jsx/index.js.js";
+} from "../../../components/layout/Navbar.jsx/index.js.js.js";
 
 const StyledHeader = styled(Header)`
   ${tw`justify-between`}

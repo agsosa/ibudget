@@ -6,7 +6,7 @@ import HeaderBase, {
   NavLinks,
   NavLink as NavLinkBase,
   PrimaryLink as PrimaryLinkBase,
-} from "../../../components/Navbar.jsx/index.js.js";
+} from "../../../components/layout/Navbar.jsx/index.js.js.js";
 import {
   Container as ContainerBase,
   ContentWithVerticalPadding,

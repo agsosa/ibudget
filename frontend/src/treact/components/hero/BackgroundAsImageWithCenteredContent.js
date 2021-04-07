@@ -10,7 +10,7 @@ import Header, {
   LogoLink,
   NavToggle,
   DesktopNavLinks,
-} from "../../../components/Navbar.jsx/index.js.js";
+} from "../../../components/layout/Navbar.jsx/index.js.js.js";
 
 const StyledHeader = styled(Header)`
   ${tw`pt-8 max-w-none w-full`}

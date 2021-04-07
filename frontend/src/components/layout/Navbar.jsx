@@ -101,7 +101,7 @@ const defaultLinks = [
     <NavLink to="/">Home</NavLink>
     <NavLink to="/how-it-works">How it Works</NavLink>
     <NavLink to="/contact-us">Contact Us</NavLink>
-    <SecondaryLink to="/login">Log In</SecondaryLink>
+    <SecondaryLink to="/dashboard">Log In</SecondaryLink>
 
     <PrimaryLink css={tw`rounded-full`} to="/register">
       Get Started

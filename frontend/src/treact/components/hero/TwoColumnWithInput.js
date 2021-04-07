@@ -4,7 +4,7 @@ import tw from "twin.macro";
 //eslint-disable-next-line
 import { css } from "styled-components/macro";
 
-import Header from "../../../components/Navbar.jsx/index.js.js";
+import Header from "../../../components/layout/Navbar.jsx/index.js.js.js";
 
 import { ReactComponent as SvgDecoratorBlob1 } from "../../images/svg-decorator-blob-1.svg";
 import DesignIllustration from "../../images/design-illustration-2.svg";
