@@ -4,11 +4,15 @@ import "bulma/css/bulma.min.css";
 import React from "react";
 import ReactDOM from "react-dom";
 import Routes from "pages/Routes";
+import store from "lib/Store";
+import { Provider } from "react-redux";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Routes />
+    <Provider store={store}>
+      <Routes />
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );
