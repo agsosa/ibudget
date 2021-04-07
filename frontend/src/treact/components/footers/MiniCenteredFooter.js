@@ -17,7 +17,7 @@ const LogoImg = tw.img`w-8`;
 const LogoText = tw.h5`ml-2 text-2xl font-black tracking-wider`;
 
 const LinksContainer = tw.div`mt-8 font-medium flex flex-wrap justify-center items-center flex-col sm:flex-row`;
-const Link = tw.a`border-b-2 border-transparent hocus:text-gray-300 hocus:border-gray-300 pb-1 transition duration-300 mt-2 mx-4`;
+const Link = tw.a`text-white border-b-2 border-transparent hocus:text-primary-400 hocus:border-primary-500 pb-1 transition duration-300 mt-2 mx-4`;
 
 const SocialLinksContainer = tw.div`mt-10`;
 const SocialLink = styled.a`
@@ -35,26 +35,15 @@ export default () => {
         <Row>
           <LogoContainer>
             <LogoImg src={logo} />
-            <LogoText>Treact</LogoText>
+            <LogoText>iBudget</LogoText>
           </LogoContainer>
           <LinksContainer>
             <Link href="#">Home</Link>
-            <Link href="#">About</Link>
             <Link href="#">Contact Us</Link>
-            <Link href="#">Blog</Link>
-            <Link href="#">Reviews</Link>
+            <Link href="#">How to Use</Link>
+            <Link href="#">Privacy Policy</Link>
+            <Link href="#">Terms of Service</Link>
           </LinksContainer>
-          <SocialLinksContainer>
-            <SocialLink href="https://facebook.com">
-              <FacebookIcon />
-            </SocialLink>
-            <SocialLink href="https://twitter.com">
-              <TwitterIcon />
-            </SocialLink>
-            <SocialLink href="https://youtube.com">
-              <YoutubeIcon />
-            </SocialLink>
-          </SocialLinksContainer>
           <CopyrightText>
             &copy; Copyright 2020, Treact Inc. All Rights Reserved.
           </CopyrightText>
