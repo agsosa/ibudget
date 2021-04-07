@@ -7,6 +7,9 @@ import RegisterPage from "pages/RegisterPage";
 import HowItWorksPage from "pages/HowItWorksPage";
 import Navbar from "components/Navbar";
 import Footer from "components/Footer";
+import ContactUsPage from "./ContactUsPage";
+import PrivacyPolicyPage from "./PrivacyPolicyPage";
+import TermsOfServicePage from "./TermsOfServicePage";
 
 function Routes() {
   return (
@@ -21,6 +24,15 @@ function Routes() {
         </Route>
         <Route path="/how-it-works">
           <HowItWorksPage />
+        </Route>
+        <Route path="/contact-us">
+          <ContactUsPage />
+        </Route>
+        <Route path="/terms-of-service">
+          <TermsOfServicePage />
+        </Route>
+        <Route path="/privacy-policy">
+          <PrivacyPolicyPage />
         </Route>
         <Route path="/dashboard">
           <DashboardPage />

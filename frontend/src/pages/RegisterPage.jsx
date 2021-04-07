@@ -1,5 +1,5 @@
 function RegisterPage() {
-  return null;
+  return <></>;
 }
 
 export default RegisterPage;

@@ -1,5 +1,5 @@
 function LoginPage() {
-  return null;
+  return <></>;
 }
 
 export default LoginPage;
