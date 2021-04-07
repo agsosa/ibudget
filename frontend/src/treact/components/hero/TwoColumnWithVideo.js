@@ -24,7 +24,7 @@ const Heading = tw.h1`font-black text-3xl md:text-5xl leading-snug max-w-3xl`;
 const Paragraph = tw.p`my-5 lg:my-8 text-sm lg:text-base font-medium text-gray-600 max-w-lg mx-auto lg:mx-0`;
 
 const Actions = tw.div`flex flex-col items-center sm:flex-row justify-center lg:justify-start mt-8`;
-const PrimaryButton = tw.button`font-bold px-8 lg:px-10 py-3 rounded bg-primary-500 text-gray-100 hocus:bg-primary-700 focus:shadow-outline focus:outline-none transition duration-300`;
+const PrimaryButton = tw.button`font-bold px-8 lg:px-10 py-3 rounded bg-primary-500 text-gray-100 hocus:bg-primary-600 focus:shadow-outline focus:outline-none transition duration-300`;
 const WatchVideoButton = styled.button`
   ${tw`mt-4 sm:mt-0 sm:ml-8 flex items-center text-secondary-300 transition duration-300 hocus:text-primary-400 focus:outline-none`}
   .playIcon {
@@ -59,14 +59,14 @@ const StyledModal = styled(ReactModalAdapter)`
 const CloseModalButton = tw.button`absolute top-0 right-0 mt-8 mr-8 hocus:text-primary-500`;
 
 export default ({
-  heading = "Modern React Templates, Just For You",
- description="Our templates are easy to setup, understand and customize. Fully modular components with a variety of pages and components.",
-  primaryButtonText="Get Started",
-  primaryButtonUrl="#",
-  watchVideoButtonText="Watch Video",
-  watchVideoYoutubeUrl="https://www.youtube.com/embed/_GuOjXYl5ew",
-  imageSrc=DesignIllustration,
-  imageCss=null,
+  heading = "Take control of your financial future",
+  description = "It's time to reclaim control and face your finances. Monitor your income, track your spending and save money. Try it today, it's free!",
+  primaryButtonText = "Get Started",
+  primaryButtonUrl = "#",
+  watchVideoButtonText = "Watch Video",
+  watchVideoYoutubeUrl = "https://www.youtube.com/embed/_GuOjXYl5ew",
+  imageSrc = DesignIllustration,
+  imageCss = null,
   imageDecoratorBlob = false,
 }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -82,7 +82,9 @@ export default ({
             <Heading>{heading}</Heading>
             <Paragraph>{description}</Paragraph>
             <Actions>
-              <PrimaryButton as="a" href={primaryButtonUrl}>{primaryButtonText}</PrimaryButton>
+              <PrimaryButton as="a" href={primaryButtonUrl}>
+                {primaryButtonText}
+              </PrimaryButton>
               <WatchVideoButton onClick={toggleModal}>
                 <span className="playIconContainer">
                   <PlayIcon className="playIcon" />
@@ -93,11 +95,7 @@ export default ({
           </LeftColumn>
           <RightColumn>
             <IllustrationContainer>
-              <img
-                css={imageCss}
-                src={imageSrc}
-                alt="Hero"
-              />
+              <img css={imageCss} src={imageSrc} alt="Hero" />
               {imageDecoratorBlob && <DecoratorBlob2 />}
             </IllustrationContainer>
           </RightColumn>
