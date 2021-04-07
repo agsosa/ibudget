@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
+import { Link } from "react-router-dom";
 
 import useAnimatedNavToggler from "treact/helpers/useAnimatedNavToggler";
 
@@ -22,7 +23,7 @@ const NavLinks = tw.div`inline-block`;
 /* hocus: stands for "on hover or focus"
  * hocus:bg-primary-700 will apply the bg-primary-700 class on hover or focus
  */
-const NavLink = tw.a`
+const NavLink = tw(Link)`
   text-lg my-2 lg:text-sm lg:mx-6 lg:my-0 text-black
   font-semibold tracking-wide transition duration-300
   pb-1 border-b-2 border-transparent hover:border-primary-500 hocus:text-primary-500
@@ -105,11 +106,12 @@ export default () => {
    */
   const defaultLinks = [
     <NavLinks key={1}>
-      <NavLink href="/#">How it Works</NavLink>
-      <NavLink href="/#">Contact Us</NavLink>
-      <NavLink href="/#">Log In</NavLink>
+      <NavLink to="/">Home</NavLink>
+      <NavLink to="/how-it-works">How it Works</NavLink>
+      <NavLink to="/contact-us">Contact Us</NavLink>
+      <NavLink to="/login">Log In</NavLink>
 
-      <PrimaryLink css={tw`rounded-full`} href="/#">
+      <PrimaryLink css={tw`rounded-full`} to="/register">
         Get Started
       </PrimaryLink>
     </NavLinks>,
@@ -119,7 +121,7 @@ export default () => {
   const collapseBreakpointCss = collapseBreakPointCssMap.lg;
 
   const defaultLogoLink = (
-    <LogoLink href="/">
+    <LogoLink to="/">
       <img src={logo} alt="logo" />
       Treact
     </LogoLink>
