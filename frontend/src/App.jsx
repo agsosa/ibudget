@@ -5,7 +5,7 @@ import AnimationRevealPage from "./treact/helpers/AnimationRevealPage";
 import Footer from "./treact/components/footers/MiniCenteredFooter";
 import Hero from "./treact/components/hero/TwoColumnWithVideo";
 import Stats from "./treact/components/features/TwoColSingleFeatureWithStats2";
-import CTA from "./treact/components/cta/GetStarted";
+// import CTA from "./treact/components/cta/GetStarted";
 import Features from "./treact/components/features/ThreeColWithSideImage";
 
 function App() {
@@ -14,7 +14,6 @@ function App() {
       <Hero />
       <Stats />
       <Features />
-      <CTA />
       <Footer />
     </AnimationRevealPage>
   );
