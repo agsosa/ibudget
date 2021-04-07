@@ -2,7 +2,9 @@ import React from "react";
 import tw from "twin.macro";
 import { Container as ContainerBase } from "treact/components/misc/Layouts";
 import logo from "treact/images/logo.svg";
+import { APP_NAME } from "lib/Config";
 
+/* Start styled components */
 const Container = tw(ContainerBase)`bg-gray-900 text-gray-100 -mx-8 -mb-8`;
 const Content = tw.div`max-w-screen-xl mx-auto py-20 lg:py-24`;
 
@@ -16,6 +18,7 @@ const LinksContainer = tw.div`mt-8 font-medium flex flex-wrap justify-center ite
 const Link = tw.a`text-white border-b-2 border-transparent hocus:text-primary-400 hocus:border-primary-500 pb-1 transition duration-300 mt-2 mx-4`;
 
 const CopyrightText = tw.p`text-center mt-10 font-medium tracking-wide text-sm text-gray-600`;
+/* End styled components */
 
 export default () => {
   return (
@@ -24,8 +27,9 @@ export default () => {
         <Row>
           <LogoContainer>
             <LogoImg src={logo} />
-            <LogoText>iBudget</LogoText>
+            <LogoText>{APP_NAME}</LogoText>
           </LogoContainer>
+
           <LinksContainer>
             <Link href="/">Home</Link>
             <Link href="/">Contact Us</Link>
@@ -33,8 +37,9 @@ export default () => {
             <Link href="/">Privacy Policy</Link>
             <Link href="/">Terms of Service</Link>
           </LinksContainer>
+
           <CopyrightText>
-            &copy; Copyright 2020, Treact Inc. All Rights Reserved.
+            &copy; Copyright 2021, {APP_NAME}. All Rights Reserved.
           </CopyrightText>
         </Row>
       </Content>
