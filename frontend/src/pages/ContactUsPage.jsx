@@ -1,5 +1,7 @@
+import ContactUsForm from "treact/components/forms/TwoColContactUsWithIllustrationFullForm";
+
 function ContactUsPage() {
-  return <></>;
+  return <ContactUsForm />;
 }
 
 export default ContactUsPage;
