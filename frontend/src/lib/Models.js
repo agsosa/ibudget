@@ -9,7 +9,7 @@
     type: EnumTransactionType
     category: EnumCategory
 */
-export const TransactionModel = {};
+// export const TransactionModel = {};
 
 /*
   BudgetModel

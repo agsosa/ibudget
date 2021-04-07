@@ -1,5 +1,6 @@
 /*
   Component to display features (three columns)
+  TODO: Document cards object
 */
 
 import React from "react";

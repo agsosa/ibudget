@@ -1,3 +1,9 @@
+/*
+  Simple footer component with dark background, links, logo and copyright.
+*/
+
+// TODO: Remove hard coded links. Update hard coded copyright year.
+
 import React from "react";
 import tw from "twin.macro";
 import { Container as ContainerBase } from "treact/components/misc/Layouts";
