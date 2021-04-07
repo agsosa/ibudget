@@ -44,8 +44,6 @@ const SubmitButton = tw(PrimaryButtonBase)`inline-block mt-8`;
 /* End styled components */
 
 export default () => {
-  // The textOnLeft boolean prop can be used to display either the text on left or right side of the image.
-
   return (
     <Container>
       <TwoColumn>
