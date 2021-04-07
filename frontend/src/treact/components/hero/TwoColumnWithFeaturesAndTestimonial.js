@@ -6,7 +6,7 @@ import HeaderBase, {
   NavLinks,
   NavLink,
   PrimaryLink,
-} from "treact/components/headers/light.js";
+} from "components/light.js";
 import { SectionHeading } from "treact/components/misc/Headings.js";
 import { SectionDescription } from "treact/components/misc/Typography.js";
 import { PrimaryButton as PrimaryButtonBase } from "treact/components/misc/Buttons.js";
