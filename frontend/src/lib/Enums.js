@@ -4,5 +4,15 @@ export const EnumTransactionType = Object.freeze({
 });
 
 export const EnumCategory = Object.freeze({
-  FOOD: "food",
+  FOOD_DRINKS: "food_drinks",
+  SHOPPING: "shopping",
+  HOUSING: "housing",
+  TRANSPORTATION: "transportation",
+  VEHICLE: "vehicle",
+  LIFE_ENTERTAINMENT: "life_entertainment",
+  COMMUNICATION_PC: "communication_pc",
+  FINANCIAL_EXPENSES: "financial_expenses",
+  INVESTMENTS: "investments",
+  INCOME: "income",
+  OTHERS: "others",
 });
