@@ -16,8 +16,8 @@ const MoneySmall = styled.text(({ isNegative }) => [
   isNegative ? tw`text-red-600` : tw`text-green-600`,
 ]);
 const Description = tw.text`w-full text-gray-600 text-center text-sm`;
-const Container = tw.div`w-full flex flex-col items-center`;
-const FlujoContainer = tw(Container)`flex-row`;
+const Container = tw.div`w-full flex flex-col items-center `;
+const FlujoContainer = tw(Container)`lg:flex-row md:mb-10 -mb-5`;
 
 const ContentWithPaddingXl = tw(
   ContentBase
@@ -39,10 +39,7 @@ function DashboardPage() {
         <Card title="Tendencia del saldo">
           <Chart />
         </Card>
-        <Card
-          title="Últimas operaciones (10)"
-          RightHeaderComponent={TestComponent}
-        >
+        <Card title="Últimas operaciones" RightHeaderComponent={TestComponent}>
           hola hola testeando contenido xddddd
           <button type="submit">test button</button>
         </Card>
