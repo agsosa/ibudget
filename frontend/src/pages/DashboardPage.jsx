@@ -1,15 +1,23 @@
 import Articles from "components/dashboard/Articles";
 import Card from "components/dashboard/Card";
-import tw from "twin.macro";
+import tw, { styled } from "twin.macro";
 import { ContentWithPaddingXl as ContentBase } from "treact/components/misc/Layouts";
 import { SectionHeading } from "treact/components/misc/Headings";
-import { SectionDescription } from "treact/components/misc/Typography";
+
 import Chart from "components/dashboard/AreaChart";
 import PieChart from "components/dashboard/PieChart";
+import DemoGauge from "components/dashboard/Gauge";
 
 const HeaderContainer = tw.div`w-full flex flex-col items-center`;
-const Heading = tw(SectionHeading)`w-full text-primary-500`;
-const Description = tw(SectionDescription)`w-full text-gray-700 text-center`;
+const Heading = tw(SectionHeading)`w-full text-primary-500 text-5xl`;
+const Money = tw.text`w-full text-gray-700 text-center text-3xl font-bold`;
+const MoneySmall = styled.text(({ isNegative }) => [
+  tw`w-full text-center text-xl font-bold`,
+  isNegative ? tw`text-red-600` : tw`text-green-600`,
+]);
+const Description = tw.text`w-full text-gray-600 text-center text-sm`;
+const Container = tw.div`w-full flex flex-col items-center`;
+const FlujoContainer = tw(Container)`flex-row`;
 
 const ContentWithPaddingXl = tw(
   ContentBase
@@ -17,31 +25,52 @@ const ContentWithPaddingXl = tw(
 
 const CardsContainer = tw.div`mt-10 lg:grid gap-4 grid-cols-2 items-center lg:items-stretch lg:justify-between text-gray-900 font-medium`;
 
-const TestComponent = () => <button type="submit">asd</button>;
+const TestComponent = () => <button type="submit">Ver más</button>;
 
 function DashboardPage() {
   return (
     <ContentWithPaddingXl>
       <HeaderContainer>
         <Heading>Hello, Alejandro</Heading>
-        <Description>It's been 5 days since your last log in</Description>
+        <Money>$580.000.000</Money>
+        <Description>Tu saldo hoy</Description>
       </HeaderContainer>
       <CardsContainer>
+        <Card title="Tendencia del saldo">
+          <Chart />
+        </Card>
         <Card
-          title="Últimas 10 operaciones"
+          title="Últimas operaciones (10)"
           RightHeaderComponent={TestComponent}
         >
           hola hola testeando contenido xddddd
           <button type="submit">test button</button>
         </Card>
-        <Card title="Tendencia">
-          <Chart />
+        <Card title="Gastos por categoría" RightHeaderComponent={TestComponent}>
+          <Container>
+            <Description>Últimos 31 dias</Description>
+            <MoneySmall isNegative>-$366.55,10</MoneySmall>
+            <PieChart />
+          </Container>
         </Card>
-        <Card title="Gastos" RightHeaderComponent={TestComponent}>
-          <PieChart />
-        </Card>
-        <Card title="Flujo" RightHeaderComponent={TestComponent}>
-          hola
+        <Card title="Flujo del dinero" RightHeaderComponent={TestComponent}>
+          <Container>
+            <FlujoContainer>
+              <Container>
+                <Description>Últimos 31 dias</Description>
+                <MoneySmall>+$366.55,10</MoneySmall>
+              </Container>
+              <Container>
+                <Description>Ingresos</Description>
+                <MoneySmall>+$366.55,10</MoneySmall>
+              </Container>
+              <Container>
+                <Description>Egresos</Description>
+                <MoneySmall isNegative>-$366.55,10</MoneySmall>
+              </Container>
+            </FlujoContainer>
+            <DemoGauge />
+          </Container>
         </Card>
       </CardsContainer>
 
