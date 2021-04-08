@@ -1,6 +1,9 @@
 /* eslint-disable */
 import React, { useState, useEffect } from "react";
 import { Gauge } from "@ant-design/charts";
+import tw from "twin.macro";
+
+const Responsive = tw.div`w-full -my-10 max-w-md max-h-full max-h-screen text-white`;
 
 const DemoGauge = () => {
   var [percent, setPercent] = useState(0);
@@ -9,6 +12,9 @@ const DemoGauge = () => {
   var color = ["#F4664A", "#FAAD14", "#30BF78"];
   var config = {
     percent,
+    style: {
+      marginTop: "-20px",
+    },
     range: {
       ticks: [0, 1],
       color: ["l(0) 0:#F4664A 0.5:#FAAD14 1:#30BF78"],
@@ -32,6 +38,7 @@ const DemoGauge = () => {
         style: function style(_ref2) {
           var percent = _ref2.percent;
           return {
+            marginTop: "35px",
             fontSize: "36px",
             lineHeight: 1,
             color:
@@ -44,7 +51,7 @@ const DemoGauge = () => {
         },
       },
       content: {
-        offsetY: 30,
+        offsetY: 55,
         style: {
           zIndex: 0,
           fontSize: "20px",
@@ -68,7 +75,11 @@ const DemoGauge = () => {
     }, 1000);
   }, []);
 
-  return <Gauge {...config} chartRef={(chartRef) => (ref = chartRef)} />;
+  return (
+    <Responsive>
+      <Gauge {...config} chartRef={(chartRef) => (ref = chartRef)} />
+    </Responsive>
+  );
 };
 
 export default DemoGauge;
