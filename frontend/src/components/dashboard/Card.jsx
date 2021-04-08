@@ -4,28 +4,9 @@ import React from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
-import {
-  SectionHeading,
-  Subheading as SubheadingBase,
-} from "treact/components/misc/Headings";
-import { SectionDescription } from "treact/components/misc/Typography";
 import { PrimaryButton as PrimaryButtonBase } from "treact/components/misc/Buttons";
-import {
-  Container as ContainerBase,
-  ContentWithPaddingXl as ContentBase,
-} from "treact/components/misc/Layouts";
 import { ReactComponent as CheckboxIcon } from "treact/images/checkbox-circle.svg";
 
-const Container = tw(ContainerBase)`bg-white text-primary-500 -mx-8 px-8`;
-const ContentWithPaddingXl = tw(
-  ContentBase
-)`relative z-10 mx-auto px-0 py-10 sm:px-6 md:px-8 lg:px-12 xl:px-24 sm:py-20 flex flex-col max-w-screen-xl`;
-const HeaderContainer = tw.div`mt-10 w-full flex flex-col items-center`;
-const Subheading = tw(SubheadingBase)`mb-4 text-gray-100`;
-const Heading = tw(SectionHeading)`w-full`;
-const Description = tw(SectionDescription)`w-full text-gray-300 text-center`;
-
-const PlansContainer = tw.div`mt-16 flex flex-col items-center lg:flex-row lg:items-stretch lg:justify-between text-gray-900 font-medium`;
 const Plan = styled.div`
   ${tw`w-full max-w-sm bg-white rounded-lg shadow-sm py-10 px-6 sm:px-10 lg:px-6 lg:py-10 xl:p-10 mx-3 flex flex-col justify-between mt-16 first:mt-0 lg:mt-0 shadow-raised`}
 `;
@@ -74,104 +55,36 @@ const ActionButton = styled(PrimaryButtonBase)`
   ${tw`block text-center text-sm font-semibold tracking-wider w-full text-gray-100 bg-primary-500 px-6 py-4 rounded hover:bg-primary-700 focus:shadow-outline focus:outline-none transition-colors duration-300`}
 `;
 
-const WhiteBackgroundOverlay = tw.div`absolute inset-x-0 bottom-0 h-1/6 lg:h-1/3 bg-white z-0`;
-
-export default ({
-  subheading = "",
-  heading = "Hello, Alejandro",
-  description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  plans = null,
-  primaryButtonText = "Create Server",
-}) => {
-  const defaultPlans = [
-    {
-      name: "Personal",
-      price: ["$9", ".99/month"],
-      oldPrice: "$11.99",
-      description:
-        "Perfect for when you want to host your personal blog or a hobby side project.",
-      features: [
-        "2 Core Xeon CPU",
-        "1 GB RAM",
-        "30 GB SSD",
-        "1 TB Transfer",
-        "99.9% Uptime",
-      ],
-      url: "https://google.com",
-    },
-    {
-      name: "Business",
-      price: ["$15", ".99/month"],
-      oldPrice: "$19.99",
-      description:
-        "Perfect for hosting blogs with lots of traffic or heavy development projects",
-      features: [
-        "4 Core Xeon CPU",
-        "2 GB RAM",
-        "100 GB SSD",
-        "3 TB Transfer",
-        "99.9% Uptime",
-        "Free Domain & SSL",
-        "Free DNS Management",
-      ],
-      url: "https://google.com",
-      featured: "Most Popular",
-    },
-    {
-      name: "Enterprise",
-      price: ["$25", ".99/month"],
-      oldPrice: "$29.99",
-      description:
-        "Perfect for hosting production websites & API services with high traffic load",
-      features: [
-        "8 Core Xeon CPU",
-        "8 GB RAM",
-        "300 GB SSD",
-        "Unlimited Transfer",
-        "99.99% Uptime",
-        "Free Domain & SSL",
-        "Free DNS Management",
-        "Free Offsite Backup",
-      ],
-      url: "https://google.com",
-    },
-  ];
-
-  if (!plans) plans = defaultPlans;
-
+export default () => {
   return (
-    <ContentWithPaddingXl>
-      <PlansContainer>
-        <Plan featured>
-          <PlanHeader>
-            <span className="nameAndFeaturedContainer">
-              <span className="name">name</span>
+    <Plan featured>
+      <PlanHeader>
+        <span className="nameAndFeaturedContainer">
+          <span className="name">name</span>
 
-              <span className="featuredText">feat</span>
-            </span>
-            <div className="pricingContainer">
-              <span className="currentPrice">
-                <span className="bigText">25</span>
-                55
-              </span>
+          <span className="featuredText">feat</span>
+        </span>
+        <div className="pricingContainer">
+          <span className="currentPrice">
+            <span className="bigText">25</span>
+            55
+          </span>
 
-              <span className="oldPrice">23</span>
-            </div>
-            <p className="description">desc</p>
-          </PlanHeader>
-          <PlanFeatures>
-            <li className="feature">
-              <CheckboxIcon className="icon" />
-              <span className="text">feat</span>
-            </li>
-          </PlanFeatures>
-          <PlanAction>
-            <ActionButton as="a" href="/">
-              text
-            </ActionButton>
-          </PlanAction>
-        </Plan>
-      </PlansContainer>
-    </ContentWithPaddingXl>
+          <span className="oldPrice">23</span>
+        </div>
+        <p className="description">desc</p>
+      </PlanHeader>
+      <PlanFeatures>
+        <li className="feature">
+          <CheckboxIcon className="icon" />
+          <span className="text">feat</span>
+        </li>
+      </PlanFeatures>
+      <PlanAction>
+        <ActionButton as="a" href="/">
+          text
+        </ActionButton>
+      </PlanAction>
+    </Plan>
   );
 };
