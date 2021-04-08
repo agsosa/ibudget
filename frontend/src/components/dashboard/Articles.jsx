@@ -11,10 +11,10 @@ import {
 } from "treact/components/misc/Layouts";
 
 const Row = tw.div`flex flex-col lg:flex-row -mb-10`;
-const Heading = tw(SectionHeading)`text-left lg:text-4xl xl:text-5xl`;
+const Heading = tw(SectionHeading)`ml-2 text-left lg:text-2xl xl:text-2xl`;
 
 const PopularPostsContainer = tw.div`lg:w-2/3`;
-const PostsContainer = tw.div`mt-12 flex flex-col sm:flex-row sm:justify-between lg:justify-start`;
+const PostsContainer = tw.div`mt-6 flex flex-col sm:flex-row sm:justify-between lg:justify-start`;
 const Post = tw(
   motion.a
 )`block sm:max-w-sm cursor-pointer mb-16 last:mb-0 sm:mb-0 sm:odd:mr-8 lg:mr-8 xl:mr-16`;
@@ -31,7 +31,7 @@ const AuthorName = tw.h6`font-semibold text-lg`;
 const AuthorProfile = tw.p`text-secondary-100 text-sm`;
 
 const RecentPostsContainer = styled.div`
-  ${tw`mt-24 lg:mt-0 lg:w-1/3`}
+  ${tw`mt-12 lg:mt-0 lg:w-1/3`}
   ${PostsContainer} {
     ${tw`flex flex-wrap lg:flex-col`}
   }
