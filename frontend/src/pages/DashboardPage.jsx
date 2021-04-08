@@ -1,11 +1,10 @@
 import Articles from "components/dashboard/Articles";
-import Pricing from "components/dashboard/Test";
+import Card from "components/dashboard/Card";
 
 function DashboardPage() {
   return (
     <>
-      <Pricing />
-
+      <Card />
       <Articles />
     </>
   );
