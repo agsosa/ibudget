@@ -6,7 +6,7 @@ import { SectionHeading } from "treact/components/misc/Headings";
 
 import Chart from "components/dashboard/AreaChart";
 import PieChart from "components/dashboard/PieChart";
-import DemoGauge from "components/dashboard/Gauge";
+import Gauge from "components/dashboard/Gauge";
 
 const HeaderContainer = tw.div`w-full flex flex-col items-center`;
 const Heading = tw(SectionHeading)`w-full text-primary-500 text-5xl`;
@@ -17,7 +17,7 @@ const MoneySmall = styled.text(({ isNegative }) => [
 ]);
 const Description = tw.text`w-full text-gray-600 text-center text-sm`;
 const Container = tw.div`w-full flex flex-col items-center `;
-const FlujoContainer = tw(Container)`lg:flex-row md:mb-10 -mb-5`;
+const FlujoContainer = tw(Container)`lg:flex-row -mb-5 sm:mb-0`;
 
 const ContentWithPaddingXl = tw(
   ContentBase
@@ -66,7 +66,7 @@ function DashboardPage() {
                 <MoneySmall isNegative>-$366.55,10</MoneySmall>
               </Container>
             </FlujoContainer>
-            <DemoGauge />
+            <Gauge />
           </Container>
         </Card>
       </CardsContainer>
