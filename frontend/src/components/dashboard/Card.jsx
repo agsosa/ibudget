@@ -7,11 +7,11 @@ import { css } from "styled-components/macro"; //eslint-disable-line
 import { PrimaryButton as PrimaryButtonBase } from "treact/components/misc/Buttons";
 import { ReactComponent as CheckboxIcon } from "treact/images/checkbox-circle.svg";
 
-const Plan = styled.div`
+const Card = styled.div`
   ${tw`w-full max-w-sm bg-white rounded-lg shadow-sm py-10 px-6 sm:px-10 lg:px-6 lg:py-10 xl:p-10 mx-3 flex flex-col justify-between mt-16 first:mt-0 lg:mt-0 shadow-raised`}
 `;
 
-const PlanHeader = styled.div`
+const CardHeader = styled.div`
   .nameAndFeaturedContainer {
     ${tw`flex flex-wrap flex-col sm:flex-row justify-between items-center`}
   }
@@ -37,7 +37,7 @@ const PlanHeader = styled.div`
     ${tw`mt-8 font-medium text-gray-700 lg:text-sm xl:text-base`}
   }
 `;
-const PlanFeatures = styled.ul`
+const CardFeatures = styled.ul`
   ${tw`mt-10 flex-1 border-t lg:-mx-6 -mx-6 sm:-mx-10 py-10 px-6 sm:px-10 lg:p-6 xl:-mx-10 xl:p-10`}
   .feature {
     ${tw`flex items-start mt-6 first:mt-0`}
@@ -50,15 +50,15 @@ const PlanFeatures = styled.ul`
   }
 `;
 
-const PlanAction = tw.div`mt-4`;
+const CardAction = tw.div`mt-4`;
 const ActionButton = styled(PrimaryButtonBase)`
   ${tw`block text-center text-sm font-semibold tracking-wider w-full text-gray-100 bg-primary-500 px-6 py-4 rounded hover:bg-primary-700 focus:shadow-outline focus:outline-none transition-colors duration-300`}
 `;
 
 export default () => {
   return (
-    <Plan featured>
-      <PlanHeader>
+    <Card featured>
+      <CardHeader>
         <span className="nameAndFeaturedContainer">
           <span className="name">name</span>
 
@@ -73,18 +73,18 @@ export default () => {
           <span className="oldPrice">23</span>
         </div>
         <p className="description">desc</p>
-      </PlanHeader>
-      <PlanFeatures>
+      </CardHeader>
+      <CardFeatures>
         <li className="feature">
           <CheckboxIcon className="icon" />
           <span className="text">feat</span>
         </li>
-      </PlanFeatures>
-      <PlanAction>
+      </CardFeatures>
+      <CardAction>
         <ActionButton as="a" href="/">
           text
         </ActionButton>
-      </PlanAction>
-    </Plan>
+      </CardAction>
+    </Card>
   );
 };
