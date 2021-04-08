@@ -3,7 +3,10 @@ import React, { useState, useEffect } from "react";
 import { Gauge } from "@ant-design/charts";
 import tw from "twin.macro";
 
-const Responsive = tw.div`w-full -my-10 max-w-md max-h-full max-h-screen text-white`;
+const Responsive = tw.div`w-full max-w-md `;
+const Status = tw.text`text-black text-center font-bold text-xl`;
+const Description = tw.text`text-gray-600 text-center text-sm`;
+const TextContainer = tw.span`flex flex-col -mt-24`;
 
 const DemoGauge = () => {
   var [percent, setPercent] = useState(0);
@@ -23,45 +26,6 @@ const DemoGauge = () => {
       pointer: { style: { stroke: "#D0D0D0" } },
       pin: { style: { stroke: "#D0D0D0" } },
     },
-    statistic: {
-      title: {
-        formatter: function formatter(_ref) {
-          var percent = _ref.percent;
-          if (percent < ticks[1]) {
-            return "Malo";
-          }
-          if (percent < ticks[2]) {
-            return "Regular";
-          }
-          return "Excelente";
-        },
-        style: function style(_ref2) {
-          var percent = _ref2.percent;
-          return {
-            marginTop: "35px",
-            fontSize: "36px",
-            lineHeight: 1,
-            color:
-              percent < ticks[1]
-                ? color[0]
-                : percent < ticks[2]
-                ? color[1]
-                : color[2],
-          };
-        },
-      },
-      content: {
-        offsetY: 55,
-        style: {
-          zIndex: 0,
-          fontSize: "20px",
-          color: "#4B535E",
-        },
-        formatter: function formatter() {
-          return "Capacidad de ahorro";
-        },
-      },
-    },
   };
 
   useEffect(() => {
@@ -78,6 +42,10 @@ const DemoGauge = () => {
   return (
     <Responsive>
       <Gauge {...config} chartRef={(chartRef) => (ref = chartRef)} />
+      <TextContainer>
+        <Status>Excelente</Status>
+        <Description>Capacidad de ahorro</Description>
+      </TextContainer>
     </Responsive>
   );
 };
