@@ -23,6 +23,7 @@ function Chart() {
 
   const config = {
     data,
+    areaStyle: { fill: "l(270) 0:#ffffff 0.5:#7ec2f3 1:#1890ff" },
     xField: "Date",
     yField: "scales",
     xAxis: { tickCount: 5 },
