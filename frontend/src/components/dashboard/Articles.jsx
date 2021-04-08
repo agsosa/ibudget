@@ -10,8 +10,8 @@ import {
   ContentWithPaddingXl,
 } from "treact/components/misc/Layouts";
 
-const Row = tw.div`flex flex-col lg:flex-row -mb-10`;
-const Heading = tw(SectionHeading)`ml-2 text-left lg:text-2xl xl:text-2xl`;
+const Row = tw.div`flex flex-col lg:flex-row -mb-16`;
+const Heading = tw(SectionHeading)`ml-2 text-left lg:text-4xl xl:text-4xl`;
 
 const PopularPostsContainer = tw.div`lg:w-2/3`;
 const PostsContainer = tw.div`mt-6 flex flex-col sm:flex-row sm:justify-between lg:justify-start`;
