@@ -7,6 +7,7 @@ import { SectionHeading } from "treact/components/misc/Headings";
 import Chart from "components/dashboard/AreaChart";
 import PieChart from "components/dashboard/PieChart";
 import Gauge from "components/dashboard/Gauge";
+import DateTimePicker from "components/dashboard/date-time-picker";
 
 const HeaderContainer = tw.div`w-full flex flex-col items-center`;
 const Heading = tw(SectionHeading)`w-full text-primary-500 text-5xl`;
@@ -15,7 +16,7 @@ const MoneySmall = styled.text(({ isNegative }) => [
   tw`w-full text-center text-xl font-bold`,
   isNegative ? tw`text-red-600` : tw`text-green-600`,
 ]);
-const Description = tw.text`w-full text-gray-600 text-center text-sm`;
+const Description = tw.text`w-full text-gray-600 text-center text-sm mt-3`;
 const Container = tw.div`w-full flex flex-col items-center `;
 const FlujoContainer = tw(Container)`lg:flex-row -mb-5 sm:mb-0`;
 
@@ -32,8 +33,9 @@ function DashboardPage() {
     <ContentWithPaddingXl>
       <HeaderContainer>
         <Heading>Hello, Alejandro</Heading>
-        <Money>$580.000.000</Money>
         <Description>Tu saldo hoy</Description>
+        <Money>$580.000.000</Money>
+        <DateTimePicker />
       </HeaderContainer>
       <CardsContainer>
         <Card title="Tendencia del saldo">
