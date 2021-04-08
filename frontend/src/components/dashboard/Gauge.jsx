@@ -1,19 +1,27 @@
-/* eslint-disable */
 import React, { useState, useEffect } from "react";
 import { Gauge } from "@ant-design/charts";
-import tw from "twin.macro";
+import tw, { styled } from "twin.macro";
 
 const Responsive = tw.div`w-full max-w-md `;
-const Status = tw.text`text-black text-center font-bold text-xl`;
+const Status = styled.text(({ percent }) => [
+  tw`text-center font-bold text-xl`,
+  percent < 1 / 3 && tw`text-red-600`,
+  percent >= 1 / 3 && tw`text-orange-500`,
+  percent >= 2 / 3 && tw`text-green-500`,
+]);
 const Description = tw.text`text-gray-600 text-center text-sm`;
 const TextContainer = tw.span`flex flex-col -mt-24`;
 
-const DemoGauge = () => {
-  var [percent, setPercent] = useState(0);
-  var ref;
-  var ticks = [0, 1 / 3, 2 / 3, 1];
-  var color = ["#F4664A", "#FAAD14", "#30BF78"];
-  var config = {
+function getStatusText(percent) {
+  if (percent < 1 / 3) return "Malo";
+  if (percent < 2 / 3) return "Regular";
+  return "Excelente";
+}
+
+export default () => {
+  const [percent, setPercent] = useState(0);
+
+  const config = {
     percent,
     style: {
       marginTop: "-20px",
@@ -29,25 +37,23 @@ const DemoGauge = () => {
   };
 
   useEffect(() => {
-    var data = percent;
-    var interval = setInterval(function () {
+    let data = percent;
+    const interval = setInterval(function () {
       if (data >= 1) {
         clearInterval(interval);
       }
       data += 0.1;
       setPercent(data);
-    }, 1000);
+    }, 700);
   }, []);
 
   return (
     <Responsive>
-      <Gauge {...config} chartRef={(chartRef) => (ref = chartRef)} />
+      <Gauge {...config} />
       <TextContainer>
-        <Status>Excelente</Status>
+        <Status percent={percent}>{getStatusText(percent)}</Status>
         <Description>Capacidad de ahorro</Description>
       </TextContainer>
     </Responsive>
   );
 };
-
-export default DemoGauge;
