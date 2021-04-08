@@ -1,8 +1,23 @@
+/* 
+  TransactionList: Component to display the information of various TransactionModel or a single TransactionModel object.
+
+  Usage:
+    To build the list automatically:
+      <TransactionList data={array of TransactionModel} />
+
+    To build the list manually:
+      <Transaction>
+        <Transaction.Item data={object of TransactionModel} />
+      </Transaction>
+    
+    To display a single transaction:
+      <TransactionList.Item data={object of TransactionModel} />
+*/
+
 /* eslint-disable */
 import * as React from "react";
 import tw, { styled } from "twin.macro";
-import StatsIllustrationSrc from "treact/images/stats-illustration.svg";
-import { GetCategorySvgIcon } from "./../../images/CategoryIcons";
+import CategoryIcon from "./CategoryIcon";
 import { EnumCategory } from "lib/Enums";
 
 const Item = tw.li`w-full border-b grid grid-cols-2 grid-rows-1 align-middle pb-3`;
@@ -17,18 +32,12 @@ const Concept = tw.text`text-gray-500`;
 const FlexCol = tw.div`flex flex-col`;
 const RightContainer = tw(FlexCol)`justify-self-end`;
 const LeftContainer = tw.div`flex flex-row justify-self-start`;
-const CategoryImage = styled.div((props) => [
-  `background-image: url("${props.imageSrc}");`,
-  tw`rounded-full bg-contain bg-no-repeat bg-orange-500 bg-center h-12 w-12 mr-4`,
-]);
 
-function TransactionItem() {
+function TransactionItem({ category }) {
   return (
     <Item>
       <LeftContainer>
-        <CategoryImage>
-          {GetCategorySvgIcon(EnumCategory.SHOPPING)}
-        </CategoryImage>
+        <CategoryIcon category={category} />
         <FlexCol>
           <Category>Shopping</Category>
           <Concept>Efectivo</Concept>
@@ -42,7 +51,7 @@ function TransactionItem() {
   );
 }
 
-function Transaction({ children }) {
+function TransactionList({ children }) {
   function viewTransactionDetails(id) {
     console.log("transaction click");
   }
@@ -61,6 +70,6 @@ function Transaction({ children }) {
   return <List>{childrenArray}</List>;
 }
 
-Transaction.Item = TransactionItem;
+TransactionList.Item = TransactionItem;
 
-export default Transaction;
+export default TransactionList;
