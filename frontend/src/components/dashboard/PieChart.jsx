@@ -1,6 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
 
 import { Pie } from "@ant-design/charts";
+import tw from "twin.macro";
+
+const Responsive = tw.div`w-full -my-10 max-w-md sm:mt-2`;
 
 function PieChart() {
   const data = [
@@ -50,7 +53,11 @@ function PieChart() {
     },
     interactions: [{ type: "element-active" }],
   };
-  return <Pie {...config} />;
+  return (
+    <Responsive>
+      <Pie {...config} />
+    </Responsive>
+  );
 }
 
 export default PieChart;
