@@ -8,6 +8,8 @@ import Chart from "components/dashboard/AreaChart";
 import PieChart from "components/dashboard/PieChart";
 import Gauge from "components/dashboard/Gauge";
 import DateTimePicker from "components/dashboard/date-time-picker";
+import Transaction from "components/dashboard/TransactionList";
+import { EnumCategory } from "lib/Enums";
 
 const HeaderContainer = tw.div`w-full flex flex-col items-center`;
 const Heading = tw(SectionHeading)`w-full text-primary-500 text-5xl`;
@@ -42,8 +44,12 @@ function DashboardPage() {
           <Chart />
         </Card>
         <Card title="Últimas operaciones" RightHeaderComponent={TestComponent}>
-          hola hola testeando contenido xddddd
-          <button type="submit">test button</button>
+          <Transaction>
+            {Object.values(EnumCategory).map((v) => {
+              console.log(v);
+              return <Transaction.Item category={v} />;
+            })}
+          </Transaction>
         </Card>
         <Card title="Gastos por categoría" RightHeaderComponent={TestComponent}>
           <Container>
