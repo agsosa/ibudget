@@ -32,70 +32,114 @@ sm:py-10 flex flex-col max-w-full`;
 /* End style components */
 
 function DashboardPage() {
+  // On View More click for Latest Transactions card
   function handleLastTransactionsViewMore() {
     console.log("handleLastTransactionsViewMore");
   }
 
-  function handleSpendingViewMore() {
-    console.log("handleSpendingViewMore");
+  // On Transaction click
+  function handleTransactionClick(transaction) {
+    console.log(`Clicked transaction ${transaction}`);
   }
 
-  function handleMoneyFlowViewMore() {
-    console.log("handleMoneyFlowViewMore");
-  }
-
-  return (
-    <ContentWithPaddingXl>
-      <HeaderContainer>
+  // Header component
+  function Header() {
+    return (
+      <>
         <Heading>Hello, Alejandro</Heading>
         <Description>Tu saldo hoy</Description>
         <Money>$580.000.000</Money>
         <DateTimePicker />
+      </>
+    );
+  }
+
+  // Latest transactions card content
+  function LatestTransactions() {
+    return (
+      <>
+        <TransactionList>
+          {Object.values(EnumCategory)
+            .slice(0, 5)
+            .map((v) => {
+              return (
+                <TransactionList.Item
+                  category={v}
+                  onClick={handleTransactionClick}
+                />
+              );
+            })}
+        </TransactionList>
+      </>
+    );
+  }
+
+  // Spending card content
+  function Spending() {
+    return (
+      <>
+        <Container>
+          <Description>Últimos 31 dias</Description>
+          <MoneySmall isNegative>-$366.55,10</MoneySmall>
+          <PieChart />
+        </Container>
+      </>
+    );
+  }
+
+  // Money Trend card content
+  function MoneyTrend() {
+    return <Chart />;
+  }
+
+  // Money flow card content
+  function MoneyFlow() {
+    return (
+      <>
+        <Container>
+          <FlujoContainer>
+            <Container>
+              <Description>Últimos 31 dias</Description>
+              <MoneySmall>+$366.55,10</MoneySmall>
+            </Container>
+            <Container>
+              <Description>Ingresos</Description>
+              <MoneySmall>+$366.55,10</MoneySmall>
+            </Container>
+            <Container>
+              <Description>Egresos</Description>
+              <MoneySmall isNegative>-$366.55,10</MoneySmall>
+            </Container>
+          </FlujoContainer>
+          <Gauge />
+        </Container>
+      </>
+    );
+  }
+  return (
+    <ContentWithPaddingXl>
+      <HeaderContainer>
+        <Header />
       </HeaderContainer>
+
       <CardList>
         <CardList.Item
-          title="Últimas operaciones"
+          title="Últimas transacciones"
           onViewMoreClick={handleLastTransactionsViewMore}
         >
-          <TransactionList>
-            {Object.values(EnumCategory)
-              .slice(0, 5)
-              .map((v) => {
-                return <TransactionList.Item category={v} />;
-              })}
-          </TransactionList>
+          <LatestTransactions />
         </CardList.Item>
+
         <CardList.Item title="Tendencia del saldo">
-          <Chart />
+          <MoneyTrend />
         </CardList.Item>
-        <CardList.Item title="Gastos" onViewMoreClick={handleSpendingViewMore}>
-          <Container>
-            <Description>Últimos 31 dias</Description>
-            <MoneySmall isNegative>-$366.55,10</MoneySmall>
-            <PieChart />
-          </Container>
+
+        <CardList.Item title="Gastos">
+          <Spending />
         </CardList.Item>
-        <CardList.Item
-          title="Flujo del dinero"
-          onViewMoreClick={handleMoneyFlowViewMore}
-        >
-          <Container>
-            <FlujoContainer>
-              <Container>
-                <Description>Últimos 31 dias</Description>
-                <MoneySmall>+$366.55,10</MoneySmall>
-              </Container>
-              <Container>
-                <Description>Ingresos</Description>
-                <MoneySmall>+$366.55,10</MoneySmall>
-              </Container>
-              <Container>
-                <Description>Egresos</Description>
-                <MoneySmall isNegative>-$366.55,10</MoneySmall>
-              </Container>
-            </FlujoContainer>
-            <Gauge />
-          </Container>
+
+        <CardList.Item title="Flujo del dinero">
+          <MoneyFlow />
         </CardList.Item>
       </CardList>
 
