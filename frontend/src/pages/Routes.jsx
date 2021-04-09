@@ -9,7 +9,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import tw from "twin.macro";
 
 import HomePage from "pages/HomePage";
-import DashboardPage from "pages/DashboardPage";
+import DashboardPage from "pages/dashboard/DashboardPage";
 import LoginPage from "pages/LoginPage";
 import RegisterPage from "pages/RegisterPage";
 import HowItWorksPage from "pages/HowItWorksPage";
