@@ -1,12 +1,10 @@
 import React from "react";
-import styled from "styled-components";
 import tw from "twin.macro";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import { Link } from "react-router-dom";
 
-import { ReactComponent as SvgDecoratorBlob1 } from "treact/images/svg-decorator-blob-1.svg";
-import { ReactComponent as SvgDecoratorBlob2 } from "treact/images/dot-pattern.svg";
 import DesignIllustration from "treact/images/design-illustration.svg";
+import { APP_NAME } from "lib/Config";
 
 /* Start styled components */
 
@@ -26,14 +24,6 @@ const PrimaryButton = tw(
 
 const IllustrationContainer = tw.div`flex justify-center md:justify-end items-center relative max-w-3xl lg:max-w-none`;
 
-// Random Decorator Blobs (shapes that you see in background)
-const DecoratorBlob1 = styled(SvgDecoratorBlob1)`
-  ${tw`pointer-events-none opacity-5 absolute left-0 bottom-0 h-64 w-64 transform -translate-x-2/3  -z-10`}
-`;
-const DecoratorBlob2 = styled(SvgDecoratorBlob2)`
-  ${tw`pointer-events-none fill-current text-primary-500 opacity-25 absolute w-32 h-32 right-0 bottom-0 transform translate-x-10 translate-y-10 -z-10`}
-`;
-
 /* End styled components */
 
 const properties = {
@@ -42,11 +32,8 @@ const properties = {
     "It's time to reclaim control and face your finances. Monitor your income, track your spending and save money. Try it today, it's free!",
   primaryButtonText: "Get Started",
   primaryButtonUrl: "/register",
-  watchVideoButtonText: "Watch Video",
-  watchVideoYoutubeUrl: "https://www.youtube.com/embed/_GuOjXYl5ew",
   imageSrc: DesignIllustration,
   imageCss: null,
-  imageDecoratorBlob: false,
 };
 
 export default () => {
@@ -68,13 +55,11 @@ export default () => {
               <img
                 css={properties.imageCss}
                 src={properties.imageSrc}
-                alt="Hero"
+                alt={APP_NAME}
               />
-              {properties.imageDecoratorBlob && <DecoratorBlob2 />}
             </IllustrationContainer>
           </RightColumn>
         </TwoColumn>
-        <DecoratorBlob1 />
       </Container>
     </>
   );
