@@ -35,7 +35,12 @@ text-gray-900 font-medium
 lg:items-stretch lg:justify-between 
 lg:grid lg:gap-4 lg:grid-cols-2 `;
 
-const ViewMoreBtn = tw.button`text-primary-700 bg-primary-100 rounded-lg px-2 font-semibold hocus:bg-primary-200 hocus:text-primary-900 focus:shadow-outline`;
+const ViewMoreBtn = tw.button`
+text-primary-700 bg-primary-100 
+rounded-lg px-2 font-semibold
+ hocus:bg-primary-200 hocus:text-primary-900 
+ focus:shadow-outline
+ transition duration-500 ease-in-out`;
 
 const TestComponent = () => <ViewMoreBtn>Ver más</ViewMoreBtn>;
 

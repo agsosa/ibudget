@@ -132,7 +132,7 @@ export default () => {
       <ContentWithPaddingXl>
         <Row>
           <PopularPostsContainer>
-            <Heading>Latest financial articles and news</Heading>
+            <Heading>Latest financial articles</Heading>
             <PostsContainer>
               {popularPosts.map((post, index) => (
                 <Post
