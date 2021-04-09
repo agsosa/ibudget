@@ -23,19 +23,21 @@ import { PropTypes } from "prop-types";
 /* Start styled components */
 
 const CardsContainer = tw.div`
-sm:self-center sm:max-w-screen-2xl
-mt-10 items-center
-text-gray-900 font-medium 
-lg:items-stretch lg:justify-between 
-lg:grid lg:gap-4 lg:grid-cols-2 `;
+  sm:self-center sm:max-w-screen-xl
+  mt-10 items-center
+  text-gray-900 font-medium 
+  lg:items-stretch lg:justify-between 
+  lg:grid lg:gap-4 lg:grid-cols-2 
+`;
 
 const ViewMoreBtn = tw.button`
-mt-2 sm:mt-0
-text-primary-700 bg-primary-100 
-rounded-lg px-2 font-semibold
- hocus:bg-primary-200 hocus:text-primary-900 
- focus:shadow-outline
- transition duration-500 ease-in-out`;
+  mt-2 sm:mt-0
+  text-primary-700 bg-primary-100 
+  rounded-lg px-2 font-semibold
+  hocus:bg-primary-200 hocus:text-primary-900 
+  focus:shadow-outline
+  transition duration-500 ease-in-out
+`;
 
 const CardBlock = styled.div`
   ${tw`
