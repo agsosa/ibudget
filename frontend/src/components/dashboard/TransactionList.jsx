@@ -20,6 +20,7 @@ import { EnumCategory } from "lib/Enums";
 import { PropTypes } from "prop-types";
 import CategoryIcon from "./CategoryIcon";
 
+/* Start styled components */
 const Item = tw.li`
 w-full border-b flex 
 sm:grid sm:grid-cols-2 
@@ -40,6 +41,8 @@ const Concept = tw.text`text-gray-500 text-sm hidden sm:flex`; // TODO: Shrink t
 const FlexCol = tw.div`flex flex-col`;
 const RightContainer = tw(FlexCol)`sm:justify-self-end ml-3 sm:ml-3`;
 const LeftContainer = tw.div`flex flex-row justify-self-start ml-5 sm:ml-0`;
+
+/* End styled components */
 
 function TransactionItem({ category, onClick }) {
   function handleClick() {
@@ -64,21 +67,12 @@ function TransactionItem({ category, onClick }) {
   );
 }
 
-TransactionItem.defaultProps = {
-  onClick: null,
-};
-
-TransactionItem.propTypes = {
-  category: PropTypes.oneOf(Object.values(EnumCategory)).isRequired,
-  onClick: PropTypes.func,
-};
-
 function TransactionList({ children }) {
   function viewTransactionDetails(id) {
     console.log(`transaction click ${id}`);
   }
 
-  // Build list manually
+  // Process children
   const childrenArray = React.Children.map(children, (child) => {
     console.log(child);
     if (child) {
@@ -86,7 +80,7 @@ function TransactionList({ children }) {
         child,
         child.type === TransactionItem
           ? {
-              onClick: viewTransactionDetails(child.props.transactionId),
+              onClick: viewTransactionDetails(child.props.transactionId), // TODO: Remove?
             }
           : {}
       );
@@ -99,6 +93,16 @@ function TransactionList({ children }) {
 }
 
 TransactionList.Item = TransactionItem;
+
+/* Start props validation */
+TransactionItem.defaultProps = {
+  onClick: null,
+};
+
+TransactionItem.propTypes = {
+  category: PropTypes.oneOf(Object.values(EnumCategory)).isRequired,
+  onClick: PropTypes.func,
+};
 
 TransactionList.defaultProps = {
   children: null,
