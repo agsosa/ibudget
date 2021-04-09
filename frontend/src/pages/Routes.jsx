@@ -1,3 +1,10 @@
+/* 
+TODO:
+Route /
+Si no esta logged in redireccionar a /home
+Si esta logged in redireccionar a /dashboard
+*/
+
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import tw from "twin.macro";
 
@@ -14,12 +21,12 @@ import ContactUsPage from "./ContactUsPage";
 import PrivacyPolicyPage from "./PrivacyPolicyPage";
 import TermsOfServicePage from "./TermsOfServicePage";
 
-const StyledDiv = tw.div`font-display min-h-screen text-secondary-500 p-8 overflow-hidden`;
+const StyledDiv = tw.div`font-display min-h-screen text-secondary-500 p-2 sm:p-6 overflow-hidden`;
 
 function Routes() {
   return (
     <Router>
-      <StyledDiv className="App">
+      <StyledDiv>
         <ScrollToTop />
         <Navbar />
         <AnimationRevealPage>

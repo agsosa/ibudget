@@ -6,13 +6,13 @@ import { PropTypes } from "prop-types";
 
 const CardBlock = styled.div`
   ${tw`
-  w-screen
-  lg:w-full bg-white rounded-lg 
+  w-full
+  bg-white rounded-lg 
   flex flex-col justify-between 
   py-5 px-6
   sm:px-8 lg:px-6
   lg:py-8 xl:p-8
-  mt-8 mx-3 first:mt-0 lg:mt-0 
+  mt-8 sm:mx-3 first:mt-0 lg:mt-0 
   shadow-sm
   shadow-raised`}
 `;
