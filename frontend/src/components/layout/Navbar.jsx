@@ -1,4 +1,6 @@
-// TODO: Fix mobile nav menu X button not sticky
+/* 
+  NavBar component with a logo and links
+*/
 
 import React from "react";
 import { motion } from "framer-motion";
@@ -16,6 +18,7 @@ import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 import { APP_NAME } from "lib/Config";
 import Modal from "components/misc/Modal";
 import { PropTypes } from "prop-types";
+import AddTransaction from "components/dashboard/AddTransaction";
 
 /* Start styled components */
 
@@ -104,17 +107,12 @@ const collapseBreakPointCssMap = {
 
 /* End styled components */
 
-// Links component to display
-const DefaultLinks = (
+// Links component to display for guests
+const GuestLinks = (
   <>
     <NavLink to="/">Home</NavLink>
     <NavLink to="/how-it-works">How it Works</NavLink>
     <NavLink to="/contact-us">Contact Us</NavLink>
-  </>
-);
-
-const GuestLinks = (
-  <>
     <SecondaryLink to="/dashboard">Log In</SecondaryLink>
 
     <PrimaryLink css={tw`rounded-full`} to="/register">
@@ -123,6 +121,7 @@ const GuestLinks = (
   </>
 );
 
+// Links component to  display for logged users
 const MemberLinks = ({ onAddTransactionClick }) => (
   <>
     <NavLink to="/dashboard">Dashboard</NavLink>
@@ -171,7 +170,7 @@ export default () => {
       {isLogged ? (
         <MemberLinks onAddTransactionClick={handleAddTransactionClick} />
       ) : (
-        [DefaultLinks, GuestLinks]
+        { GuestLinks }
       )}
     </NavLinks>
   );
@@ -205,8 +204,9 @@ export default () => {
             )}
           </NavToggle>
         </MobileNavLinksContainer>
+
         <Modal ref={modalRef} title="Add Transaction">
-          Test
+          <AddTransaction />
         </Modal>
       </HeaderContainer>
     </Header>

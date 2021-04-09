@@ -1,6 +1,9 @@
 /*
   Component to animate children components (fade in) on mount. Supports react-router.
-  Usage: Wrap child components to be animated
+  Usage: 
+    Wrap child components to be animated
+
+    <AnimationRevealPage>(content)</AnimationRevealPage>
 
   TODO: Test without react router
 */
