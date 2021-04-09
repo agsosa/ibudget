@@ -30,6 +30,7 @@ lg:items-stretch lg:justify-between
 lg:grid lg:gap-4 lg:grid-cols-2 `;
 
 const ViewMoreBtn = tw.button`
+mt-2 sm:mt-0
 text-primary-700 bg-primary-100 
 rounded-lg px-2 font-semibold
  hocus:bg-primary-200 hocus:text-primary-900 
@@ -51,7 +52,7 @@ const CardBlock = styled.div`
 
 const CardHeader = styled.div`
   .headerContainer {
-    ${tw`flex flex-wrap flex-row sm:flex-row justify-between border-b pb-3`}
+    ${tw`flex flex-wrap flex-row sm:flex-row border-b pb-3 justify-center sm:justify-between`}
   }
   .name {
     ${tw`lg:text-lg xl:text-xl font-bold tracking-wider mr-3`}
