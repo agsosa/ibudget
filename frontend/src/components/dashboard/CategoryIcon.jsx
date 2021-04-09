@@ -55,7 +55,34 @@ function CategoryIcon({ category }) {
       icon = Icons.SHOPPING;
       break;
     case EnumCategory.FOOD_DRINKS:
-      icon = Icons.FOOD;
+      icon = Icons.RESTAURANT;
+      break;
+    case EnumCategory.HOUSING:
+      icon = Icons.HOUSE;
+      break;
+    case EnumCategory.COMMUNICATION_PC:
+      icon = Icons.PC;
+      break;
+    case EnumCategory.FINANCIAL_EXPENSES:
+      icon = Icons.CREDITCARD;
+      break;
+    case EnumCategory.INCOME:
+      icon = Icons.CASH;
+      break;
+    case EnumCategory.INVESTMENTS:
+      icon = Icons.DOLLAR;
+      break;
+    case EnumCategory.LIFE_ENTERTAINMENT:
+      icon = Icons.USER;
+      break;
+    case EnumCategory.OTHERS:
+      icon = Icons.DOTS;
+      break;
+    case EnumCategory.TRANSPORTATION:
+      icon = Icons.TRUCK;
+      break;
+    case EnumCategory.VEHICLE:
+      icon = Icons.CAR;
       break;
     default:
       icon = null;
