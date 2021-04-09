@@ -1,3 +1,13 @@
+/* 
+  Component to display a category icon with a rounded colored background
+
+  Usage:
+    <CategoryIcon />
+
+  Props:
+    - category: Value of EnumCategory
+*/
+
 import * as Icons from "images/CategorySvg";
 import tw, { styled } from "twin.macro";
 import { EnumCategory } from "lib/Enums";
@@ -10,6 +20,7 @@ import { PropTypes } from "prop-types";
  * @param  {String} enumCategory The category (must be a value of EnumCategory)
  * @return {TwFn}                Tailwind background style
  */
+// TODO: Move to Helper?
 const getCategoryBackgroundStyle = (enumCategory) => {
   switch (enumCategory) {
     case EnumCategory.SHOPPING:

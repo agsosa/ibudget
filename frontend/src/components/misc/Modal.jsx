@@ -20,6 +20,7 @@ import tw from "twin.macro";
 import ReactModalAdapter from "treact/helpers/ReactModalAdapter";
 import { PropTypes } from "prop-types";
 
+/* Start styled components */
 const StyledModal = styled(ReactModalAdapter)`
   &.mainHeroModal__overlay {
     ${tw`fixed inset-0 z-50`}
@@ -33,6 +34,8 @@ const StyledModal = styled(ReactModalAdapter)`
 `;
 
 const CloseModalButton = tw.button`absolute top-0 right-0 mt-8 mr-8 hocus:text-primary-500`;
+
+/* End styled components */
 
 function Modal({ children, title }, ref) {
   const [modalIsOpen, setModalIsOpen] = useState(false);

@@ -2,14 +2,16 @@
   Cards components (list or individual)
 
   Usage:
-    For a single card use
-      <CardList.Item>
-        (content)
-      </CardList.Item>
+    - For a single card use
+        <CardList.Item>
+          (content)
+        </CardList.Item>
 
-      Available props: title (string), pass a onViewMoreClick callback to enable a View More button
+      CardList.Item Props:
+        - title: string to display as title
+        - onViewMoreClick: callback to enable a View More button
 
-    For a list of cards wrap every CardList.Item with <CardList></CardList>
+    - For a list of cards wrap every CardList.Item with <CardList></CardList>
 */
 
 import React from "react";

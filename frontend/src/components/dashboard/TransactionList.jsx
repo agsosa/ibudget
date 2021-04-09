@@ -1,17 +1,20 @@
+// TODO: Implement data prop for TransactionList.Item
+
 /* 
   TransactionList: Component to display the information of various TransactionModel or a single TransactionModel object.
 
   Usage:
       <TransactionList>
-        <Transaction.Item data={object of TransactionModel}/>
-        <Transaction.Item data={object of TransactionModel} />
+        <TransactionList.Item data={object of TransactionModel}/>
+        <TransactionList.Item data={object of TransactionModel} />
         ... etc
       </TransactionList>
     
     To display a single transaction:
       <TransactionList.Item data={object of TransactionModel} />
 
-  TransactionItem onClick prop: callback that will be executed on click with the transaction object as parameter
+  TransactionList.Item props: 
+    - onClick: Callback that will be executed on click with the transaction object as parameter
 */
 
 import * as React from "react";
