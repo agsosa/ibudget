@@ -20,6 +20,7 @@ import tw, { styled } from "twin.macro";
 import ReactModalAdapter from "treact/helpers/ReactModalAdapter";
 import { PropTypes } from "prop-types";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
+import { motion } from "framer-motion";
 
 /* Start styled components */
 
@@ -29,10 +30,12 @@ const StyledModal = styled(ReactModalAdapter)`
   }
 `;
 const BlackOverlay = styled.div(({ isOpen }) => [
-  tw`bg-black bg-opacity-50 w-screen h-screen absolute inset-0 z-50`,
+  tw`bg-black bg-opacity-75 w-screen h-screen absolute inset-0 z-50 transition-all duration-500 ease-in-out`,
   !isOpen && tw`hidden`,
 ]);
-const Content = tw.div`xl:mx-auto p-6 lg:p-12 m-6 my-12 sm:m-16 max-w-screen-xl absolute inset-0 flex rounded-xl bg-white outline-none flex-col`; // p-6 lg:p-12
+const Content = tw(
+  motion.div
+)`xl:mx-auto p-6 lg:p-12 m-6 my-12 sm:m-16 max-w-screen-xl absolute inset-0 flex rounded-xl bg-white outline-none flex-col`; // p-6 lg:p-12
 const Header = tw.div`w-full grid grid-rows-1 grid-cols-2 sm:mx-5`; // sm:mx-5
 const Title = tw.text`font-bold justify-self-start text-base sm:text-xl`;
 const CloseModalButton = tw.button`hocus:text-primary-500 justify-self-end sm:mr-12`; // sm:mr-12
@@ -43,7 +46,9 @@ const ChildrenContainer = tw.div`sm:px-5 w-full h-full mt-8`;
 function Modal({ children, title }, ref) {
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
 
-  const toggleModal = () => setModalIsOpen(!modalIsOpen);
+  const toggleModal = () => {
+    setModalIsOpen(!modalIsOpen);
+  };
 
   React.useImperativeHandle(ref, () => ({
     toggle() {
@@ -59,7 +64,16 @@ function Modal({ children, title }, ref) {
         onRequestClose={toggleModal}
         shouldCloseOnOverlayClick
       >
-        <Content>
+        <Content
+          initial={{ y: 200 }}
+          animate={{ y: 0 }}
+          transition={{
+            type: "spring",
+            ease: "easeInOut",
+            stiffness: 70,
+            duration: 0.3,
+          }}
+        >
           <Header>
             <Title>{title}</Title>
             <CloseModalButton onClick={toggleModal}>
