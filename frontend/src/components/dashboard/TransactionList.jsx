@@ -1,43 +1,54 @@
-// TODO: WIP
-
 /* 
   TransactionList: Component to display the information of various TransactionModel or a single TransactionModel object.
 
   Usage:
-    To build the list automatically:
-      <TransactionList data={array of TransactionModel} />
-
-    To build the list manually:
-      <Transaction>
+      <TransactionList>
+        <Transaction.Item data={object of TransactionModel}/>
         <Transaction.Item data={object of TransactionModel} />
-      </Transaction>
+        ... etc
+      </TransactionList>
     
     To display a single transaction:
       <TransactionList.Item data={object of TransactionModel} />
+
+  TransactionItem onClick prop: callback that will be executed on click with the transaction object as parameter
 */
 
-/* eslint-disable */
 import * as React from "react";
 import tw, { styled } from "twin.macro";
-import CategoryIcon from "./CategoryIcon";
 import { EnumCategory } from "lib/Enums";
+import { PropTypes } from "prop-types";
+import CategoryIcon from "./CategoryIcon";
 
-const Item = tw.li`w-full border-b flex sm:grid sm:grid-cols-2 sm:grid-rows-1 align-middle pb-3 mt-1 mb-5`;
-const List = tw.ul``; //md:grid md:grid-cols-2 md:grid-rows-5 md:gap-5
+const Item = tw.li`
+w-full border-b flex 
+sm:grid sm:grid-cols-2 
+sm:grid-rows-1 align-middle 
+py-2 px-2 mt-1 mb-4
+transition duration-700 ease-in-out
+cursor-pointer
+hocus:bg-primary-100`;
+
+const List = tw.ul``;
 const Amount = styled.text(({ isNegative }) => [
   tw`sm:text-right`,
   isNegative ? tw`text-red-600` : tw`text-green-600`,
 ]);
 const Date = tw.text`text-gray-500 sm:text-right text-xs`;
-const Category = tw.text`text-black text-base hidden sm:flex`;
+const Category = tw.text`text-black text-base hidden sm:flex hocus:text-primary-500`;
 const Concept = tw.text`text-gray-500 text-sm hidden sm:flex`; // TODO: Shrink text
 const FlexCol = tw.div`flex flex-col`;
 const RightContainer = tw(FlexCol)`sm:justify-self-end ml-3 sm:ml-3`;
 const LeftContainer = tw.div`flex flex-row justify-self-start ml-5 sm:ml-0`;
 
-function TransactionItem({ category }) {
+function TransactionItem({ category, onClick }) {
+  function handleClick() {
+    console.log("on click");
+    if (onClick) onClick(); // TODO: Pass transaction object
+  }
+
   return (
-    <Item>
+    <Item onClick={handleClick}>
       <LeftContainer>
         <CategoryIcon category={category} />
         <FlexCol>
@@ -53,13 +64,22 @@ function TransactionItem({ category }) {
   );
 }
 
+TransactionItem.defaultProps = {
+  onClick: null,
+};
+
+TransactionItem.propTypes = {
+  category: PropTypes.oneOf(Object.values(EnumCategory)).isRequired,
+  onClick: PropTypes.func,
+};
+
 function TransactionList({ children }) {
-  console.log(children);
   function viewTransactionDetails(id) {
-    console.log("transaction click");
+    console.log(`transaction click ${id}`);
   }
 
-  const childrenArray = React.Children.map(children, (child, i) => {
+  // Build list manually
+  const childrenArray = React.Children.map(children, (child) => {
     console.log(child);
     if (child) {
       return React.cloneElement(
@@ -71,11 +91,20 @@ function TransactionList({ children }) {
           : {}
       );
     }
+
+    return null;
   });
 
   return <List>{childrenArray}</List>;
 }
 
 TransactionList.Item = TransactionItem;
+
+TransactionList.defaultProps = {
+  children: null,
+};
+TransactionList.propTypes = {
+  children: PropTypes.node,
+};
 
 export default TransactionList;
