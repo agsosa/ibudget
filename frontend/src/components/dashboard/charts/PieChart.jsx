@@ -8,27 +8,27 @@ const Responsive = tw.div`w-full -my-10 max-w-md sm:mt-2`;
 function PieChart() {
   const data = [
     {
-      type: "分类一",
-      value: 27,
+      type: "Comida",
+      value: 100,
     },
     {
-      type: "分类二",
+      type: "Cine",
       value: 25,
     },
     {
-      type: "分类三",
+      type: "Transporte",
       value: 18,
     },
     {
-      type: "分类四",
+      type: "Hijo",
       value: 15,
     },
     {
-      type: "分类五",
+      type: "Utilitarios",
       value: 10,
     },
     {
-      type: "其他",
+      type: "Otros",
       value: 5,
     },
   ];
@@ -44,7 +44,7 @@ function PieChart() {
       offset: "-30%",
       content: function content(_ref) {
         const { percent } = _ref;
-        return "".concat(percent * 100, "%");
+        return "".concat((percent * 100).toFixed(0), "%");
       },
       style: {
         fontSize: 14,
