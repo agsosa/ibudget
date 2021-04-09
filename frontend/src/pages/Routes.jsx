@@ -15,8 +15,8 @@ import RegisterPage from "pages/RegisterPage";
 import HowItWorksPage from "pages/HowItWorksPage";
 import Navbar from "components/layout/Navbar";
 import Footer from "components/layout/Footer";
-import ScrollToTop from "components/layout/ScrollToTop";
-import AnimationRevealPage from "components/layout/AnimationRevealPage";
+import ScrollToTop from "components/misc/ScrollToTop";
+import AnimationRevealPage from "components/misc/AnimationRevealPage";
 import ContactUsPage from "./ContactUsPage";
 import PrivacyPolicyPage from "./PrivacyPolicyPage";
 import TermsOfServicePage from "./TermsOfServicePage";
@@ -50,6 +50,9 @@ function Routes() {
               <PrivacyPolicyPage />
             </Route>
             <Route path="/dashboard">
+              <DashboardPage />
+            </Route>
+            <Route path="/add-transaction">
               <DashboardPage />
             </Route>
             <Route path="/">
