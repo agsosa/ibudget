@@ -16,3 +16,11 @@ export const EnumCategory = Object.freeze({
   INCOME: "income",
   OTHERS: "others",
 });
+
+export const EnumPeriod = Object.freeze({
+  SevenDays: 0,
+  ThirtyDays: 1,
+  NinetyDays: 2,
+  TwelveMonths: 3,
+  Custom: 4,
+});
