@@ -9,12 +9,15 @@ import Gauge from "components/dashboard/charts/Gauge";
 import DateTimePicker from "components/dashboard/date-picker";
 import TransactionList from "components/dashboard/TransactionList";
 import { EnumCategory } from "lib/Enums";
+import { motion } from "framer-motion";
 
 /* Start styled components */
 
 const HeaderContainer = tw.div`w-full flex flex-col items-center`;
 const Heading = tw(SectionHeading)`w-full text-primary-500 text-5xl`;
-const Money = tw.text`w-full text-gray-700 text-center text-3xl font-bold transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-125`;
+const Money = tw(
+  motion.div
+)`w-full text-gray-700 text-center text-3xl font-bold`;
 const MoneySmall = styled.text(({ isNegative }) => [
   tw`w-full text-center text-xl font-bold`,
   isNegative ? tw`text-red-600` : tw`text-green-600`,
@@ -48,7 +51,19 @@ function DashboardPage() {
       <HeaderContainer>
         <Heading>Hello, Alejandro</Heading>
         <Description>Tu saldo hoy</Description>
-        <Money>$580.000.000</Money>
+        <Money
+          animate={{
+            scale: [1.1, 1, 1.1],
+          }}
+          transition={{
+            type: "spring",
+            ease: "easeInOut",
+            stiffness: 100,
+            duration: 1.5,
+          }}
+        >
+          $580.000.000
+        </Money>
         <DateTimePicker />
       </HeaderContainer>
     );

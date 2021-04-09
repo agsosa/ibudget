@@ -4,6 +4,8 @@ import { subDays } from "date-fns"; // eslint-disable-line
 import tw, { styled } from "twin.macro";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 import ReactSelect from "react-select";
+import { EnumPeriod } from "lib/Enums";
+import { PropTypes } from "prop-types";
 
 const Container = tw.div``;
 const DateComponent = tw(DateRange)`transform scale-x-90 sm:scale-x-100`;
@@ -22,6 +24,7 @@ const CloseBtn = tw(
 
 export default () => {
   const containterRef = React.useRef(null);
+  const [period, setPeriod] = React.useState(EnumPeriod.ThirtyDays);
   const [isDropdownOpen, setDropdownOpen] = React.useState(false);
   const [state, setState] = React.useState([
     {
@@ -31,6 +34,33 @@ export default () => {
     },
   ]);
 
+  /* Start radio component */
+  function handleRadioClick(event) {
+    console.log(event.target.value, period);
+    setPeriod(event.target.value);
+  }
+
+  function Radio({ value, label }) {
+    return (
+      <InputContainer>
+        <Input
+          type="radio"
+          value={value}
+          checked={period === value}
+          onChange={handleRadioClick}
+        />
+        <InputText>{label}</InputText>
+      </InputContainer>
+    );
+  }
+
+  Radio.propTypes = {
+    value: PropTypes.oneOf(Object.values(EnumPeriod)).isRequired,
+    label: PropTypes.string.isRequired,
+  };
+  /* End radio component */
+
+  /* Start dropdown component */
   function toggleDropdown() {
     setDropdownOpen(!isDropdownOpen);
   }
@@ -58,36 +88,28 @@ export default () => {
       <DropdownContent show={isDropdownOpen}>
         <CloseBtn onClick={toggleDropdown} />
         <InputGroup>
+          <Radio value={EnumPeriod.SevenDays} label="7 days" />
+          <Radio value={EnumPeriod.ThirtyDays} label="30 days" />
+          <Radio value={EnumPeriod.NinetyDays} label="90 days" />
+          <Radio value={EnumPeriod.TwelveMonths} label="12 months" />
+
           <InputContainer>
-            <Input type="radio" />
-            <InputText>7 days</InputText>
-          </InputContainer>
-          <InputContainer>
-            <Input type="radio" />
-            <InputText>30 days</InputText>
-          </InputContainer>
-          <InputContainer>
-            <Input type="radio" />
-            <InputText>90 days</InputText>
-          </InputContainer>
-          <InputContainer>
-            <Input type="radio" />
-            <InputText>12 months</InputText>
-          </InputContainer>
-          <InputContainer>
-            <Input type="radio" />
+            <Input type="radio" value={EnumPeriod.Custom} />
             <InputText>Custom range</InputText>
           </InputContainer>
         </InputGroup>
-        <DateComponent
-          editableDateInputs
-          onChange={(item) => setState([item.selection])}
-          moveRangeOnFirstSelection={false}
-          ranges={state}
-        />
+        {period === EnumPeriod.Custom && (
+          <DateComponent
+            editableDateInputs
+            onChange={(item) => setState([item.selection])}
+            moveRangeOnFirstSelection={false}
+            ranges={state}
+          />
+        )}
       </DropdownContent>
     );
   }
+  /* End dropdown component */
 
   return (
     <Container ref={containterRef}>
