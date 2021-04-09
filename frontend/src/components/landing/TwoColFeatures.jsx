@@ -10,7 +10,6 @@ import {
 } from "treact/components/misc/Headings";
 import { PrimaryButton as PrimaryButtonBase } from "treact/components/misc/Buttons";
 import StatsIllustrationSrc from "treact/images/stats-illustration.svg";
-import { ReactComponent as SvgDotPattern } from "treact/images/dot-pattern.svg";
 
 /* Start styled components */
 
@@ -46,10 +45,6 @@ const PrimaryButton = tw(
   PrimaryButtonBase,
   Link
 )`mt-8 md:mt-10 text-sm inline-block mx-auto md:mx-0`;
-
-const DecoratorBlob = styled(SvgDotPattern)(() => [
-  tw`w-20 h-20 absolute right-0 bottom-0 transform translate-x-1/2 translate-y-1/2 fill-current text-primary-500 -z-10`,
-]);
 
 /* End styled components */
 
@@ -99,9 +94,6 @@ export default () => {
             <Image imageSrc={properties.imageSrc} css={properties.imageCss} />
           ) : (
             <img src={properties.imageSrc} css={properties.imageCss} alt="" />
-          )}
-          {properties.imageDecoratorBlob && (
-            <DecoratorBlob css={properties.imageDecoratorBlobCss} />
           )}
         </ImageColumn>
         <TextColumn textOnLeft={properties.textOnLeft}>

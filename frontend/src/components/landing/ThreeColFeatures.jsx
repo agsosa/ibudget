@@ -14,7 +14,6 @@ import {
 } from "treact/components/misc/Headings";
 import { SectionDescription } from "treact/components/misc/Typography";
 
-import { ReactComponent as SvgDecoratorBlob3 } from "treact/images/svg-decorator-blob-3.svg";
 import SupportIconImage from "treact/images/support-icon.svg";
 import ShieldIconImage from "treact/images/shield-icon.svg";
 import CustomizeIconImage from "treact/images/customize-icon.svg";
@@ -59,10 +58,6 @@ const Card = styled.div`
   .description {
     ${tw`mt-1 sm:mt-4 font-medium text-secondary-100 leading-loose`}
   }
-`;
-
-const DecoratorBlob = styled(SvgDecoratorBlob3)`
-  ${tw`pointer-events-none absolute right-0 bottom-0 w-64 opacity-25 transform translate-x-32 translate-y-48 `}
 `;
 
 /* End styled components */
@@ -128,7 +123,6 @@ export default () => {
           </Column>
         ))}
       </ThreeColumnContainer>
-      <DecoratorBlob />
     </Container>
   );
 };
