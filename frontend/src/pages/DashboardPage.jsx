@@ -4,11 +4,11 @@ import tw, { styled } from "twin.macro";
 import { ContentWithPaddingXl as ContentBase } from "treact/components/misc/Layouts";
 import { SectionHeading } from "treact/components/misc/Headings";
 
-import Chart from "components/dashboard/AreaChart";
-import PieChart from "components/dashboard/PieChart";
-import Gauge from "components/dashboard/Gauge";
+import Chart from "components/dashboard/charts/AreaChart";
+import PieChart from "components/dashboard/charts/PieChart";
+import Gauge from "components/dashboard/charts/Gauge";
 import DateTimePicker from "components/dashboard/date-time-picker";
-import Transaction from "components/dashboard/TransactionList";
+import TransactionList from "components/dashboard/TransactionList";
 import { EnumCategory } from "lib/Enums";
 
 const HeaderContainer = tw.div`w-full flex flex-col items-center`;
@@ -19,8 +19,8 @@ const MoneySmall = styled.text(({ isNegative }) => [
   isNegative ? tw`text-red-600` : tw`text-green-600`,
 ]);
 const Description = tw.text`w-full text-gray-600 text-center text-sm mt-3`;
-const Container = tw.div`w-full flex flex-col items-center `;
-const FlujoContainer = tw(Container)`lg:flex-row -mb-5 sm:mb-0`;
+const Container = tw.div`w-full flex flex-col items-center -mt-2`;
+const FlujoContainer = tw(Container)`lg:flex-row -mb-5 sm:mb-0 mt-2`;
 
 const ContentWithPaddingXl = tw(
   ContentBase
@@ -28,7 +28,9 @@ const ContentWithPaddingXl = tw(
 
 const CardsContainer = tw.div`mt-10 lg:grid gap-4 grid-cols-2 items-center lg:items-stretch lg:justify-between text-gray-900 font-medium`;
 
-const TestComponent = () => <button type="submit">Ver más</button>;
+const ViewMoreBtn = tw.button` text-gray-800 font-semibold hocus:text-primary-500 focus:shadow-outline`;
+
+const TestComponent = () => <ViewMoreBtn>Ver más</ViewMoreBtn>;
 
 function DashboardPage() {
   return (
@@ -44,12 +46,13 @@ function DashboardPage() {
           <Chart />
         </Card>
         <Card title="Últimas operaciones" RightHeaderComponent={TestComponent}>
-          <Transaction>
-            {Object.values(EnumCategory).map((v) => {
-              console.log(v);
-              return <Transaction.Item category={v} />;
-            })}
-          </Transaction>
+          <TransactionList>
+            {Object.values(EnumCategory)
+              .slice(0, 5)
+              .map((v) => {
+                return <TransactionList.Item category={v} />;
+              })}
+          </TransactionList>
         </Card>
         <Card title="Gastos por categoría" RightHeaderComponent={TestComponent}>
           <Container>
