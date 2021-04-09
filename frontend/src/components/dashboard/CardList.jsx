@@ -1,3 +1,17 @@
+/* 
+  Cards components (list or individual)
+
+  Usage:
+    For a single card use
+      <CardList.Item>
+        (content)
+      </CardList.Item>
+
+      Available props: title (string), pass a onViewMoreClick callback to enable a View More button
+
+    For a list of cards wrap every CardList.Item with <CardList></CardList>
+*/
+
 import React from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
@@ -65,22 +79,6 @@ function CardItem({ title, onViewMoreClick, children }) {
 }
 
 function CardList({ children }) {
-  /* const childrenArray = React.Children.map(children, (child) => {
-    console.log(child);
-    if (child) {
-      return React.cloneElement(
-        child,
-        child.type === CardItem
-          ? {
-              onClick: viewTransactionDetails(child.props.transactionId),
-            }
-          : {}
-      );
-    }
-
-    return null;
-  }); */
-
   return <CardsContainer>{children}</CardsContainer>;
 }
 
