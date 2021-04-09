@@ -1,15 +1,16 @@
 import Articles from "components/dashboard/Articles";
-import Card from "components/dashboard/Card";
+import CardList from "components/dashboard/CardList";
 import tw, { styled } from "twin.macro";
 import { ContentWithPaddingXl as ContentBase } from "treact/components/misc/Layouts";
 import { SectionHeading } from "treact/components/misc/Headings";
-
 import Chart from "components/dashboard/charts/AreaChart";
 import PieChart from "components/dashboard/charts/PieChart";
 import Gauge from "components/dashboard/charts/Gauge";
 import DateTimePicker from "components/dashboard/date-time-picker";
 import TransactionList from "components/dashboard/TransactionList";
 import { EnumCategory } from "lib/Enums";
+
+/* Start styled components */
 
 const HeaderContainer = tw.div`w-full flex flex-col items-center`;
 const Heading = tw(SectionHeading)`w-full text-primary-500 text-5xl`;
@@ -28,23 +29,21 @@ px-0 py-10 sm:px-6
 md:px-8 lg:px-12 xl:px-24 
 sm:py-10 flex flex-col max-w-full`;
 
-const CardsContainer = tw.div`
-w-full
-mt-10 items-center
-text-gray-900 font-medium 
-lg:items-stretch lg:justify-between 
-lg:grid lg:gap-4 lg:grid-cols-2 `;
-
-const ViewMoreBtn = tw.button`
-text-primary-700 bg-primary-100 
-rounded-lg px-2 font-semibold
- hocus:bg-primary-200 hocus:text-primary-900 
- focus:shadow-outline
- transition duration-500 ease-in-out`;
-
-const TestComponent = () => <ViewMoreBtn>Ver más</ViewMoreBtn>;
+/* End style components */
 
 function DashboardPage() {
+  function handleLastTransactionsViewMore() {
+    console.log("handleLastTransactionsViewMore");
+  }
+
+  function handleSpendingViewMore() {
+    console.log("handleSpendingViewMore");
+  }
+
+  function handleMoneyFlowViewMore() {
+    console.log("handleMoneyFlowViewMore");
+  }
+
   return (
     <ContentWithPaddingXl>
       <HeaderContainer>
@@ -53,8 +52,11 @@ function DashboardPage() {
         <Money>$580.000.000</Money>
         <DateTimePicker />
       </HeaderContainer>
-      <CardsContainer>
-        <Card title="Últimas operaciones" RightHeaderComponent={TestComponent}>
+      <CardList>
+        <CardList.Item
+          title="Últimas operaciones"
+          onViewMoreClick={handleLastTransactionsViewMore}
+        >
           <TransactionList>
             {Object.values(EnumCategory)
               .slice(0, 5)
@@ -62,18 +64,21 @@ function DashboardPage() {
                 return <TransactionList.Item category={v} />;
               })}
           </TransactionList>
-        </Card>
-        <Card title="Tendencia del saldo">
+        </CardList.Item>
+        <CardList.Item title="Tendencia del saldo">
           <Chart />
-        </Card>
-        <Card title="Gastos" RightHeaderComponent={TestComponent}>
+        </CardList.Item>
+        <CardList.Item title="Gastos" onViewMoreClick={handleSpendingViewMore}>
           <Container>
             <Description>Últimos 31 dias</Description>
             <MoneySmall isNegative>-$366.55,10</MoneySmall>
             <PieChart />
           </Container>
-        </Card>
-        <Card title="Flujo del dinero" RightHeaderComponent={TestComponent}>
+        </CardList.Item>
+        <CardList.Item
+          title="Flujo del dinero"
+          onViewMoreClick={handleMoneyFlowViewMore}
+        >
           <Container>
             <FlujoContainer>
               <Container>
@@ -91,8 +96,8 @@ function DashboardPage() {
             </FlujoContainer>
             <Gauge />
           </Container>
-        </Card>
-      </CardsContainer>
+        </CardList.Item>
+      </CardList>
 
       <Articles />
     </ContentWithPaddingXl>
