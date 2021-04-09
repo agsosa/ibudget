@@ -46,8 +46,9 @@ const LeftContainer = tw.div`flex flex-row justify-self-start ml-5 sm:ml-0`;
 
 function TransactionItem({ category, onClick }) {
   function handleClick() {
-    console.log("on click");
-    if (onClick) onClick(); // TODO: Pass transaction object
+    console.log("on TransactionItem click");
+    const transaction = { id: "test", category }; // TODO: Pass transaction prop
+    if (onClick) onClick(transaction);
   }
 
   return (
@@ -68,28 +69,7 @@ function TransactionItem({ category, onClick }) {
 }
 
 function TransactionList({ children }) {
-  function viewTransactionDetails(id) {
-    console.log(`transaction click ${id}`);
-  }
-
-  // Process children
-  const childrenArray = React.Children.map(children, (child) => {
-    console.log(child);
-    if (child) {
-      return React.cloneElement(
-        child,
-        child.type === TransactionItem
-          ? {
-              onClick: viewTransactionDetails(child.props.transactionId), // TODO: Remove?
-            }
-          : {}
-      );
-    }
-
-    return null;
-  });
-
-  return <List>{childrenArray}</List>;
+  return <List>{children}</List>;
 }
 
 TransactionList.Item = TransactionItem;
