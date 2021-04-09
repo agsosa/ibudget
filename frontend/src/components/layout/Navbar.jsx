@@ -17,11 +17,9 @@ import { APP_NAME } from "lib/Config";
 
 /* Start styled components */
 
-const Header = tw.header`
-  flex items-center
-  justify-between
-  max-w-screen-2xl mx-auto
-`;
+const Header = tw.header`sticky top-0 z-50 bg-white py-4 w-full`;
+
+const HeaderContainer = tw.div`px-5 max-w-screen-2xl flex items-center justify-between mx-auto`;
 
 const NavLinks = tw.div`inline-block`;
 
@@ -161,33 +159,34 @@ export default () => {
 
   return (
     <Header className="header-light">
-      <DesktopNavLinks css={collapseBreakpointCss.desktopNavLinks}>
-        {defaultLogoLink}
-        {links}
-      </DesktopNavLinks>
-
-      <MobileNavLinksContainer
-        css={collapseBreakpointCss.mobileNavLinksContainer}
-      >
-        {defaultLogoLink}
-        <MobileNavLinks
-          initial={{ x: "150%", display: "none" }}
-          animate={animation}
-          css={collapseBreakpointCss.mobileNavLinks}
-        >
+      <HeaderContainer>
+        <DesktopNavLinks css={collapseBreakpointCss.desktopNavLinks}>
+          {defaultLogoLink}
           {links}
-        </MobileNavLinks>
-        <NavToggle
-          onClick={toggleNavbar}
-          className={showNavLinks ? "open" : "closed"}
+        </DesktopNavLinks>
+        <MobileNavLinksContainer
+          css={collapseBreakpointCss.mobileNavLinksContainer}
         >
-          {showNavLinks ? (
-            <CloseIcon tw="w-6 h-6" />
-          ) : (
-            <MenuIcon tw="w-6 h-6" />
-          )}
-        </NavToggle>
-      </MobileNavLinksContainer>
+          {defaultLogoLink}
+          <MobileNavLinks
+            initial={{ x: "150%", display: "none" }}
+            animate={animation}
+            css={collapseBreakpointCss.mobileNavLinks}
+          >
+            {links}
+          </MobileNavLinks>
+          <NavToggle
+            onClick={toggleNavbar}
+            className={showNavLinks ? "open" : "closed"}
+          >
+            {showNavLinks ? (
+              <CloseIcon tw="w-6 h-6" />
+            ) : (
+              <MenuIcon tw="w-6 h-6" />
+            )}
+          </NavToggle>
+        </MobileNavLinksContainer>
+      </HeaderContainer>
     </Header>
   );
 };

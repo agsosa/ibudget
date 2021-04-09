@@ -21,7 +21,7 @@ import ContactUsPage from "./ContactUsPage";
 import PrivacyPolicyPage from "./PrivacyPolicyPage";
 import TermsOfServicePage from "./TermsOfServicePage";
 
-const StyledDiv = tw.div`font-display min-h-screen text-secondary-500 p-2 sm:p-6 overflow-hidden`;
+const StyledDiv = tw.div`font-display min-h-screen min-w-full text-secondary-500`;
 
 function Routes() {
   return (

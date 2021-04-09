@@ -24,7 +24,7 @@ const Container = tw.div`w-full flex flex-col items-center -mt-2`;
 const FlujoContainer = tw(Container)`lg:flex-row -mb-5 sm:mb-0 mt-2 `;
 
 const ContentWithPaddingXl = tw(ContentBase)`
-relative mx-auto 
+mx-auto 
 px-0 py-10 sm:px-6 
 md:px-8 lg:px-12 xl:px-24 
 sm:py-10 flex flex-col max-w-full`;
@@ -45,12 +45,12 @@ function DashboardPage() {
   // Header component
   function Header() {
     return (
-      <>
+      <HeaderContainer>
         <Heading>Hello, Alejandro</Heading>
         <Description>Tu saldo hoy</Description>
         <Money>$580.000.000</Money>
         <DateTimePicker />
-      </>
+      </HeaderContainer>
     );
   }
 
@@ -118,9 +118,7 @@ function DashboardPage() {
   }
   return (
     <ContentWithPaddingXl>
-      <HeaderContainer>
-        <Header />
-      </HeaderContainer>
+      <Header />
 
       <CardList>
         <CardList.Item

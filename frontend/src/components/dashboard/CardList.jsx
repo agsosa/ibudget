@@ -23,7 +23,7 @@ import { PropTypes } from "prop-types";
 /* Start styled components */
 
 const CardsContainer = tw.div`
-w-full
+sm:self-center sm:max-w-screen-2xl
 mt-10 items-center
 text-gray-900 font-medium 
 lg:items-stretch lg:justify-between 
@@ -39,9 +39,9 @@ rounded-lg px-2 font-semibold
 
 const CardBlock = styled.div`
   ${tw`
-  w-full
+  w-full justify-self-center
   bg-white rounded-lg 
-  flex flex-col justify-between 
+  flex flex-col justify-between
   py-5 px-6
   sm:px-8 lg:px-6
   lg:py-8 xl:p-8
@@ -52,10 +52,10 @@ const CardBlock = styled.div`
 
 const CardHeader = styled.div`
   .headerContainer {
-    ${tw`flex flex-wrap flex-row sm:flex-row border-b pb-3 justify-center sm:justify-between`}
+    ${tw`flex flex-wrap flex-col items-center sm:flex-row border-b pb-3 justify-center sm:justify-between`}
   }
   .name {
-    ${tw`lg:text-lg xl:text-xl font-bold tracking-wider mr-3`}
+    ${tw`lg:text-lg xl:text-xl font-bold tracking-wider`}
   }
   .childrenContainer {
     ${tw`mt-8 font-medium text-gray-700 lg:text-sm xl:text-base`}

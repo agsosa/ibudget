@@ -25,9 +25,11 @@ import CategoryIcon from "./CategoryIcon";
 
 /* Start styled components */
 const Item = tw.li`
+justify-center
 w-full border-b flex 
 sm:grid sm:grid-cols-2 
-sm:grid-rows-1 align-middle 
+sm:grid-rows-1 align-middle
+-ml-5 sm:ml-0
 py-2 px-2 mt-1 mb-4
 transition duration-700 ease-in-out
 cursor-pointer
@@ -42,7 +44,7 @@ const Date = tw.text`text-gray-500 sm:text-right text-xs`;
 const Category = tw.text`text-black text-base hidden sm:flex hocus:text-primary-500`;
 const Concept = tw.text`text-gray-500 text-sm hidden sm:flex`; // TODO: Shrink text
 const FlexCol = tw.div`flex flex-col`;
-const RightContainer = tw(FlexCol)`sm:justify-self-end ml-3 sm:ml-3`;
+const RightContainer = tw(FlexCol)`sm:justify-self-end `;
 const LeftContainer = tw.div`flex flex-row justify-self-start ml-5 sm:ml-0`;
 
 /* End styled components */

@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 
 /* Start styled components */
 
-const Container = tw(ContainerBase)`bg-gray-900 text-gray-100 -mx-8 -mb-8`;
+const Container = tw(ContainerBase)`bg-gray-900 text-gray-100 w-full`;
 const Content = tw.div`max-w-screen-xl mx-auto py-20 lg:py-24`;
 
 const Row = tw.div`flex items-center justify-center flex-col px-8`;
