@@ -20,15 +20,20 @@ const MoneySmall = styled.text(({ isNegative }) => [
 ]);
 const Description = tw.text`w-full text-gray-600 text-center text-sm mt-3`;
 const Container = tw.div`w-full flex flex-col items-center -mt-2`;
-const FlujoContainer = tw(Container)`lg:flex-row -mb-5 sm:mb-0 mt-2`;
+const FlujoContainer = tw(Container)`lg:flex-row -mb-5 sm:mb-0 mt-2 `;
 
 const ContentWithPaddingXl = tw(
   ContentBase
 )`relative mx-auto px-0 py-10 sm:px-6 md:px-8 lg:px-12 xl:px-24 sm:py-10 flex flex-col max-w-full`;
 
-const CardsContainer = tw.div`mt-10 lg:grid gap-4 grid-cols-2 items-center lg:items-stretch lg:justify-between text-gray-900 font-medium`;
+const CardsContainer = tw.div`
+w-screen lg:w-full
+mt-10 items-center
+text-gray-900 font-medium 
+lg:items-stretch lg:justify-between 
+lg:grid lg:gap-4 lg:grid-cols-2 `;
 
-const ViewMoreBtn = tw.button` text-gray-800 font-semibold hocus:text-primary-500 focus:shadow-outline`;
+const ViewMoreBtn = tw.button` text-primary-700 bg-primary-100 rounded-lg px-2 font-semibold hocus:bg-primary-200 hocus:text-primary-900 focus:shadow-outline`;
 
 const TestComponent = () => <ViewMoreBtn>Ver más</ViewMoreBtn>;
 
@@ -54,7 +59,7 @@ function DashboardPage() {
               })}
           </TransactionList>
         </Card>
-        <Card title="Gastos por categoría" RightHeaderComponent={TestComponent}>
+        <Card title="Gastos" RightHeaderComponent={TestComponent}>
           <Container>
             <Description>Últimos 31 dias</Description>
             <MoneySmall isNegative>-$366.55,10</MoneySmall>

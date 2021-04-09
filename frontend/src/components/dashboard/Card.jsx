@@ -5,7 +5,16 @@ import { css } from "styled-components/macro"; //eslint-disable-line
 import { PropTypes } from "prop-types";
 
 const CardBlock = styled.div`
-  ${tw`w-full bg-white rounded-lg shadow-sm py-10 px-6 sm:px-10 lg:px-6 lg:py-10 xl:p-8 mx-3 flex flex-col justify-between mt-8 first:mt-0 lg:mt-0 shadow-raised`}
+  ${tw`
+  w-screen
+  lg:w-full bg-white rounded-lg 
+  flex flex-col justify-between 
+  py-5 px-6
+  sm:px-8 lg:px-6
+  lg:py-8 xl:p-8
+  mt-8 mx-3 first:mt-0 lg:mt-0 
+  shadow-sm
+  shadow-raised`}
 `;
 
 const CardHeader = styled.div`
