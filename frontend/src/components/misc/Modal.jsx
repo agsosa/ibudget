@@ -1,18 +1,17 @@
 /* 
   Responsive modal component
 
-  Usage :
+  Usage:
     const modalRef = React.useRef(); // Create ref to be able to open the modal
 
     modalRef.current.toggle(); // Open modal
 
     <Modal ref={modalRef} title="My modal">
-      ...content...
+      (content)
     </Modal>
 
-
   Props:
-    title: string to display as title
+    title: optional string to display as title
 */
 
 import * as React from "react";
@@ -69,9 +68,9 @@ function Modal({ children, title }, ref) {
           animate={{ y: 0 }}
           transition={{
             type: "spring",
-            ease: "easeInOut",
-            stiffness: 70,
-            duration: 0.3,
+            ease: "easeIn",
+            stiffness: 100,
+            duration: 0.2,
           }}
         >
           <Header>
