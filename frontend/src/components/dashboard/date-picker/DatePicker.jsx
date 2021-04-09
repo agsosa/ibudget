@@ -7,11 +7,11 @@ import ReactSelect from "react-select";
 import { EnumPeriod } from "lib/Enums";
 import { PropTypes } from "prop-types";
 
-const Container = tw.div``;
+const Container = tw.div`justify-center align-middle`;
 const DateComponent = tw(DateRange)`transform scale-x-90 sm:scale-x-100`;
 const Select = tw(ReactSelect)`w-56`;
 const DropdownContent = styled.div(({ show }) => [
-  tw`bg-white shadow-2xl flex flex-col z-20 absolute left-0 w-full sm:w-auto sm:left-auto`,
+  tw`bg-white shadow-2xl flex flex-col z-20 absolute w-full left-0 sm:w-auto sm:left-auto`,
   !show && tw`hidden`,
 ]);
 const Input = tw.input`m-1`;
@@ -35,19 +35,22 @@ export default () => {
   ]);
 
   /* Start radio component */
-  function handleRadioClick(event) {
-    console.log(event.target.value, period);
-    setPeriod(event.target.value);
+  function handleRadioSelect(event) {
+    const enumPeriod = parseInt(event.target.value, 10);
+    if (enumPeriod !== EnumPeriod.Custom) setDropdownOpen(false);
+    setPeriod(enumPeriod);
   }
 
+  // Radio component
   function Radio({ value, label }) {
     return (
       <InputContainer>
         <Input
+          onClick={(e) => e.stopPropagation()}
           type="radio"
           value={value}
           checked={period === value}
-          onChange={handleRadioClick}
+          onChange={handleRadioSelect}
         />
         <InputText>{label}</InputText>
       </InputContainer>
@@ -65,7 +68,10 @@ export default () => {
     setDropdownOpen(!isDropdownOpen);
   }
 
+  // Close dropdown on click outside
   function handleClickOutside(event) {
+    console.log(event.target);
+    console.log(!containterRef.current.contains(event.target), isDropdownOpen);
     if (
       isDropdownOpen &&
       containterRef.current &&
@@ -75,6 +81,7 @@ export default () => {
     }
   }
 
+  // Register click even
   React.useEffect(() => {
     document.addEventListener("click", handleClickOutside);
 
@@ -83,6 +90,7 @@ export default () => {
     };
   }, [isDropdownOpen]); // Add isDropdownOpen as dependency to re-register listener on state update
 
+  // Dropdown component
   function Dropdown() {
     return (
       <DropdownContent show={isDropdownOpen}>
@@ -92,20 +100,15 @@ export default () => {
           <Radio value={EnumPeriod.ThirtyDays} label="30 days" />
           <Radio value={EnumPeriod.NinetyDays} label="90 days" />
           <Radio value={EnumPeriod.TwelveMonths} label="12 months" />
-
-          <InputContainer>
-            <Input type="radio" value={EnumPeriod.Custom} />
-            <InputText>Custom range</InputText>
-          </InputContainer>
+          <Radio value={EnumPeriod.Custom} label="Custom range" />
         </InputGroup>
-        {period === EnumPeriod.Custom && (
-          <DateComponent
-            editableDateInputs
-            onChange={(item) => setState([item.selection])}
-            moveRangeOnFirstSelection={false}
-            ranges={state}
-          />
-        )}
+
+        <DateComponent
+          editableDateInputs
+          onChange={(item) => setState([item.selection])}
+          moveRangeOnFirstSelection={false}
+          ranges={state}
+        />
       </DropdownContent>
     );
   }
