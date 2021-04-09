@@ -1,6 +1,6 @@
 import "./style.css";
 import "tailwindcss/dist/base.css";
-import "bulma/css/bulma.min.css";
+import "react-bulma-components/dist/react-bulma-components.min.css";
 import React from "react";
 import ReactDOM from "react-dom";
 import Routes from "pages/Routes";
