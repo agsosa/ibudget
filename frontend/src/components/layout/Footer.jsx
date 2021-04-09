@@ -7,7 +7,7 @@
 import React from "react";
 import tw from "twin.macro";
 import { Container as ContainerBase } from "treact/components/misc/Layouts";
-import logo from "treact/images/logo.svg";
+import logo from "images/logo.png";
 import { APP_NAME } from "lib/Config";
 import { Link } from "react-router-dom";
 
@@ -20,7 +20,7 @@ const Row = tw.div`flex items-center justify-center flex-col px-8`;
 
 const LogoContainer = tw.div`flex items-center justify-center md:justify-start`;
 const LogoImg = tw.img`w-8`;
-const LogoText = tw.h5`ml-2 text-2xl font-black tracking-wider`;
+const LogoText = tw.h5`ml-3 text-2xl font-black tracking-wider`;
 
 const LinksContainer = tw.div`mt-8 font-medium flex flex-wrap justify-center items-center flex-col sm:flex-row`;
 const LinkStyle = tw(
@@ -53,9 +53,7 @@ export default () => {
             <LinkStyle to="/terms-of-service">Terms of Service</LinkStyle>
           </LinksContainer>
 
-          <CopyrightText>
-            &copy; Copyright 2021, {APP_NAME}. All Rights Reserved.
-          </CopyrightText>
+          <CopyrightText>&copy; Copyright 2021 - {APP_NAME}</CopyrightText>
         </Row>
       </Content>
     </Container>
