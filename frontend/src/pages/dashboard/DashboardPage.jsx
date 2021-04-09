@@ -1,3 +1,4 @@
+/* eslint-disable*/
 import Articles from "components/dashboard/Articles";
 import CardList from "components/dashboard/CardList";
 import tw, { styled } from "twin.macro";
@@ -15,9 +16,7 @@ import { motion } from "framer-motion";
 
 const HeaderContainer = tw.div`w-full flex flex-col items-center`;
 const Heading = tw(SectionHeading)`w-full text-primary-500 text-5xl`;
-const Money = tw(
-  motion.div
-)`w-full text-gray-700 text-center text-3xl font-bold`;
+const Money = tw(motion.div)`  text-gray-700 text-center text-3xl font-bold`;
 const MoneySmall = styled.text(({ isNegative }) => [
   tw`w-full text-center text-xl font-bold`,
   isNegative ? tw`text-red-600` : tw`text-green-600`,
@@ -53,13 +52,13 @@ function DashboardPage() {
         <Description>Tu saldo hoy</Description>
         <Money
           animate={{
-            scale: [1.1, 1, 1.1],
+            scale: [1.15, 1.05, 1.22],
           }}
           transition={{
             type: "spring",
             ease: "easeInOut",
             stiffness: 100,
-            duration: 1.5,
+            duration: 1,
           }}
         >
           $580.000.000
