@@ -14,7 +14,7 @@ import { EnumCategory } from "lib/Enums";
 
 const HeaderContainer = tw.div`w-full flex flex-col items-center`;
 const Heading = tw(SectionHeading)`w-full text-primary-500 text-5xl`;
-const Money = tw.text`w-full text-gray-700 text-center text-3xl font-bold`;
+const Money = tw.text`w-full text-gray-700 text-center text-3xl font-bold transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-125`;
 const MoneySmall = styled.text(({ isNegative }) => [
   tw`w-full text-center text-xl font-bold`,
   isNegative ? tw`text-red-600` : tw`text-green-600`,

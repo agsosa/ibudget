@@ -25,15 +25,15 @@ import CategoryIcon from "./CategoryIcon";
 
 /* Start styled components */
 const Item = tw.li`
-justify-center
-w-full border-b flex 
-sm:grid sm:grid-cols-2 
-sm:grid-rows-1 align-middle
--ml-5 sm:ml-0
-py-2 px-2 mt-1 mb-4
+w-full mx-auto border-b 
+py-3 sm:py-2 px-2 mb-4
 transition duration-700 ease-in-out
 cursor-pointer
 hocus:bg-primary-100`;
+
+const ItemContentContainer = tw.div`
+flex justify-center sm:grid sm:grid-cols-2 
+sm:grid-rows-1 align-middle -ml-10 sm:ml-0`;
 
 const List = tw.ul``;
 const Amount = styled.text(({ isNegative }) => [
@@ -58,17 +58,19 @@ function TransactionItem({ category, onClick }) {
 
   return (
     <Item onClick={handleClick}>
-      <LeftContainer>
-        <CategoryIcon category={category} />
-        <FlexCol>
-          <Category>{category}</Category>
-          <Concept>Varios</Concept>
-        </FlexCol>
-      </LeftContainer>
-      <RightContainer>
-        <Amount isNegative>-$500.230,50</Amount>
-        <Date>4/21/2021, 10:00 PM</Date>
-      </RightContainer>
+      <ItemContentContainer>
+        <LeftContainer>
+          <CategoryIcon category={category} />
+          <FlexCol>
+            <Category>{category}</Category>
+            <Concept>Varios</Concept>
+          </FlexCol>
+        </LeftContainer>
+        <RightContainer>
+          <Amount isNegative>-$500.230,50</Amount>
+          <Date>4/21/2021, 10:00 PM</Date>
+        </RightContainer>
+      </ItemContentContainer>
     </Item>
   );
 }
