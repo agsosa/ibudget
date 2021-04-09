@@ -6,7 +6,7 @@ import { SectionHeading } from "treact/components/misc/Headings";
 import Chart from "components/dashboard/charts/AreaChart";
 import PieChart from "components/dashboard/charts/PieChart";
 import Gauge from "components/dashboard/charts/Gauge";
-import DateTimePicker from "components/dashboard/date-time-picker";
+import DateTimePicker from "components/dashboard/date-picker";
 import TransactionList from "components/dashboard/TransactionList";
 import { EnumCategory } from "lib/Enums";
 
