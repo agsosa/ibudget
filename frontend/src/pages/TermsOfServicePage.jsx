@@ -72,11 +72,10 @@ function TermsOfServicePage() {
             </li>
             <li>
               <strong>Company</strong> (referred to as either "the Company",
-              "We", "Us" or "Our" in this Agreement) refers to Treact Inc., Navi
-              Mumbai.
+              "We", "Us" or "Our" in this Agreement) refers to iBudget.
             </li>
             <li>
-              <strong>Country</strong> refers to: Maharashtra, India
+              <strong>Country</strong> refers to: Argentina
             </li>
             <li>
               <strong>Service</strong> refers to the Website.
@@ -93,8 +92,8 @@ function TermsOfServicePage() {
               included or made available by the Service.
             </li>
             <li>
-              <strong>Website</strong> refers to Treact, accessible from
-              https://treact.com
+              <strong>Website</strong> refers to iBudget, accessible from
+              https://ibudget.app
             </li>
             <li>
               <strong>You</strong> means the individual accessing or using the
@@ -318,8 +317,7 @@ function TermsOfServicePage() {
           </p>
 
           <ul>
-            <li>By email: support@example.com</li>
-            <li>By phone number: 408.996.1010</li>
+            <li>By email: support@ibudget.app</li>
           </ul>
         </Text>
       </ContentWithPaddingXl>
