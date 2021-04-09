@@ -14,6 +14,8 @@ import logo from "images/logo.png";
 import { ReactComponent as MenuIcon } from "feather-icons/dist/icons/menu.svg";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 import { APP_NAME } from "lib/Config";
+import Modal from "components/misc/Modal";
+import { PropTypes } from "prop-types";
 
 /* Start styled components */
 
@@ -103,7 +105,7 @@ const collapseBreakPointCssMap = {
 /* End styled components */
 
 // Links component to display
-const defaultLinks = (
+const DefaultLinks = (
   <>
     <NavLink to="/">Home</NavLink>
     <NavLink to="/how-it-works">How it Works</NavLink>
@@ -111,7 +113,7 @@ const defaultLinks = (
   </>
 );
 
-const guestLinks = (
+const GuestLinks = (
   <>
     <SecondaryLink to="/dashboard">Log In</SecondaryLink>
 
@@ -121,12 +123,12 @@ const guestLinks = (
   </>
 );
 
-const memberLinks = (
+const MemberLinks = ({ onAddTransactionClick }) => (
   <>
     <NavLink to="/dashboard">Dashboard</NavLink>
     <NavLink to="/transactions">Transactions</NavLink>
     <NavLink to="/analytics">Analytics</NavLink>
-    <AddTransactionBtn css={tw`rounded-full`} to="/dashboard">
+    <AddTransactionBtn css={tw`rounded-full`} onClick={onAddTransactionClick}>
       + Transaction
     </AddTransactionBtn>
     <UserContainer to="/account">
@@ -137,8 +139,16 @@ const memberLinks = (
   </>
 );
 
+MemberLinks.defaultProps = {
+  onAddTransactionClick: null,
+};
+
+MemberLinks.propTypes = {
+  onAddTransactionClick: PropTypes.func,
+};
+
 // Logo component to display
-const defaultLogoLink = (
+const DefaultLogoLink = (
   <LogoLink to="/">
     <img src={logo} alt="logo" />
     {APP_NAME}
@@ -146,14 +156,23 @@ const defaultLogoLink = (
 );
 
 export default () => {
+  const modalRef = React.useRef();
   const { showNavLinks, animation, toggleNavbar } = useAnimatedNavToggler();
   const collapseBreakpointCss = collapseBreakPointCssMap.lg;
+
+  function handleAddTransactionClick() {
+    modalRef.current.toggle();
+  }
 
   const isLogged = true;
 
   const links = (
     <NavLinks onClick={toggleNavbar}>
-      {isLogged ? memberLinks : [defaultLinks, guestLinks]}
+      {isLogged ? (
+        <MemberLinks onAddTransactionClick={handleAddTransactionClick} />
+      ) : (
+        [DefaultLinks, GuestLinks]
+      )}
     </NavLinks>
   );
 
@@ -161,13 +180,13 @@ export default () => {
     <Header className="header-light">
       <HeaderContainer>
         <DesktopNavLinks css={collapseBreakpointCss.desktopNavLinks}>
-          {defaultLogoLink}
+          {DefaultLogoLink}
           {links}
         </DesktopNavLinks>
         <MobileNavLinksContainer
           css={collapseBreakpointCss.mobileNavLinksContainer}
         >
-          {defaultLogoLink}
+          {DefaultLogoLink}
           <MobileNavLinks
             initial={{ x: "150%", display: "none" }}
             animate={animation}
@@ -180,12 +199,15 @@ export default () => {
             className={showNavLinks ? "open" : "closed"}
           >
             {showNavLinks ? (
-              <CloseIcon tw="w-6 h-6" />
+              <CloseIcon tw="w-6 h-6 mt-5" />
             ) : (
               <MenuIcon tw="w-6 h-6" />
             )}
           </NavToggle>
         </MobileNavLinksContainer>
+        <Modal ref={modalRef} title="Add Transaction">
+          Test
+        </Modal>
       </HeaderContainer>
     </Header>
   );
