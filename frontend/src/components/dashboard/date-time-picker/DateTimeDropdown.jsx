@@ -1,6 +1,9 @@
+// TODO: Implement on date select
+
 import * as React from "react";
 import { Dropdown } from "react-bulma-components";
-import { EnumPeriod, getTimePeriodLabel } from "./EnumPeriod";
+import { EnumPeriod } from "lib/Enums";
+import { getPeriodLabel } from "lib/Helpers";
 
 export default () => {
   const dropdownRef = React.useRef(null);
@@ -13,7 +16,7 @@ export default () => {
 
   function getDropdownPlaceholder() {
     // TODO: Add support for custom ranges
-    return getTimePeriodLabel(period);
+    return getPeriodLabel(period);
   }
 
   return (
@@ -32,7 +35,7 @@ export default () => {
               value={value}
               onClick={() => handleChange(value)}
             >
-              {getTimePeriodLabel(value)}
+              {getPeriodLabel(value)}
             </Dropdown.Item>
           </>
         );
