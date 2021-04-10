@@ -24,6 +24,7 @@ import { PropTypes } from "prop-types";
 import CategoryIcon from "./CategoryIcon";
 
 /* Start styled components */
+
 const Item = tw.li`
 w-full mx-auto border-b 
 py-3 sm:py-2 px-2 mb-4

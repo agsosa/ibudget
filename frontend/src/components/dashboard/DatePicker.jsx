@@ -6,7 +6,7 @@ import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 import ReactSelect from "react-select";
 import { EnumPeriod } from "lib/Enums";
 import { getPeriodLabel } from "lib/Helpers";
-import RadioGroup from "components/dashboard/RadioGroup";
+import RadioGroup from "components/misc/RadioGroup";
 
 const Container = tw.div`mt-8 flex-col text-center flex sm:flex-row justify-center align-middle`;
 const Label = tw.text`text-gray-600 mr-3 mt-2`;

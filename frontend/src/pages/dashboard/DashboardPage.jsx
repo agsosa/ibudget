@@ -1,6 +1,5 @@
-/* eslint-disable*/
 import Articles from "components/dashboard/Articles";
-import CardList from "components/dashboard/CardList";
+import CardList from "components/misc/CardList";
 import tw, { styled } from "twin.macro";
 import { ContentWithPaddingXl as ContentBase } from "treact/components/misc/Layouts";
 import { SectionHeading } from "treact/components/misc/Headings";
@@ -130,6 +129,7 @@ function DashboardPage() {
       </>
     );
   }
+
   return (
     <ContentWithPaddingXl>
       <Header />
