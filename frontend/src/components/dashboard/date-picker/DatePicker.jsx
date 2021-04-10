@@ -23,7 +23,7 @@ export default () => {
   const containterRef = React.useRef(null);
   const [period, setPeriod] = React.useState(EnumPeriod.ThirtyDays);
   const [isDropdownOpen, setDropdownOpen] = React.useState(false);
-  const [state, setState] = React.useState([
+  const [dateRange, setDateRange] = React.useState([
     {
       startDate: new Date(),
       endDate: subDays(new Date(), 30),
@@ -91,9 +91,9 @@ export default () => {
 
         <DateComponent
           editableDateInputs
-          onChange={(item) => setState([item.selection])}
+          onChange={(item) => setDateRange([item.selection])}
           moveRangeOnFirstSelection={false}
-          ranges={state}
+          ranges={dateRange}
         />
       </DropdownContent>
     );
