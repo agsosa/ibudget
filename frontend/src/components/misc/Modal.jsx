@@ -25,13 +25,9 @@ import { motion } from "framer-motion";
 
 const StyledModal = styled(ReactModalAdapter)`
   &.mainHeroModal__overlay {
-    ${tw`fixed z-50 h-full w-full top-0 left-0 flex items-center justify-center`}
+    ${tw`fixed z-50 h-full w-full top-0 left-0 flex items-center justify-center outline-none hocus:outline-none focus:outline-none bg-black bg-opacity-50`}
   }
 `;
-const BlackOverlay = styled.div(({ isOpen }) => [
-  tw`bg-black bg-opacity-50 min-w-full min-h-screen fixed inset-0 z-30`,
-  !isOpen && tw`hidden`,
-]);
 
 // absolute inset-x-0 w-3/4 md:w-2/5 mx-auto my-auto bottom-1/2    left: 50%;transform: translateX(-50%);
 const ModalContent = tw(motion.div)`
@@ -87,7 +83,6 @@ function Modal({ children, title }, ref) {
           <ChildrenContainer>{children}</ChildrenContainer>
         </ModalContent>
       </StyledModal>
-      <BlackOverlay isOpen={modalIsOpen} />
     </>
   );
 }
