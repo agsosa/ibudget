@@ -63,30 +63,40 @@ const initialState = {
 function AddTransaction() {
   const [state, setState] = React.useState(initialState);
 
+  // Function called on text box input fields
   function onInputChange(evt) {
     let value;
 
-    // Parse/validate input
-    if (evt.target.type === "checkbox") {
+    /*   if (evt.target.type === "checkbox") {
       value = evt.target.checked;
-    } else if (evt.target.name === "amount") {
-      const inputNumber = parseInt(evt.target.value, 10);
-      if (
-        inputNumber >= 0 &&
-        inputNumber <= TransactionModel.AMOUNT_MAX_NUMBER
-      ) {
-        value = inputNumber;
-      }
-    } else value = evt.target.value;
+    } */
 
-    if (value) {
-      setState((oldState) => ({
-        ...oldState,
-        [evt.target.name]: value,
-      }));
+    // Validate and parse input fields
+    switch (evt.target.name) {
+      case "amount":
+        const inputNumber = parseFloat(evt.target.value);
+
+        if (!inputNumber) {
+          value = null; // Allow empty amount field for UX purposes
+        } else if (
+          inputNumber.countDecimals() <= TransactionModel.AMOUNT_MAX_DECIMALS &&
+          inputNumber > TransactionModel.AMOUNT_MIN_NUMBER &&
+          inputNumber <= TransactionModel.AMOUNT_MAX_NUMBER
+        ) {
+          value = inputNumber;
+        }
+        break;
+      default:
+        value = evt.target.value;
     }
+
+    setState((oldState) => ({
+      ...oldState,
+      [evt.target.name]: value,
+    }));
   }
 
+  // Function called on Type input click
   function onTypeButtonClick(value) {
     if (Object.values(EnumTransactionType).includes(value)) {
       setState((oldState) => ({
@@ -165,9 +175,8 @@ function AddTransaction() {
           style={{
             paddingLeft: 32,
           }}
-          min={0}
+          min={TransactionModel.AMOUNT_MIN_NUMBER}
           max={TransactionModel.AMOUNT_MAX_NUMBER}
-          format={(value) => "asd"}
           value={state.amount}
         />
         <Icon
