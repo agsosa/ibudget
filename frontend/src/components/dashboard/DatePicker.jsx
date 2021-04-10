@@ -8,7 +8,9 @@ import { EnumPeriod } from "lib/Enums";
 import { getPeriodLabel } from "lib/Helpers";
 import RadioGroup from "components/dashboard/RadioGroup";
 
-const Container = tw.div`justify-center align-middle`;
+const Container = tw.div`mt-8 flex-col text-center flex sm:flex-row justify-center align-middle`;
+const Label = tw.text`text-gray-600 mr-3 mt-2`;
+const SelectContainer = tw.div`justify-center align-middle`;
 const DateComponent = tw(DateRange)`transform scale-x-90 sm:scale-x-100`;
 const Select = tw(ReactSelect)`w-56`;
 const DropdownContent = styled.div(({ show }) => [
@@ -101,16 +103,20 @@ export default () => {
   /* End dropdown component */
 
   return (
-    <Container ref={containterRef}>
-      <Select
-        isSearchable={false}
-        onMenuOpen={toggleDropdown}
-        placeholder={getPeriodLabel(period)}
-        components={{
-          Menu: () => null,
-        }}
-      />
-      <Dropdown />
+    <Container>
+      <Label>Period: </Label>
+
+      <SelectContainer ref={containterRef}>
+        <Select
+          isSearchable={false}
+          onMenuOpen={toggleDropdown}
+          placeholder={getPeriodLabel(period)}
+          components={{
+            Menu: () => null,
+          }}
+        />
+        <Dropdown />
+      </SelectContainer>
     </Container>
   );
 };

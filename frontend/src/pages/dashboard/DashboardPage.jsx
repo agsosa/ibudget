@@ -7,7 +7,7 @@ import { SectionHeading } from "treact/components/misc/Headings";
 import Chart from "components/dashboard/charts/AreaChart";
 import PieChart from "components/dashboard/charts/PieChart";
 import Gauge from "components/dashboard/charts/Gauge";
-import DateTimePicker from "components/dashboard/date-picker";
+import DatePicker from "components/dashboard/DatePicker";
 import TransactionList from "components/dashboard/TransactionList";
 import { EnumCategory } from "lib/Enums";
 import { motion } from "framer-motion";
@@ -63,7 +63,7 @@ function DashboardPage() {
         >
           $580.000.000
         </Money>
-        <DateTimePicker />
+        <DatePicker />
       </HeaderContainer>
     );
   }
