@@ -12,7 +12,7 @@ const Container = tw.div`justify-center align-middle`;
 const DateComponent = tw(DateRange)`transform scale-x-90 sm:scale-x-100`;
 const Select = tw(ReactSelect)`w-56`;
 const DropdownContent = styled.div(({ show }) => [
-  tw`bg-white shadow-2xl flex flex-col z-20 absolute w-full left-0 sm:w-auto sm:left-auto`,
+  tw`bg-white shadow-2xl flex flex-col z-20 absolute w-full left-0 sm:w-auto sm:left-auto sm:transform sm:translate-x-1/2 sm:right-1/2`,
   !show && tw`hidden`,
 ]);
 const CloseBtn = tw(
