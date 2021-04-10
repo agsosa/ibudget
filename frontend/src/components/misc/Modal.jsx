@@ -25,7 +25,7 @@ import { motion } from "framer-motion";
 
 const StyledModal = styled(ReactModalAdapter)`
   &.mainModal__overlay {
-    ${tw`fixed z-50 h-full w-full top-0 left-0 flex items-center justify-center bg-black bg-opacity-50`}
+    ${tw`fixed z-50 h-screen w-screen top-0 left-0 flex items-center justify-center bg-black bg-opacity-50`}
   }
   &.mainModal__content {
     ${tw`outline-none`}
@@ -35,14 +35,14 @@ const StyledModal = styled(ReactModalAdapter)`
 // absolute inset-x-0 w-3/4 md:w-2/5 mx-auto my-auto bottom-1/2    left: 50%;transform: translateX(-50%);
 const ModalContent = tw(motion.div)`
 p-6 z-50
-max-w-screen-md
+md:max-w-screen-md w-screen h-screen md:h-full overflow-auto
 rounded-xl bg-gray-100
 shadow-2xl
 flex flex-col`;
 const Header = tw.div`w-full grid grid-rows-1 grid-cols-2 sm:mx-5`; // sm:mx-5
 const Title = tw.text`font-bold justify-self-start text-xl sm:text-2xl`;
 const CloseModalButton = tw.button`hocus:text-primary-500 justify-self-end sm:mr-12 focus:outline-none`; // sm:mr-12
-const ChildrenContainer = tw.div`sm:px-5 w-full h-full mt-8`;
+const ChildrenContainer = tw.div`sm:px-5 mt-8 pb-2`;
 
 /* End styled components */
 
