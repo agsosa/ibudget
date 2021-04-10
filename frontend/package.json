@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@ant-design/charts": "^1.1.1",
+    "@mdi/js": "^5.9.55",
+    "@mdi/react": "^1.5.0",
     "@rematch/core": "^2.0.1",
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
