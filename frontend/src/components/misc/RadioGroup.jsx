@@ -1,19 +1,20 @@
 /*
   RadioGroup
-    Component to display and manage a list of Radio input elements
+    Component to display and manage a list of Radio input elements (single check only)
 
     Props:
-      selectedValue: current selected value, it will check any child RadioGroup.Item with this value (any)
+      selectedValue: current selected value, it will check any child RadioGroup.Item with this value (required)(any)
       onValueChange: callback to be called on any child RadioGroup.Item check (function(value))
 
   RadioGroup.Item
     Radio input element
     
     Props:
-      value: the value to store (any)
+      value: the value to store (required)(any)
       label: the string to display next to the radio (string)
-      checked: condition to check/uncheck the radio (bool)
-      onChangeCB: callback to be called on check (function(value))
+
+      checked: condition to check/uncheck the radio (bool) (managed by RadioGroup)
+      onChangeCB: callback to be called on check (function(value)) (managed by RadioGroup's onValueChange)
 
     Usage:
         <RadioGroup onValueChange={handleRadioSelect} selectedValue={period}>
