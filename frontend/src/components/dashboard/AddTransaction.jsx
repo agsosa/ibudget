@@ -33,23 +33,24 @@ import { enUS, es } from "react-date-range/dist/locale";
 
 /* Start styled components */
 
-const InputContainer = tw.div`flex flex-col md:grid md:grid-cols-2 `;
-const LeftContainer = tw.div`flex-col flex justify-center items-center md:px-8`;
-const RightContainer = tw.div`flex-col flex justify-center items-center md:px-8`;
+const InputContainer = tw.div`flex flex-col md:grid md:grid-cols-2 md:gap-12`;
+const LeftContainer = tw.div`flex-col flex items-center gap-4 md:gap-3`;
+const RightContainer = tw.div`flex-col flex items-center gap-4`;
 
 const CommonBottonStyle = tw.button`py-2 px-8 lg:px-20 font-semibold text-lg focus:outline-none`;
 const PrimaryButton = tw(CommonBottonStyle)`
-rounded-xl 
+rounded-xl mt-3
 bg-primary-500 
 hover:bg-primary-700 transform hover:scale-105 text-white 
-transition duration-200 ease-in-out`;
+transition-all duration-200 ease-in-out`;
 const SecondaryButton = tw(
   CommonBottonStyle
 )`mt-2 text-blue-600 text-base hover:text-primary-500 hover:underline`;
-const ButtonsContainer = tw.div`w-full justify-center items-center flex flex-col mt-8 `;
+const ButtonsContainer = tw.div`w-full justify-center items-center flex flex-col mt-4`;
 
-const InputGroup = tw.div`flex flex-col items-center mb-3 w-full`;
-const InputLabel = tw.text`text-base mb-2`;
+const InputGroup = tw.div`flex flex-col items-center mb-3 w-full sm:w-80`;
+const InputLabel = tw.text`text-lg font-semibold mb-2`;
+const OptionalLabel = tw.text`text-sm font-light`;
 
 /* End styled components */
 
@@ -62,6 +63,8 @@ const initialState = {
   concept: "", // String concept (optional)
 };
 
+const OptionalText = <OptionalLabel>Opcional</OptionalLabel>;
+
 function AddTransaction() {
   const [state, setState] = React.useState(initialState);
 
@@ -69,7 +72,6 @@ function AddTransaction() {
   function onInputChange(evt) {
     const fieldName = evt.target.name;
     const inputValue = evt.target.value;
-    let value = null;
 
     /*   if (evt.target.type === "checkbox") {
       value = evt.target.checked;
@@ -95,6 +97,9 @@ function AddTransaction() {
         case "notes":
           validInput = inputValue.length < TransactionModel.NOTES_MAX_CHARS;
           break;
+        case "concept":
+          validInput = inputValue.length < TransactionModel.CONCEPT_MAX_CHARS;
+          break;
       }
 
       if (validInput) {
@@ -104,6 +109,7 @@ function AddTransaction() {
         }));
       }
     } else {
+      // Reset field if we don't get a inputValue
       setState((oldState) => ({
         ...oldState,
         [fieldName]: initialState[fieldName],
@@ -136,6 +142,13 @@ function AddTransaction() {
   const CategoryDropdown = (
     <InputGroup>
       <InputLabel>Categoría</InputLabel>
+      <Input
+        onChange={onInputChange}
+        name="concept"
+        type="text"
+        placeholder={`Write something (${TransactionModel.CONCEPT_MAX_CHARS} characters)`}
+        value={state.concept}
+      />
     </InputGroup>
   );
 
@@ -162,11 +175,12 @@ function AddTransaction() {
 
   const NoteTextbox = (
     <InputGroup>
-      <InputLabel>Notas</InputLabel>
+      <InputLabel>Nota {OptionalText}</InputLabel>
 
       <Textarea
         name="notes"
         value={state.notes}
+        resizable={false}
         onChange={onInputChange}
         placeholder={`Write something (${TransactionModel.NOTES_MAX_CHARS} characters)`}
       />
@@ -175,7 +189,14 @@ function AddTransaction() {
 
   const ConceptSelect = (
     <InputGroup>
-      <InputLabel>Concepto</InputLabel>
+      <InputLabel>Concepto {OptionalText}</InputLabel>
+      <Input
+        onChange={onInputChange}
+        name="concept"
+        type="text"
+        placeholder={`Write something (${TransactionModel.CONCEPT_MAX_CHARS} characters)`}
+        value={state.concept}
+      />
     </InputGroup>
   );
 
@@ -226,13 +247,13 @@ function AddTransaction() {
       <InputContainer>
         <LeftContainer>
           {TypeSelect}
-          {DateSelect}
+          {AmountInput}
+
+          {CategoryDropdown}
           {NoteTextbox}
         </LeftContainer>
         <RightContainer>
-          {AmountInput}
-          {ConceptSelect}
-          {CategoryDropdown}
+          {ConceptSelect} {DateSelect}
         </RightContainer>
       </InputContainer>
       <ButtonsContainer>
