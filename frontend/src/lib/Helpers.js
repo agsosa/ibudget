@@ -1,5 +1,11 @@
 import { EnumPeriod } from "./Enums";
 
+/* eslint-disable no-extend-native */
+Number.prototype.countDecimals = function () {
+  if (Math.floor(this.valueOf()) === this.valueOf()) return 0;
+  return this.toString().split(".")[1].length || 0;
+};
+
 // Javascript NumberFormat object to format money
 const moneyFormatter = new Intl.NumberFormat("en-US", {
   style: "currency",
