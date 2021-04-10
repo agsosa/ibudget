@@ -36,11 +36,6 @@ const Heading = tw(
 )`mt-4 font-black text-left text-3xl sm:text-4xl lg:text-5xl text-center md:text-left leading-tight`;
 const Description = tw.p`mt-4 text-center md:text-left text-sm md:text-base lg:text-lg font-medium leading-relaxed text-secondary-100`;
 
-const Statistics = tw.div`flex flex-col items-center sm:block text-center md:text-left mt-4`;
-const Statistic = tw.div`text-left sm:inline-block sm:mr-12 last:mr-0 mt-4`;
-const Value = tw.div`font-bold text-lg sm:text-xl lg:text-2xl text-secondary-500 tracking-wide`;
-const Key = tw.div`font-medium text-primary-700`;
-
 const PrimaryButton = tw(
   PrimaryButtonBase,
   Link
@@ -63,23 +58,6 @@ const properties = {
   imageSrc: StatsIllustrationSrc,
   imageCss: null,
   imageContainerCss: null,
-  imageDecoratorBlob: false,
-  imageDecoratorBlobCss: null,
-  imageInsideDiv: true,
-  statistics: [
-    {
-      key: "Clients",
-      value: "2282+",
-    },
-    {
-      key: "Projects",
-      value: "3891+",
-    },
-    {
-      key: "Awards",
-      value: "1000+",
-    },
-  ],
   textOnLeft: false,
 };
 
@@ -88,13 +66,9 @@ export default () => {
 
   return (
     <Container>
-      <TwoColumn css={!properties.imageInsideDiv && tw`md:items-center`}>
+      <TwoColumn>
         <ImageColumn css={properties.imageContainerCss}>
-          {properties.imageInsideDiv ? (
-            <Image imageSrc={properties.imageSrc} css={properties.imageCss} />
-          ) : (
-            <img src={properties.imageSrc} css={properties.imageCss} alt="" />
-          )}
+          <Image imageSrc={properties.imageSrc} css={properties.imageCss} />
         </ImageColumn>
         <TextColumn textOnLeft={properties.textOnLeft}>
           <TextContent>
@@ -103,14 +77,6 @@ export default () => {
             )}
             <Heading>{properties.heading}</Heading>
             <Description>{properties.description}</Description>
-            <Statistics>
-              {properties.statistics.map((statistic) => (
-                <Statistic key={statistic.key}>
-                  <Value>{statistic.value}</Value>
-                  <Key>{statistic.key}</Key>
-                </Statistic>
-              ))}
-            </Statistics>
             <PrimaryButton to={properties.primaryButtonUrl}>
               {properties.primaryButtonText}
             </PrimaryButton>
