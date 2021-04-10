@@ -18,9 +18,9 @@ export const EnumCategory = Object.freeze({
 });
 
 export const EnumPeriod = Object.freeze({
-  SevenDays: 0,
-  ThirtyDays: 1,
-  NinetyDays: 2,
-  TwelveMonths: 3,
-  Custom: 4,
+  SevenDays: "7d",
+  ThirtyDays: "30d",
+  NinetyDays: "90d",
+  TwelveMonths: "12M",
+  Custom: "custom",
 });
