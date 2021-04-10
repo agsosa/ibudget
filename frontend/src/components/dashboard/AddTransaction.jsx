@@ -53,11 +53,11 @@ const InputLabel = tw.text`text-base mb-2`;
 
 const initialState = {
   amount: null, // Number amount of money (required)
-  notes: null, // String notes (optional)
+  notes: "", // String notes (optional)
   category: null, // Value of EnumCategory (required)
   type: EnumTransactionType.OUT, // Value of EnumTransactionType (required)
   date: null, // date  (required)
-  concept: null, // String concept (optional)
+  concept: "", // String concept (optional)
 };
 
 function AddTransaction() {
@@ -65,35 +65,48 @@ function AddTransaction() {
 
   // Function called on text box input fields
   function onInputChange(evt) {
-    let value;
+    const fieldName = evt.target.name;
+    const inputValue = evt.target.value;
+    let value = null;
 
     /*   if (evt.target.type === "checkbox") {
       value = evt.target.checked;
     } */
 
     // Validate and parse input fields
-    switch (evt.target.name) {
-      case "amount":
-        const inputNumber = parseFloat(evt.target.value);
+    if (inputValue) {
+      let parsedInput; // Used to parse fields if needed
+      let validInput = false;
 
-        if (!inputNumber) {
-          value = null; // Allow empty amount field for UX purposes
-        } else if (
-          inputNumber.countDecimals() <= TransactionModel.AMOUNT_MAX_DECIMALS &&
-          inputNumber > TransactionModel.AMOUNT_MIN_NUMBER &&
-          inputNumber <= TransactionModel.AMOUNT_MAX_NUMBER
-        ) {
-          value = inputNumber;
-        }
-        break;
-      default:
-        value = evt.target.value;
+      switch (fieldName) {
+        case "amount":
+          parsedInput = parseFloat(inputValue);
+
+          validInput =
+            !Number.isNaN(parsedInput) &&
+            parsedInput.countDecimals() <=
+              TransactionModel.AMOUNT_MAX_DECIMALS &&
+            parsedInput >= TransactionModel.AMOUNT_MIN_NUMBER &&
+            parsedInput <= TransactionModel.AMOUNT_MAX_NUMBER;
+
+          break;
+        case "notes":
+          validInput = inputValue.length < TransactionModel.NOTES_MAX_CHARS;
+          break;
+      }
+
+      if (validInput) {
+        setState((oldState) => ({
+          ...oldState,
+          [fieldName]: parsedInput || inputValue,
+        }));
+      }
+    } else {
+      setState((oldState) => ({
+        ...oldState,
+        [fieldName]: initialState[fieldName],
+      }));
     }
-
-    setState((oldState) => ({
-      ...oldState,
-      [evt.target.name]: value,
-    }));
   }
 
   // Function called on Type input click
@@ -145,7 +158,7 @@ function AddTransaction() {
         name="notes"
         value={state.notes}
         onChange={onInputChange}
-        placeholder="Additional notes..."
+        placeholder={`Write something (${TransactionModel.NOTES_MAX_CHARS} characters)`}
       />
     </InputGroup>
   );
@@ -158,7 +171,7 @@ function AddTransaction() {
 
   const DateSelect = (
     <InputGroup>
-      <InputLabel>Concepto</InputLabel>
+      <InputLabel>Fecha</InputLabel>
     </InputGroup>
   );
 
@@ -198,13 +211,13 @@ function AddTransaction() {
       <InputContainer>
         <LeftContainer>
           {TypeSelect}
-          {CategoryDropdown}
+          {DateSelect}
           {NoteTextbox}
         </LeftContainer>
         <RightContainer>
-          {ConceptSelect}
-          {DateSelect}
           {AmountInput}
+          {ConceptSelect}
+          {CategoryDropdown}
         </RightContainer>
       </InputContainer>
       <ButtonsContainer>
