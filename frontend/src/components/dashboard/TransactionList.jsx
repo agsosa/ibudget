@@ -21,6 +21,7 @@ import * as React from "react";
 import tw, { styled } from "twin.macro";
 import { EnumCategory } from "lib/Enums";
 import { PropTypes } from "prop-types";
+import { getCategoryLabel } from "lib/Helpers";
 import CategoryIcon from "./CategoryIcon";
 
 /* Start styled components */
@@ -63,7 +64,7 @@ function TransactionItem({ category, onClick }) {
         <LeftContainer>
           <CategoryIcon category={category} />
           <FlexCol>
-            <Category>{category}</Category>
+            <Category>{getCategoryLabel(category)}</Category>
             <Concept>Varios</Concept>
           </FlexCol>
         </LeftContainer>
