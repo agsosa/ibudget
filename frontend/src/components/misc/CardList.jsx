@@ -23,11 +23,11 @@ import { PropTypes } from "prop-types";
 /* Start styled components */
 
 const CardsContainer = tw.div`
-  sm:self-center sm:max-w-screen-xl
+  lg:self-center lg:max-w-screen-xl
   mt-10 items-center
   text-gray-900 font-medium 
   md:items-stretch md:justify-between 
-  md:grid md:gap-0 lg:gap-4 md:grid-cols-2 
+  lg:grid lg:gap-0 lg:gap-4 md:grid-cols-2 
 `;
 
 const ViewMoreBtn = tw.button`
