@@ -6,7 +6,7 @@ import { SectionHeading } from "treact/components/misc/Headings";
 import Chart from "components/dashboard/charts/AreaChart";
 import PieChart from "components/dashboard/charts/PieChart";
 import Gauge from "components/dashboard/charts/Gauge";
-import DatePicker from "components/dashboard/DatePicker";
+import DateRangeSelector from "components/dashboard/DateRangeSelector";
 import TransactionList from "components/dashboard/TransactionList";
 import { EnumCategory } from "lib/Enums";
 import { motion } from "framer-motion";
@@ -15,6 +15,8 @@ import { motion } from "framer-motion";
 
 const HeaderContainer = tw.div`w-full flex flex-col items-center`;
 const Heading = tw(SectionHeading)`w-full text-primary-500 text-5xl`;
+const DateRangeContainer = tw.div`mt-8 flex-col text-center flex sm:flex-row justify-center align-middle`;
+const DateRangeLabel = tw.text`text-gray-600 mr-3 mt-2`;
 const Money = tw(motion.div)`  text-gray-700 text-center text-3xl font-bold`;
 const MoneySmall = styled.text(({ isNegative }) => [
   tw`w-full text-center text-xl font-bold`,
@@ -57,12 +59,15 @@ function DashboardPage() {
             type: "spring",
             ease: "easeInOut",
             stiffness: 100,
-            duration: 1,
+            duration: 2,
           }}
         >
           $580.000.000
         </Money>
-        <DatePicker />
+        <DateRangeContainer>
+          <DateRangeLabel>Period: </DateRangeLabel>
+          <DateRangeSelector />
+        </DateRangeContainer>
       </HeaderContainer>
     );
   }

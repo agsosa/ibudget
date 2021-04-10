@@ -1,3 +1,5 @@
+// TODO: Fix range selection not working inside absolute containers
+
 import * as React from "react";
 import { DateRange } from "react-date-range";
 import { subDays } from "date-fns"; // eslint-disable-line
@@ -8,8 +10,8 @@ import { EnumPeriod } from "lib/Enums";
 import { getPeriodLabel } from "lib/Helpers";
 import RadioGroup from "components/misc/RadioGroup";
 
-const Container = tw.div`mt-8 flex-col text-center flex sm:flex-row justify-center align-middle`;
-const Label = tw.text`text-gray-600 mr-3 mt-2`;
+/* Start styled components */
+
 const SelectContainer = tw.div`justify-center align-middle`;
 const DateComponent = tw(DateRange)`transform scale-x-90 sm:scale-x-100`;
 const Select = tw(ReactSelect)`w-56`;
@@ -20,6 +22,8 @@ const DropdownContent = styled.div(({ show }) => [
 const CloseBtn = tw(
   CloseIcon
 )`absolute right-0 mt-3 mr-4 transform scale-90 cursor-pointer`;
+
+/* End styled components */
 
 export default () => {
   const containterRef = React.useRef(null);
@@ -103,20 +107,16 @@ export default () => {
   /* End dropdown component */
 
   return (
-    <Container>
-      <Label>Period: </Label>
-
-      <SelectContainer ref={containterRef}>
-        <Select
-          isSearchable={false}
-          onMenuOpen={toggleDropdown}
-          placeholder={getPeriodLabel(period)}
-          components={{
-            Menu: () => null,
-          }}
-        />
-        <Dropdown />
-      </SelectContainer>
-    </Container>
+    <SelectContainer ref={containterRef}>
+      <Select
+        isSearchable={false}
+        onMenuOpen={toggleDropdown}
+        placeholder={getPeriodLabel(period)}
+        components={{
+          Menu: () => null,
+        }}
+      />
+      <Dropdown />
+    </SelectContainer>
   );
 };
