@@ -34,8 +34,7 @@ const ViewMoreBtn = tw.button`
   mt-2 sm:mt-0
   text-primary-700 bg-primary-100 
   rounded-lg px-2 font-semibold
-  hocus:bg-primary-200 hocus:text-primary-900 
-  focus:shadow-outline
+  hocus:bg-primary-200 hocus:text-primary-900 hocus:outline-none
   transition duration-500 ease-in-out
 `;
 
