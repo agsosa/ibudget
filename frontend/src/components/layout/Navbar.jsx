@@ -28,19 +28,16 @@ const HeaderContainer = tw.div`px-5 max-w-screen-2xl flex items-center justify-b
 
 const NavLinks = tw.div`inline-block`;
 
-/* hocus: stands for "on hover or focus"
- * hocus:bg-primary-700 will apply the bg-primary-700 class on hover or focus
- */
 const NavLink = tw(Link)`
   text-lg my-2 lg:text-sm lg:mx-6 lg:my-0 text-black
   font-semibold tracking-wide transition duration-300
-  pb-1 border-b-2 border-transparent hocus:text-primary-500
+  pb-1 border-b-2 border-transparent hover:text-primary-500
 `;
 
 const PrimaryLink = tw(NavLink)`
   lg:mx-0
   px-8 py-3 rounded bg-primary-500 text-gray-100
-  hocus:bg-primary-700 hocus:text-gray-200
+  hover:bg-primary-700 hover:text-gray-200
   border-b-0
 `;
 
