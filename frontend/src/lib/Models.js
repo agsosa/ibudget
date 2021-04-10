@@ -31,7 +31,7 @@ export const TransactionModel = {
   NOTES_MAX_CHARS: 50, // max TransactionModel's notes field length
   AMOUNT_MIN_NUMBER: 0.01,
   AMOUNT_MAX_NUMBER: 1000000000, // max TransactionModel's amount field number
-  AMOUNT_MAX_DECIMALS: 3,
+  AMOUNT_MAX_DECIMALS: 2,
 };
 
 /*
