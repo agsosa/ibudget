@@ -8,10 +8,24 @@
     - category: Value of EnumCategory
 */
 
-import * as Icons from "images/CategorySvg";
+/* eslint-disable */
 import tw, { styled } from "twin.macro";
 import { EnumCategory } from "lib/Enums";
 import { PropTypes } from "prop-types";
+import Icon from "@mdi/react";
+import {
+  mdiSilverware,
+  mdiCartOutline,
+  mdiHome,
+  mdiBus,
+  mdiCarHatchback,
+  mdiDevices,
+  mdiCurrencyUsd,
+  mdiCreditCardOutline,
+  mdiBriefcaseOutline,
+  mdiAccount,
+  mdiDotsVertical,
+} from "@mdi/js";
 
 /* Start styled components */
 
@@ -51,55 +65,70 @@ const getCategoryBackgroundStyle = (enumCategory) => {
 };
 
 const CategoryImage = styled.div(({ category }) => [
-  tw`rounded-full bg-contain bg-no-repeat bg-orange-500 bg-center h-12 w-12 mr-4`,
+  tw`rounded-full bg-contain bg-no-repeat bg-orange-500 bg-center h-12 w-12 mr-4 flex justify-center align-middle`,
   getCategoryBackgroundStyle(category),
 ]);
+
+//const Icon = tw.i`text-white mt-2 text-3xl`;
 
 /* End styled components */
 
 function CategoryIcon({ category }) {
   let icon;
 
-  // Get the associated SVG icon for the category
+  // Get the associated FontAwesome class icon for the category
   switch (category) {
     case EnumCategory.SHOPPING:
-      icon = Icons.SHOPPING;
+      icon = mdiCartOutline;
       break;
     case EnumCategory.FOOD_DRINKS:
-      icon = Icons.RESTAURANT;
+      icon = mdiSilverware;
       break;
     case EnumCategory.HOUSING:
-      icon = Icons.HOUSE;
+      icon = mdiHome;
       break;
     case EnumCategory.COMMUNICATION_PC:
-      icon = Icons.PC;
+      icon = mdiDevices;
       break;
     case EnumCategory.FINANCIAL_EXPENSES:
-      icon = Icons.CREDITCARD;
+      icon = mdiCreditCardOutline;
       break;
     case EnumCategory.INCOME:
-      icon = Icons.CASH;
+      icon = mdiCurrencyUsd;
       break;
     case EnumCategory.INVESTMENTS:
-      icon = Icons.DOLLAR;
+      icon = mdiBriefcaseOutline;
       break;
     case EnumCategory.LIFE_ENTERTAINMENT:
-      icon = Icons.USER;
+      icon = mdiAccount;
       break;
     case EnumCategory.OTHERS:
-      icon = Icons.DOTS;
+      icon = mdiDotsVertical;
       break;
     case EnumCategory.TRANSPORTATION:
-      icon = Icons.TRUCK;
+      icon = mdiBus;
       break;
     case EnumCategory.VEHICLE:
-      icon = Icons.CAR;
+      icon = mdiCarHatchback;
       break;
     default:
       icon = null;
   }
 
-  return <CategoryImage category={category}>{icon}</CategoryImage>;
+  return (
+    <CategoryImage category={category}>
+      <Icon
+        path={icon}
+        title="Category"
+        size={1.5}
+        style={{ marginTop: 5 }}
+        horizontal
+        vertical
+        rotate={180}
+        color="white"
+      />
+    </CategoryImage>
+  );
 }
 
 CategoryIcon.propTypes = {
