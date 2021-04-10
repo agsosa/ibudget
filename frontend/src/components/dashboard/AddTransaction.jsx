@@ -28,6 +28,8 @@ import { mdiMinus, mdiPlus } from "@mdi/js";
 import { EnumTransactionType } from "lib/Enums";
 import SelectButtonGroup from "components/misc/SelectButtonGroup";
 import { TransactionModel } from "lib/Models";
+import { Calendar } from "react-date-range";
+import { enUS, es } from "react-date-range/dist/locale";
 
 /* Start styled components */
 
@@ -46,7 +48,7 @@ const SecondaryButton = tw(
 )`mt-2 text-blue-600 text-base hover:text-primary-500 hover:underline`;
 const ButtonsContainer = tw.div`w-full justify-center items-center flex flex-col mt-8 `;
 
-const InputGroup = tw.div`flex flex-col items-center mb-3`;
+const InputGroup = tw.div`flex flex-col items-center mb-3 w-full`;
 const InputLabel = tw.text`text-base mb-2`;
 
 /* End styled components */
@@ -123,6 +125,14 @@ function AddTransaction() {
     }
   }
 
+  // Function called on calendar date select
+  function onCalendarChange(item) {
+    setState((oldState) => ({
+      ...oldState,
+      date: item,
+    }));
+  }
+
   const CategoryDropdown = (
     <InputGroup>
       <InputLabel>Categoría</InputLabel>
@@ -172,6 +182,11 @@ function AddTransaction() {
   const DateSelect = (
     <InputGroup>
       <InputLabel>Fecha</InputLabel>
+      <Calendar
+        onChange={onCalendarChange}
+        locale={es} // TODO: Automatically get calendar locale
+        date={state.date}
+      />
     </InputGroup>
   );
 
@@ -223,8 +238,6 @@ function AddTransaction() {
       <ButtonsContainer>
         <PrimaryButton>Add Transaction</PrimaryButton>
         <SecondaryButton>Add and Create another</SecondaryButton>
-
-        {JSON.stringify(state)}
       </ButtonsContainer>
     </>
   );
