@@ -29,7 +29,9 @@ export const TransactionModel = {
   },
   CONCEPT_MAX_CHARS: 25, // max TransactionModel's concept field length
   NOTES_MAX_CHARS: 50, // max TransactionModel's notes field length
+  AMOUNT_MIN_NUMBER: 0.01,
   AMOUNT_MAX_NUMBER: 1000000000, // max TransactionModel's amount field number
+  AMOUNT_MAX_DECIMALS: 3,
 };
 
 /*
