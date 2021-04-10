@@ -1,21 +1,48 @@
 /*
   TransactionModel
-    id
-    user_id: 
-    concept: string
-    amount: number
-    creation_date: date
-    modify_date: date
-    type: EnumTransactionType
-    category: EnumCategory
+    shape:
+      {
+        id
+        user_id: 
+        concept: string
+        amount: number
+        date: date
+        type: EnumTransactionType
+        category: EnumCategory
+        notes: string
+      }
+  
+    methods:
+
 */
-// export const TransactionModel = {};
+export const TransactionModel = {
+  name: "TransactionModel",
+  state: {
+    id: null,
+    user_id: null,
+    concept: null,
+    amount: null,
+    date: null,
+    type: null,
+    category: null,
+    notes: null,
+  },
+  CONCEPT_MAX_CHARS: 25, // max TransactionModel's concept field length
+  NOTES_MAX_CHARS: 50, // max TransactionModel's notes field length
+  AMOUNT_MAX_NUMBER: 1000000000, // max TransactionModel's amount field number
+};
 
 /*
   BudgetModel
-    transactions: Array of TransactionModel
+    shape:
+      { 
+        transactions: Array of TransactionModel
+      }
+
+    methods:
 */
 export const BudgetModel = {
+  name: "BudgetModel",
   state: { transactions: [] },
   reducers: {
     increment(state, payload) {
