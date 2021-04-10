@@ -25,19 +25,24 @@ import { motion } from "framer-motion";
 
 const StyledModal = styled(ReactModalAdapter)`
   &.mainHeroModal__overlay {
-    ${tw`fixed inset-0 z-50`}
+    ${tw`fixed z-50 h-full w-full top-0 left-0 flex items-center justify-center`}
   }
 `;
 const BlackOverlay = styled.div(({ isOpen }) => [
-  tw`bg-black bg-opacity-75 w-screen h-screen absolute inset-0 z-50 transition-all duration-500 ease-in-out`,
+  tw`bg-black bg-opacity-50 min-w-full min-h-screen fixed inset-0 z-30`,
   !isOpen && tw`hidden`,
 ]);
-const Content = tw(
-  motion.div
-)`xl:mx-auto p-6 lg:p-12 m-6 my-12 sm:m-16 max-w-screen-xl absolute inset-0 flex rounded-xl bg-white outline-none flex-col`; // p-6 lg:p-12
+
+// absolute inset-x-0 w-3/4 md:w-2/5 mx-auto my-auto bottom-1/2    left: 50%;transform: translateX(-50%);
+const ModalContent = tw(motion.div)`
+p-6 z-50
+max-w-screen-md
+rounded-xl bg-gray-100
+shadow-2xl
+flex flex-col`;
 const Header = tw.div`w-full grid grid-rows-1 grid-cols-2 sm:mx-5`; // sm:mx-5
-const Title = tw.text`font-bold justify-self-start text-base sm:text-xl`;
-const CloseModalButton = tw.button`hocus:text-primary-500 justify-self-end sm:mr-12`; // sm:mr-12
+const Title = tw.text`font-bold justify-self-start text-xl sm:text-2xl`;
+const CloseModalButton = tw.button`hocus:text-primary-500 justify-self-end sm:mr-12 focus:outline-none`; // sm:mr-12
 const ChildrenContainer = tw.div`sm:px-5 w-full h-full mt-8`;
 
 /* End styled components */
@@ -56,14 +61,14 @@ function Modal({ children, title }, ref) {
   }));
 
   return (
-    <BlackOverlay isOpen={modalIsOpen}>
+    <>
       <StyledModal
         className="mainHeroModal"
         isOpen={modalIsOpen}
         onRequestClose={toggleModal}
         shouldCloseOnOverlayClick
       >
-        <Content
+        <ModalContent
           initial={{ y: 200 }}
           animate={{ y: 0 }}
           transition={{
@@ -80,9 +85,10 @@ function Modal({ children, title }, ref) {
             </CloseModalButton>
           </Header>
           <ChildrenContainer>{children}</ChildrenContainer>
-        </Content>
+        </ModalContent>
       </StyledModal>
-    </BlackOverlay>
+      <BlackOverlay isOpen={modalIsOpen} />
+    </>
   );
 }
 
