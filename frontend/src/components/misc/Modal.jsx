@@ -24,8 +24,11 @@ import { motion } from "framer-motion";
 /* Start styled components */
 
 const StyledModal = styled(ReactModalAdapter)`
-  &.mainHeroModal__overlay {
-    ${tw`fixed z-50 h-full w-full top-0 left-0 flex items-center justify-center outline-none hocus:outline-none focus:outline-none bg-black bg-opacity-50`}
+  &.mainModal__overlay {
+    ${tw`fixed z-50 h-full w-full top-0 left-0 flex items-center justify-center bg-black bg-opacity-50`}
+  }
+  &.mainModal__content {
+    ${tw`outline-none`}
   }
 `;
 
@@ -59,7 +62,7 @@ function Modal({ children, title }, ref) {
   return (
     <>
       <StyledModal
-        className="mainHeroModal"
+        className="mainModal"
         isOpen={modalIsOpen}
         onRequestClose={toggleModal}
         shouldCloseOnOverlayClick
