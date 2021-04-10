@@ -5,7 +5,8 @@ import tw, { styled } from "twin.macro";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 import ReactSelect from "react-select";
 import { EnumPeriod } from "lib/Enums";
-import { PropTypes } from "prop-types";
+import { getPeriodLabel } from "lib/Helpers";
+import RadioGroup from "components/dashboard/RadioGroup";
 
 const Container = tw.div`justify-center align-middle`;
 const DateComponent = tw(DateRange)`transform scale-x-90 sm:scale-x-100`;
@@ -14,10 +15,6 @@ const DropdownContent = styled.div(({ show }) => [
   tw`bg-white shadow-2xl flex flex-col z-20 absolute w-full left-0 sm:w-auto sm:left-auto`,
   !show && tw`hidden`,
 ]);
-const Input = tw.input`m-1`;
-const InputGroup = tw.div`p-5 ml-3 sm:ml-0`;
-const InputContainer = tw.div`flex flex-row align-middle my-1`;
-const InputText = tw.text`ml-1 text-sm`;
 const CloseBtn = tw(
   CloseIcon
 )`absolute right-0 mt-3 mr-4 transform scale-90 cursor-pointer`;
@@ -34,34 +31,10 @@ export default () => {
     },
   ]);
 
-  /* Start radio component */
-  function handleRadioSelect(event) {
-    const enumPeriod = parseInt(event.target.value, 10);
-    if (enumPeriod !== EnumPeriod.Custom) setDropdownOpen(false);
-    setPeriod(enumPeriod);
+  function handleRadioSelect(value) {
+    if (value !== EnumPeriod.Custom) setDropdownOpen(false);
+    setPeriod(value);
   }
-
-  // Radio component
-  function Radio({ value, label }) {
-    return (
-      <InputContainer>
-        <Input
-          onClick={(e) => e.stopPropagation()}
-          type="radio"
-          value={value}
-          checked={period === value}
-          onChange={handleRadioSelect}
-        />
-        <InputText>{label}</InputText>
-      </InputContainer>
-    );
-  }
-
-  Radio.propTypes = {
-    value: PropTypes.oneOf(Object.values(EnumPeriod)).isRequired,
-    label: PropTypes.string.isRequired,
-  };
-  /* End radio component */
 
   /* Start dropdown component */
   function toggleDropdown() {
@@ -70,8 +43,6 @@ export default () => {
 
   // Close dropdown on click outside
   function handleClickOutside(event) {
-    console.log(event.target);
-    console.log(!containterRef.current.contains(event.target), isDropdownOpen);
     if (
       isDropdownOpen &&
       containterRef.current &&
@@ -81,7 +52,7 @@ export default () => {
     }
   }
 
-  // Register click even
+  // Register click event
   React.useEffect(() => {
     document.addEventListener("click", handleClickOutside);
 
@@ -95,13 +66,28 @@ export default () => {
     return (
       <DropdownContent show={isDropdownOpen}>
         <CloseBtn onClick={toggleDropdown} />
-        <InputGroup>
-          <Radio value={EnumPeriod.SevenDays} label="7 days" />
-          <Radio value={EnumPeriod.ThirtyDays} label="30 days" />
-          <Radio value={EnumPeriod.NinetyDays} label="90 days" />
-          <Radio value={EnumPeriod.TwelveMonths} label="12 months" />
-          <Radio value={EnumPeriod.Custom} label="Custom range" />
-        </InputGroup>
+        <RadioGroup onValueChange={handleRadioSelect} selectedValue={period}>
+          <RadioGroup.Item
+            value={EnumPeriod.SevenDays}
+            label={getPeriodLabel(EnumPeriod.SevenDays)}
+          />
+          <RadioGroup.Item
+            value={EnumPeriod.ThirtyDays}
+            label={getPeriodLabel(EnumPeriod.ThirtyDays)}
+          />
+          <RadioGroup.Item
+            value={EnumPeriod.NinetyDays}
+            label={getPeriodLabel(EnumPeriod.NinetyDays)}
+          />
+          <RadioGroup.Item
+            value={EnumPeriod.TwelveMonths}
+            label={getPeriodLabel(EnumPeriod.TwelveMonths)}
+          />
+          <RadioGroup.Item
+            value={EnumPeriod.Custom}
+            label={getPeriodLabel(EnumPeriod.Custom)}
+          />
+        </RadioGroup>
 
         <DateComponent
           editableDateInputs
@@ -119,7 +105,7 @@ export default () => {
       <Select
         isSearchable={false}
         onMenuOpen={toggleDropdown}
-        placeholder="xd"
+        placeholder={getPeriodLabel(period)}
         components={{
           Menu: () => null,
         }}
