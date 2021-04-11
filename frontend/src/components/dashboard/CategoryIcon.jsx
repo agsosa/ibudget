@@ -2,10 +2,11 @@
   Component to display a category icon with a rounded colored background
 
   Usage:
-    <CategoryIcon />
+    <CategoryIcon category={...} />
 
   Props:
-    - category: Value of EnumCategory
+    - category: Value of EnumCategory (required)
+    - small: boolean to indicate if the icon should be 50% smaller (optional)
 */
 
 /* eslint-disable */
@@ -64,16 +65,17 @@ const getCategoryBackgroundStyle = (enumCategory) => {
   }
 };
 
-const CategoryImage = styled.div(({ category }) => [
+const CategoryImage = styled.div(({ category, small }) => [
   tw`rounded-full bg-contain bg-no-repeat bg-orange-500 bg-center h-12 w-12 mr-4 flex justify-center align-middle`,
   getCategoryBackgroundStyle(category),
+  small && tw`transform scale-50`,
 ]);
 
 //const Icon = tw.i`text-white mt-2 text-3xl`;
 
 /* End styled components */
 
-function CategoryIcon({ category }) {
+function CategoryIcon({ category, small }) {
   let icon;
 
   // Get the associated FontAwesome class icon for the category
@@ -116,7 +118,7 @@ function CategoryIcon({ category }) {
   }
 
   return (
-    <CategoryImage category={category}>
+    <CategoryImage category={category} small={small}>
       <Icon
         path={icon}
         title="Category"
@@ -131,8 +133,13 @@ function CategoryIcon({ category }) {
   );
 }
 
+CategoryIcon.defaultProps = {
+  small: false,
+};
+
 CategoryIcon.propTypes = {
   category: PropTypes.oneOf(Object.values(EnumCategory)).isRequired,
+  small: PropTypes.bool,
 };
 
 export default CategoryIcon;
