@@ -1,7 +1,7 @@
 const mysql = require("mysql2");
 
 class Database {
-  connection;
+  #connection;
 
   constructor() {
     this.connection = mysql.createConnection({
@@ -23,6 +23,17 @@ class Database {
 
   close(cb) {
     this.connection.end(cb);
+  }
+
+  execute(query, params) {
+    return this.connection
+      .promise()
+      .execute(query, params)
+      .catch((err) =>
+        console.error(
+          `[Database] Prepared Statement executed with error: ${err}`
+        )
+      );
   }
 }
 
