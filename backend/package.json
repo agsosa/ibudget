@@ -7,6 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/index.js"
   },
+  "_moduleAliases": {
+    "@root": ".",
+    "@data": "src/data",
+    "@lib": "src/lib",
+    "@routes": "src/routes"
+  },
   "author": "agsosa",
   "license": "ISC",
   "dependencies": {
@@ -17,7 +23,9 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "helmet": "^4.4.1",
+    "module-alias": "^2.2.2",
     "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
     "passport": "^0.4.1",
     "rate-limiter-flexible": "^2.2.1"
   },
