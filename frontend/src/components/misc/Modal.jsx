@@ -42,7 +42,7 @@ flex flex-col`;
 const Header = tw.div`w-full grid grid-rows-1 grid-cols-2 sm:mx-5`; // sm:mx-5
 const Title = tw.text`font-bold justify-self-start text-xl sm:text-2xl`;
 const CloseModalButton = tw.button`hocus:text-primary-500 justify-self-end sm:mr-12 focus:outline-none`; // sm:mr-12
-const ChildrenContainer = tw.div`sm:px-5 mt-8 pb-2`;
+const ChildrenContainer = tw.div`sm:px-5 mt-8 sm:pb-2 pb-4`;
 
 /* End styled components */
 
@@ -80,7 +80,7 @@ function Modal({ children, title }, ref) {
           <Header>
             <Title>{title}</Title>
             <CloseModalButton onClick={toggleModal}>
-              <CloseIcon tw="w-6 h-6" />
+              <CloseIcon />
             </CloseModalButton>
           </Header>
           <ChildrenContainer>{children}</ChildrenContainer>
