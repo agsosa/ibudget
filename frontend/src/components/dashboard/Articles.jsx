@@ -4,11 +4,11 @@ import tw from "twin.macro";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { css } from "styled-components/macro"; //eslint-disable-line
-import { SectionHeading } from "treact/components/misc/Headings";
+import { SectionHeading } from "third-party/treact/components/misc/Headings";
 import {
   Container,
   ContentWithPaddingXl,
-} from "treact/components/misc/Layouts";
+} from "third-party/treact/components/misc/Layouts";
 
 const Row = tw.div`flex flex-col lg:flex-row -mb-16`;
 const Heading = tw(SectionHeading)`ml-2 text-left lg:text-4xl xl:text-4xl`;

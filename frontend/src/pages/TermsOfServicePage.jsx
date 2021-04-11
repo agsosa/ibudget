@@ -1,11 +1,11 @@
 import {
   Container,
   ContentWithPaddingXl,
-} from "treact/components/misc/Layouts";
+} from "third-party/treact/components/misc/Layouts";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; // eslint-disable-line
-import { SectionHeading } from "treact/components/misc/Headings";
+import { SectionHeading } from "third-party/treact/components/misc/Headings";
 
 const HeadingRow = tw.div`flex`;
 const Heading = tw(SectionHeading)`text-gray-900 mb-10`;

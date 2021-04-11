@@ -1,3 +1,5 @@
+// TODO: Remove feather icon and unused dependencies from treact
+// TODO: Clean up styled components, optimize bundle size and page load speed
 import "./index.scss";
 import "tailwindcss/dist/base.css";
 import "react-date-range/dist/styles.css";
@@ -7,7 +9,7 @@ import ReactDOM from "react-dom";
 import Routes from "pages/Routes";
 import store from "lib/Store";
 import { Provider } from "react-redux";
-import reportWebVitals from "./reportWebVitals";
+import reportWebVitals from "./reportWebVitals"; // TODO: Setup web vitals
 
 ReactDOM.render(
   <React.StrictMode>

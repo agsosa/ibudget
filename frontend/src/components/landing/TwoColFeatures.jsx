@@ -7,9 +7,9 @@ import { css } from "styled-components/macro"; //eslint-disable-line
 import {
   SectionHeading,
   Subheading as SubheadingBase,
-} from "treact/components/misc/Headings";
-import { PrimaryButton as PrimaryButtonBase } from "treact/components/misc/Buttons";
-import StatsIllustrationSrc from "treact/images/stats-illustration.svg";
+} from "third-party/treact/components/misc/Headings";
+import { PrimaryButton as PrimaryButtonBase } from "third-party/treact/components/misc/Buttons";
+import StatsIllustrationSrc from "third-party/treact/images/stats-illustration.svg";
 
 /* Start styled components */
 

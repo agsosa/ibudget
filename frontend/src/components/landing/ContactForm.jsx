@@ -5,8 +5,8 @@ import { css } from "styled-components/macro"; //eslint-disable-line
 import {
   SectionHeading,
   Subheading as SubheadingBase,
-} from "treact/components/misc/Headings";
-import { PrimaryButton as PrimaryButtonBase } from "treact/components/misc/Buttons";
+} from "third-party/treact/components/misc/Headings";
+import { PrimaryButton as PrimaryButtonBase } from "third-party/treact/components/misc/Buttons";
 
 /* Start styled components */
 

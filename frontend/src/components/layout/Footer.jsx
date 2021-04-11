@@ -4,7 +4,7 @@
 
 import React from "react";
 import tw from "twin.macro";
-import { Container as ContainerBase } from "treact/components/misc/Layouts";
+import { Container as ContainerBase } from "third-party/treact/components/misc/Layouts";
 import logo from "images/logo.png";
 import { APP_NAME } from "lib/Config";
 import { Link } from "react-router-dom";
@@ -23,7 +23,7 @@ const LogoText = tw.h5`ml-3 text-2xl font-black tracking-wider`;
 const LinksContainer = tw.div`mt-8 font-medium flex flex-wrap justify-center items-center flex-col sm:flex-row`;
 const LinkStyle = tw(
   Link
-)`text-white border-b-2 border-transparent hocus:text-primary-400 hocus:border-primary-500 pb-1 transition duration-300 mt-2 mx-4`;
+)`text-white border-b-2 border-transparent hocus:text-primary-400 hocus:border-primary-500 pb-1 transition-all duration-300 mt-2 mx-4`;
 
 const CopyrightText = tw.p`text-center mt-10 font-medium tracking-wide text-sm text-gray-600`;
 

@@ -7,16 +7,16 @@ import HeaderBase, {
   NavLink,
   PrimaryLink,
 } from "components/light.js";
-import { SectionHeading } from "treact/components/misc/Headings.js";
-import { SectionDescription } from "treact/components/misc/Typography.js";
-import { PrimaryButton as PrimaryButtonBase } from "treact/components/misc/Buttons.js";
+import { SectionHeading } from "third-party/treact/components/misc/Headings.js";
+import { SectionDescription } from "third-party/treact/components/misc/Typography.js";
+import { PrimaryButton as PrimaryButtonBase } from "third-party/treact/components/misc/Buttons.js";
 import {
   Container,
   ContentWithVerticalPadding,
-} from "treact/components/misc/Layouts.js";
+} from "third-party/treact/components/misc/Layouts.js";
 import { ReactComponent as CheckboxIcon } from "feather-icons/dist/icons/check-circle.svg";
-import { ReactComponent as QuotesLeftIconBase } from "treact/images/quotes-l.svg";
-import { ReactComponent as SvgDecoratorBlob1 } from "treact/images/dot-pattern.svg";
+import { ReactComponent as QuotesLeftIconBase } from "third-party/treact/images/quotes-l.svg";
+import { ReactComponent as SvgDecoratorBlob1 } from "third-party/treact/images/dot-pattern.svg";
 
 const Header = tw(HeaderBase)`max-w-none`;
 const Row = tw.div`flex flex-col lg:flex-row justify-between items-center lg:pt-16 max-w-screen-2xl mx-auto sm:px-8`;

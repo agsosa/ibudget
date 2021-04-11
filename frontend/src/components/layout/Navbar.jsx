@@ -10,7 +10,7 @@ import { css } from "styled-components/macro"; //eslint-disable-line
 import { Link } from "react-router-dom";
 import { Icon } from "react-bulma-components";
 
-import useAnimatedNavToggler from "treact/helpers/useAnimatedNavToggler";
+import useAnimatedNavToggler from "third-party/treact/helpers/useAnimatedNavToggler";
 
 import logo from "images/logo.png";
 import { ReactComponent as MenuIcon } from "feather-icons/dist/icons/menu.svg";

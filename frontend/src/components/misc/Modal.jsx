@@ -16,7 +16,7 @@
 
 import * as React from "react";
 import tw, { styled } from "twin.macro";
-import ReactModalAdapter from "treact/helpers/ReactModalAdapter";
+import ReactModalAdapter from "third-party/treact/helpers/ReactModalAdapter";
 import { PropTypes } from "prop-types";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 import { motion } from "framer-motion";

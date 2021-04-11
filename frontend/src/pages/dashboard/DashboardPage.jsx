@@ -1,8 +1,8 @@
 import Articles from "components/dashboard/Articles";
 import CardList from "components/misc/CardList";
 import tw, { styled } from "twin.macro";
-import { ContentWithPaddingXl as ContentBase } from "treact/components/misc/Layouts";
-import { SectionHeading } from "treact/components/misc/Headings";
+import { ContentWithPaddingXl as ContentBase } from "third-party/treact/components/misc/Layouts";
+import { SectionHeading } from "third-party/treact/components/misc/Headings";
 import Chart from "components/dashboard/charts/AreaChart";
 import PieChart from "components/dashboard/charts/PieChart";
 import Gauge from "components/dashboard/charts/Gauge";

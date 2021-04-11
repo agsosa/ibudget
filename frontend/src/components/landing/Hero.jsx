@@ -2,7 +2,7 @@ import React from "react";
 import tw from "twin.macro";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import { Link } from "react-router-dom";
-import DesignIllustration from "treact/images/design-illustration.svg";
+import DesignIllustration from "third-party/treact/images/design-illustration.svg";
 import { APP_NAME } from "lib/Config";
 
 /* Start styled components */

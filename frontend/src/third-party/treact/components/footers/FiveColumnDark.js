@@ -3,10 +3,10 @@ import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
 
-import LogoImage from "treact/images/logo-light.svg";
-import { ReactComponent as FacebookIcon } from "treact/images/facebook-icon.svg";
-import { ReactComponent as TwitterIcon } from "treact/images/twitter-icon.svg";
-import { ReactComponent as YoutubeIcon } from "treact/images/youtube-icon.svg";
+import LogoImage from "third-party/treact/images/logo-light.svg";
+import { ReactComponent as FacebookIcon } from "third-party/treact/images/facebook-icon.svg";
+import { ReactComponent as TwitterIcon } from "third-party/treact/images/twitter-icon.svg";
+import { ReactComponent as YoutubeIcon } from "third-party/treact/images/youtube-icon.svg";
 
 const Container = tw.div`relative bg-gray-900 text-gray-100 -mx-8 -mb-8 px-8`;
 const Content = tw.div`max-w-screen-xl mx-auto pt-16 pb-8`;

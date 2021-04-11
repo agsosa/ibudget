@@ -1,5 +1,5 @@
-import FAQ from "treact/components/faqs/SingleCol";
-import Steps from "treact/components/features/TwoColWithSteps";
+import FAQ from "third-party/treact/components/faqs/SingleCol";
+import Steps from "third-party/treact/components/features/TwoColWithSteps";
 
 function HowItWorksPage() {
   return (

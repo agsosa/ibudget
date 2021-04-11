@@ -1,6 +1,10 @@
+// TODO: Move description label to props?
+
 import React, { useState, useEffect } from "react";
 import { Gauge } from "@ant-design/charts";
 import tw, { styled } from "twin.macro";
+
+/* Start styled components */
 
 const Responsive = tw.div`w-full max-w-md `;
 const Status = styled.text(({ percent }) => [
@@ -11,6 +15,8 @@ const Status = styled.text(({ percent }) => [
 ]);
 const Description = tw.text`text-gray-600 text-center text-sm`;
 const TextContainer = tw.span`flex flex-col -mt-24`;
+
+/* End styled components */
 
 function getStatusText(percent) {
   if (percent < 1 / 3) return "Malo";

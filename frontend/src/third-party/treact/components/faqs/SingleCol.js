@@ -6,12 +6,12 @@ import { css } from "styled-components/macro"; //eslint-disable-line
 import {
   SectionHeading,
   Subheading as SubheadingBase,
-} from "treact/components/misc/Headings";
-import { SectionDescription } from "treact/components/misc/Typography.js";
+} from "third-party/treact/components/misc/Headings";
+import { SectionDescription } from "third-party/treact/components/misc/Typography.js";
 import {
   Container,
   ContentWithPaddingXl,
-} from "treact/components/misc/Layouts.js";
+} from "third-party/treact/components/misc/Layouts.js";
 import { ReactComponent as ChevronDownIcon } from "feather-icons/dist/icons/chevron-down.svg";
 
 const Subheading = tw(SubheadingBase)`mb-4 text-center`;

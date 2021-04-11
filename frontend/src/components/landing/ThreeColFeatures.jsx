@@ -11,15 +11,15 @@ import { css } from "styled-components/macro"; //eslint-disable-line
 import {
   SectionHeading,
   Subheading as SubheadingBase,
-} from "treact/components/misc/Headings";
-import { SectionDescription } from "treact/components/misc/Typography";
+} from "third-party/treact/components/misc/Headings";
+import { SectionDescription } from "third-party/treact/components/misc/Typography";
 
-import SupportIconImage from "treact/images/support-icon.svg";
-import ShieldIconImage from "treact/images/shield-icon.svg";
-import CustomizeIconImage from "treact/images/customize-icon.svg";
-import FastIconImage from "treact/images/fast-icon.svg";
-import ReliableIconImage from "treact/images/reliable-icon.svg";
-import SimpleIconImage from "treact/images/simple-icon.svg";
+import SupportIconImage from "third-party/treact/images/support-icon.svg";
+import ShieldIconImage from "third-party/treact/images/shield-icon.svg";
+import CustomizeIconImage from "third-party/treact/images/customize-icon.svg";
+import FastIconImage from "third-party/treact/images/fast-icon.svg";
+import ReliableIconImage from "third-party/treact/images/reliable-icon.svg";
+import SimpleIconImage from "third-party/treact/images/simple-icon.svg";
 
 /* Start styled components */
 
