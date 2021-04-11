@@ -22,7 +22,7 @@ import AddTransaction from "components/dashboard/AddTransactionModal";
 
 /* Start styled components */
 
-const Header = tw.header`sticky top-0 z-50 bg-white py-1 md:py-4 w-full`;
+const Header = tw.header`sticky top-0 z-40 bg-white py-1 md:py-4 w-full`;
 
 const HeaderContainer = tw.div`px-5 max-w-screen-2xl flex items-center justify-between mx-auto`;
 
