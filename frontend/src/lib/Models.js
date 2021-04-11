@@ -6,7 +6,9 @@
         user_id: 
         concept: string
         amount: number
-        date: date
+        date: date // date input by user
+        created_at: date
+        updated_at: date
         type_id: TransactionTypeEnum
         category_id: CategoryEnum
         notes: string
@@ -23,6 +25,8 @@ export const TransactionModel = {
     concept: null,
     amount: null,
     date: null,
+    created_at: null,
+    updated_at: null,
     type_id: null,
     category_id: null,
     notes: null,
