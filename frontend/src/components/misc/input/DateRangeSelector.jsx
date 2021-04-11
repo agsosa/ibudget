@@ -83,7 +83,7 @@ export default () => {
     }
   }
 
-  // Register click event
+  // Register click event to close the dropdown on click outside
   React.useEffect(() => {
     document.addEventListener("click", handleClickOutside);
 

@@ -20,17 +20,19 @@
       onClickCB: callback to be called on check (function(value)) (managed by SelectButtonGroup's onValueSelect)
 
     Usage:
-        <RadioGroup onValueChange={handleRadioSelect} selectedValue={period}>
-          <RadioGroup.Item
+        <SelectButtonGroup onValueChange={handleSelectValueChange} selectedValue={value}>
+          <SelectButtonGroup.Item
             value={EnumPeriod.SevenDays}
             label={getPeriodLabel(EnumPeriod.SevenDays)}
+            roudedLeft
           />
-          <RadioGroup.Item
+          <SelectButtonGroup.Item
             value={EnumPeriod.ThirtyDays}
             label={getPeriodLabel(EnumPeriod.ThirtyDays)}
+            rounded
           />
           ... etc
-        </RadioGroup>
+        </SelectButtonGroup>
 */
 
 import * as React from "react";
