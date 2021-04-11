@@ -25,14 +25,11 @@ import Button from "react-bulma-components/lib/components/button";
 import Icon from "@mdi/react";
 import { mdiMinus, mdiPlus } from "@mdi/js";
 import { EnumTransactionType } from "lib/Enums";
-import SelectButtonGroup from "components/misc/SelectButtonGroup";
+import SelectButtonGroup from "components/misc/input/SelectButtonGroup";
 import { TransactionModel } from "lib/Models";
 import { Calendar } from "react-date-range";
 import { enUS, es } from "react-date-range/dist/locale";
-import ReactSelect from "react-select";
-import { EnumCategory } from "lib/Enums";
-import CategoryIcon from "./CategoryIcon";
-import { getCategoryLabel } from "lib/Helpers";
+import CategorySelector from "components/dashboard/CategorySelector";
 
 /* Start styled components */
 
@@ -55,12 +52,6 @@ const InputGroup = tw.div`flex flex-col items-center mb-3 w-full sm:w-80`;
 const InputLabel = tw.text`text-lg font-semibold mb-2`;
 const OptionalLabel = tw.text`text-sm font-light`;
 
-const Select = tw(ReactSelect)`w-full`;
-const CategoryContainer = styled.div(({ small }) => [
-  tw`flex flex-row items-center`,
-  small && tw`absolute justify-center w-full`,
-]);
-
 /* End styled components */
 
 const initialState = {
@@ -82,7 +73,7 @@ function AddTransaction() {
     const fieldName = evt.target.name;
     const inputValue = evt.target.value;
 
-    /*   if (evt.target.type === "checkbox") {
+    /* if (evt.target.type === "checkbox") {
       value = evt.target.checked;
     } */
 
@@ -126,7 +117,7 @@ function AddTransaction() {
     }
   }
 
-  // Function called on Type input click
+  // Function called on Type button click
   function onTypeButtonClick(value) {
     if (Object.values(EnumTransactionType).includes(value)) {
       setState((oldState) => ({
@@ -156,33 +147,10 @@ function AddTransaction() {
     }));
   }
 
-  const CategoryOption = ({ value, small }) => (
-    <CategoryContainer small={small}>
-      <CategoryIcon category={value} small={small} />
-      {getCategoryLabel(value)}
-    </CategoryContainer>
-  );
-
-  const SingleValue = ({ getValue }) => (
-    <CategoryOption value={getValue()[0].value} small />
-  );
-
   const CategoryDropdown = (
     <InputGroup>
       <InputLabel>Categoría</InputLabel>
-      <Select
-        className="basic-single"
-        classNamePrefix="select"
-        placeholder="Select..."
-        value={state.category}
-        components={{ SingleValue }}
-        isClearable
-        onChange={onCategoryChange}
-        isSearchable={false}
-        formatOptionLabel={CategoryOption}
-        options={Object.values(EnumCategory).map((value) => ({ value }))}
-        name="category"
-      />
+      <CategorySelector onCategoryChange={onCategoryChange} />
     </InputGroup>
   );
 
@@ -282,7 +250,6 @@ function AddTransaction() {
         <LeftContainer>
           {TypeSelect}
           {AmountInput}
-
           {CategoryDropdown}
           {NoteTextbox}
         </LeftContainer>
