@@ -75,20 +75,12 @@ function DashboardPage() {
   // Latest transactions card content
   function LatestTransactions() {
     return (
-      <>
-        <TransactionList>
-          {Object.values(EnumCategory)
-            .slice(0, 5)
-            .map((v) => {
-              return (
-                <TransactionList.Item
-                  category={v}
-                  onClick={handleTransactionClick}
-                />
-              );
-            })}
-        </TransactionList>
-      </>
+      <TransactionList
+        data={Object.values(EnumCategory)
+          .slice(0, 5)
+          .map((v) => ({ category: v }))}
+        onClick={handleTransactionClick}
+      />
     );
   }
 

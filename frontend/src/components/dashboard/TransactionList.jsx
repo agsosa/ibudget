@@ -1,27 +1,21 @@
 // TODO: Implement data prop for TransactionList.Item
+// TODO: Implement onClick for TransactionList
 
 /* 
-  TransactionList: Component to display the information of various TransactionModel or a single TransactionModel object.
+  TransactionList: Component to display the information of various or a single TransactionModel object
 
-  Usage:
-      <TransactionList>
-        <TransactionList.Item data={object of TransactionModel}/>
-        <TransactionList.Item data={object of TransactionModel} />
-        ... etc
-      </TransactionList>
-    
-    To display a single transaction:
-      <TransactionList.Item data={object of TransactionModel} />
+    Usage:
+      <TransactionList data={[...]} />
 
-  TransactionList.Item props: 
-    - onClick: Callback that will be executed on click with the transaction object as parameter
+    props:
+      data: Array of TransactionModel objects to display
 */
 
 import * as React from "react";
 import tw, { styled } from "twin.macro";
-import { EnumCategory } from "lib/Enums";
 import { PropTypes } from "prop-types";
 import { getCategoryLabel } from "lib/Helpers";
+import { TransactionModel } from "lib/Models";
 import CategoryIcon from "./CategoryIcon";
 
 /* Start styled components */
@@ -51,20 +45,14 @@ const LeftContainer = tw.div`flex flex-row justify-self-start ml-5 sm:ml-0`;
 
 /* End styled components */
 
-function TransactionItem({ category, onClick }) {
-  function handleClick() {
-    console.log("on TransactionItem click");
-    const transaction = { id: "test", category }; // TODO: Pass transaction prop
-    if (onClick) onClick(transaction);
-  }
-
+function TransactionItem({ data, onClick }) {
   return (
-    <Item onClick={handleClick}>
+    <Item onClick={onClick}>
       <ItemContentContainer>
         <LeftContainer>
-          <CategoryIcon category={category} />
+          <CategoryIcon category={data.category} />
           <FlexCol>
-            <Category>{getCategoryLabel(category)}</Category>
+            <Category>{getCategoryLabel(data.category)}</Category>
             <Concept>Varios</Concept>
           </FlexCol>
         </LeftContainer>
@@ -77,27 +65,38 @@ function TransactionItem({ category, onClick }) {
   );
 }
 
-function TransactionList({ children }) {
-  return <List>{children}</List>;
+function TransactionList({ data }) {
+  return (
+    <List>
+      {(data &&
+        Array.isArray(data) &&
+        data.map((item) => {
+          return React.createElement(TransactionItem, {
+            data: item,
+            onClick: () => {
+              console.log("test"); // TODO: Implement
+            },
+          });
+        })) ||
+        console.warn("TransactionList: Invalid data prop")}
+    </List>
+  );
 }
 
-TransactionList.Item = TransactionItem;
-
-/* Start props validation */
 TransactionItem.defaultProps = {
   onClick: null,
 };
 
 TransactionItem.propTypes = {
-  category: PropTypes.oneOf(Object.values(EnumCategory)).isRequired,
+  data: PropTypes.objectOf(TransactionModel.state).isRequired,
   onClick: PropTypes.func,
 };
 
 TransactionList.defaultProps = {
-  children: null,
+  data: null,
 };
 TransactionList.propTypes = {
-  children: PropTypes.node,
+  data: PropTypes.arrayOf(PropTypes.objectOf(TransactionModel.state)),
 };
 
 export default TransactionList;
