@@ -13,7 +13,10 @@ import RadioGroup from "components/misc/input/RadioGroup";
 /* Start styled components */
 
 const SelectContainer = tw.div`justify-center align-middle`;
-const DateComponent = tw(DateRange)`transform scale-x-90 sm:scale-x-100`;
+const DateComponent = styled(DateRange)(({ hidden }) => [
+  tw`transform scale-x-90 sm:scale-x-100`,
+  hidden && tw`hidden`,
+]);
 const Select = tw(ReactSelect)`w-56`;
 const DropdownContent = styled.div(({ show }) => [
   tw`bg-white shadow-2xl flex flex-col z-20 absolute w-full left-0 sm:w-auto sm:left-auto sm:transform sm:translate-x-1/2 sm:right-1/2`,
@@ -104,6 +107,7 @@ export default () => {
         />
 
         <DateComponent
+          hidden={period !== EnumPeriod.Custom}
           editableDateInputs
           onChange={(item) => setDateRange([item.selection])}
           moveRangeOnFirstSelection={false}
