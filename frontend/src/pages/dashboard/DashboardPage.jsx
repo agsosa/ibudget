@@ -6,7 +6,7 @@ import { SectionHeading } from "treact/components/misc/Headings";
 import Chart from "components/dashboard/charts/AreaChart";
 import PieChart from "components/dashboard/charts/PieChart";
 import Gauge from "components/dashboard/charts/Gauge";
-import DateRangeSelector from "components/dashboard/DateRangeSelector";
+import DateRangeSelector from "components/misc/input/DateRangeSelector";
 import TransactionList from "components/dashboard/TransactionList";
 import { EnumCategory } from "lib/Enums";
 import { motion } from "framer-motion";

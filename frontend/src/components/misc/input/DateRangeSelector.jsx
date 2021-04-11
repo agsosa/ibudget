@@ -8,7 +8,7 @@ import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 import ReactSelect from "react-select";
 import { EnumPeriod } from "lib/Enums";
 import { getPeriodLabel } from "lib/Helpers";
-import RadioGroup from "components/misc/RadioGroup";
+import RadioGroup from "components/misc/input/RadioGroup";
 
 /* Start styled components */
 
