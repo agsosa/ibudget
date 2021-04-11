@@ -24,10 +24,11 @@ description blabla
 ## How to deploy
 - Set dotenv vars bla bla
 
-## How to add a new category
-- Bla bla
-
 ## Misc. information
-- config files bla bla
+#### Configuration
+- bla bla
+
+#### How to add a new transaction category
+- Bla bla
 
 Alkemy
