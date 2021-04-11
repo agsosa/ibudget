@@ -3,31 +3,12 @@
     Component to display and manage a list of Radio input elements (single check only)
 
     Props:
-      selectedValue: current selected value, it will check any child RadioGroup.Item with this value (required)(any)
-      onValueChange: callback to be called on any child RadioGroup.Item check (function(value))
+      onValueChange: callback to be called on any option check (function(value))
+      options: list of options (array of { value: any, label: string })
 
-  RadioGroup.Item
-    Radio input element
-    
-    Props:
-      value: the value to store (required)(any)
-      label: the string to display next to the radio (string)
-
-      checked: condition to check/uncheck the radio (bool) (managed by RadioGroup)
-      onChangeCB: callback to be called on check (function(value)) (managed by RadioGroup's onValueChange)
-
-    Usage:
-        <RadioGroup onValueChange={handleRadioSelect} selectedValue={period}>
-          <RadioGroup.Item
-            value={EnumPeriod.SevenDays}
-            label={getPeriodLabel(EnumPeriod.SevenDays)}
-          />
-          <RadioGroup.Item
-            value={EnumPeriod.ThirtyDays}
-            label={getPeriodLabel(EnumPeriod.ThirtyDays)}
-          />
-          ... etc
-        </RadioGroup>
+    Example:
+      options = [ { value: 5, label: "five"}, { value: 10, label "ten"}, ...]
+      <RadioGroup value={state.value} onValueChange={handleValueChange} options={options} />
 */
 
 import * as React from "react";
@@ -57,26 +38,30 @@ function RadioItem({ value, label, checked, onChangeCB }) {
   );
 }
 
-function RadioGroup({ onValueChange, children, selectedValue }) {
-  const childrenArray = React.Children.map(children, (child) => {
-    if (child) {
-      return React.cloneElement(
-        child,
-        child.type === RadioItem
-          ? {
-              checked: child.props.value === selectedValue,
-              onChangeCB: onValueChange,
-            }
-          : {}
-      );
-    }
-    return null;
-  });
+function RadioGroup({ onValueChange, options, value }) {
+  return (
+    <InputGroup>
+      {Array.isArray(options) &&
+        options.map((o) => {
+          if (o.value) {
+            return React.createElement(RadioItem, {
+              value: o.value,
+              label: o.label,
+              checked: value === o.value,
+              onChangeCB: () => {
+                if (onValueChange) onValueChange(o.value);
+              },
+            });
+          }
 
-  return <InputGroup>{childrenArray}</InputGroup>;
+          console.warn(
+            "RadioGroup: All elements of the option array should include a value property"
+          );
+          return null;
+        })}
+    </InputGroup>
+  );
 }
-
-RadioGroup.Item = RadioItem;
 
 RadioItem.defaultProps = {
   label: "",
@@ -92,14 +77,18 @@ RadioItem.propTypes = {
 };
 
 RadioGroup.defaultProps = {
-  children: null,
   onValueChange: null,
 };
 
 RadioGroup.propTypes = {
-  children: PropTypes.node,
   onValueChange: PropTypes.func,
-  selectedValue: PropTypes.any.isRequired, // eslint-disable-line
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.any.isRequired, // eslint-disable-line
+      label: PropTypes.string,
+    })
+  ).isRequired,
+  value: PropTypes.any, // eslint-disable-line
 };
 
 export default RadioGroup;
