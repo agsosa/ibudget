@@ -5,12 +5,12 @@
     <CategoryIcon category={...} />
 
   Props:
-    - category: Value of EnumCategory (required)
+    - category: Value of CategoryEnum (required)
     - small: boolean to indicate if the icon should be 50% smaller (optional)
 */
 
 import tw, { styled } from "twin.macro";
-import { EnumCategory } from "lib/Enums";
+import { CategoryEnum } from "lib/Enums";
 import { PropTypes } from "prop-types";
 import Icon from "@mdi/react";
 import {
@@ -31,33 +31,33 @@ import {
 
 /**
  * Get the associated tailwind background style for a category
- * @param  {String} enumCategory The category (must be a value of EnumCategory)
+ * @param  {String} categoryEnum The category (must be a value of CategoryEnum)
  * @return {TwFn}                Tailwind background style
  */
 // TODO: Move to Helper?
-const getCategoryBackgroundStyle = (enumCategory) => {
-  switch (enumCategory) {
-    case EnumCategory.SHOPPING:
+const getCategoryBackgroundStyle = (categoryEnum) => {
+  switch (categoryEnum) {
+    case CategoryEnum.SHOPPING:
       return tw`bg-orange-500`;
-    case EnumCategory.COMMUNICATION_PC:
+    case CategoryEnum.COMMUNICATION_PC:
       return tw`bg-orange-400`;
-    case EnumCategory.FINANCIAL_EXPENSES:
+    case CategoryEnum.FINANCIAL_EXPENSES:
       return tw`bg-red-600`;
-    case EnumCategory.FOOD_DRINKS:
+    case CategoryEnum.FOOD_DRINKS:
       return tw`bg-red-500`;
-    case EnumCategory.HOUSING:
+    case CategoryEnum.HOUSING:
       return tw`bg-indigo-600`;
-    case EnumCategory.INCOME:
+    case CategoryEnum.INCOME:
       return tw`bg-yellow-400`;
-    case EnumCategory.INVESTMENTS:
+    case CategoryEnum.INVESTMENTS:
       return tw`bg-green-500`;
-    case EnumCategory.LIFE_ENTERTAINMENT:
+    case CategoryEnum.LIFE_ENTERTAINMENT:
       return tw`bg-blue-500`;
-    case EnumCategory.OTHERS:
+    case CategoryEnum.OTHERS:
       return tw`bg-gray-500`;
-    case EnumCategory.TRANSPORTATION:
+    case CategoryEnum.TRANSPORTATION:
       return tw`bg-pink-500`;
-    case EnumCategory.VEHICLE:
+    case CategoryEnum.VEHICLE:
       return tw`bg-purple-500`;
     default:
       return tw`bg-gray-700`;
@@ -69,37 +69,37 @@ const getCategoryBackgroundStyle = (enumCategory) => {
 const getCategoryMaterialIcon = (category) => {
   let icon;
   switch (category) {
-    case EnumCategory.SHOPPING:
+    case CategoryEnum.SHOPPING:
       icon = mdiCartOutline;
       break;
-    case EnumCategory.FOOD_DRINKS:
+    case CategoryEnum.FOOD_DRINKS:
       icon = mdiSilverware;
       break;
-    case EnumCategory.HOUSING:
+    case CategoryEnum.HOUSING:
       icon = mdiHome;
       break;
-    case EnumCategory.COMMUNICATION_PC:
+    case CategoryEnum.COMMUNICATION_PC:
       icon = mdiDevices;
       break;
-    case EnumCategory.FINANCIAL_EXPENSES:
+    case CategoryEnum.FINANCIAL_EXPENSES:
       icon = mdiCreditCardOutline;
       break;
-    case EnumCategory.INCOME:
+    case CategoryEnum.INCOME:
       icon = mdiCurrencyUsd;
       break;
-    case EnumCategory.INVESTMENTS:
+    case CategoryEnum.INVESTMENTS:
       icon = mdiBriefcaseOutline;
       break;
-    case EnumCategory.LIFE_ENTERTAINMENT:
+    case CategoryEnum.LIFE_ENTERTAINMENT:
       icon = mdiAccount;
       break;
-    case EnumCategory.OTHERS:
+    case CategoryEnum.OTHERS:
       icon = mdiDotsVertical;
       break;
-    case EnumCategory.TRANSPORTATION:
+    case CategoryEnum.TRANSPORTATION:
       icon = mdiBus;
       break;
-    case EnumCategory.VEHICLE:
+    case CategoryEnum.VEHICLE:
       icon = mdiCarHatchback;
       break;
     default:
@@ -141,7 +141,7 @@ CategoryIcon.defaultProps = {
 };
 
 CategoryIcon.propTypes = {
-  category: PropTypes.oneOf(Object.values(EnumCategory)).isRequired,
+  category: PropTypes.oneOf(Object.values(CategoryEnum)).isRequired,
   small: PropTypes.bool,
 };
 

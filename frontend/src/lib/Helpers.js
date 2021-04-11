@@ -1,4 +1,4 @@
-import { EnumCategory, EnumPeriod } from "./Enums";
+import { CategoryEnum, PeriodEnum } from "./Enums";
 
 /* eslint-disable no-extend-native */
 Number.prototype.countDecimals = function () {
@@ -23,47 +23,47 @@ export function getMoneyDisplayString(money) {
 }
 
 // TODO: Move Enum to Label functions to Locale manager
-// Function to convert a EnumTimePeriod value to a label
-export function getPeriodLabel(enumTimePeriod) {
-  switch (enumTimePeriod) {
-    case EnumPeriod.SevenDays:
+// Function to convert a PeriodEnum value to a label
+export function getPeriodLabel(periodEnum) {
+  switch (periodEnum) {
+    case PeriodEnum.SEVEN_DAYS:
       return "7 days";
-    case EnumPeriod.ThirtyDays:
+    case PeriodEnum.THIRTY_DAYS:
       return "30 days";
-    case EnumPeriod.NinetyDays:
+    case PeriodEnum.NINETY_DAYS:
       return "90 days";
-    case EnumPeriod.TwelveMonths:
+    case PeriodEnum.TWELVE_MONTHS:
       return "12 months";
-    case EnumPeriod.Custom:
+    case PeriodEnum.CUSTOM:
       return "Custom range";
     default:
       return "Invalid period";
   }
 }
-// Function to convert a EnumCategory value to a label
-export function getCategoryLabel(enumCategory) {
-  switch (enumCategory) {
-    case EnumCategory.FOOD_DRINKS:
+// Function to convert a CategoryEnum value to a label
+export function getCategoryLabel(categoryEnum) {
+  switch (categoryEnum) {
+    case CategoryEnum.FOOD_DRINKS:
       return "Comida y Bebidas";
-    case EnumCategory.SHOPPING:
+    case CategoryEnum.SHOPPING:
       return "Compras";
-    case EnumCategory.HOUSING:
+    case CategoryEnum.HOUSING:
       return "Propiedades";
-    case EnumCategory.TRANSPORTATION:
+    case CategoryEnum.TRANSPORTATION:
       return "Transporte";
-    case EnumCategory.VEHICLE:
+    case CategoryEnum.VEHICLE:
       return "Vehículo";
-    case EnumCategory.LIFE_ENTERTAINMENT:
+    case CategoryEnum.LIFE_ENTERTAINMENT:
       return "Vida y Entretenimiento";
-    case EnumCategory.COMMUNICATION_PC:
+    case CategoryEnum.COMMUNICATION_PC:
       return "Comunicación y Tecnología";
-    case EnumCategory.FINANCIAL_EXPENSES:
+    case CategoryEnum.FINANCIAL_EXPENSES:
       return "Gastos Financieros";
-    case EnumCategory.INVESTMENTS:
+    case CategoryEnum.INVESTMENTS:
       return "Inversiones";
-    case EnumCategory.INCOME:
+    case CategoryEnum.INCOME:
       return "Ingresos";
-    case EnumCategory.OTHERS:
+    case CategoryEnum.OTHERS:
       return "Otros";
     default:
       return "";

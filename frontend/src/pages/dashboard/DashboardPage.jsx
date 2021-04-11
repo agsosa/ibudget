@@ -8,7 +8,7 @@ import PieChart from "components/dashboard/charts/PieChart";
 import Gauge from "components/dashboard/charts/Gauge";
 import DateRangeSelector from "components/misc/input/DateRangeSelector";
 import TransactionList from "components/dashboard/TransactionList";
-import { EnumCategory } from "lib/Enums";
+import { CategoryEnum } from "lib/Enums";
 import { motion } from "framer-motion";
 
 /* Start styled components */
@@ -76,9 +76,9 @@ function DashboardPage() {
   function LatestTransactions() {
     return (
       <TransactionList
-        data={Object.values(EnumCategory)
+        data={Object.values(CategoryEnum)
           .slice(0, 5)
-          .map((v) => ({ category: v }))}
+          .map((v) => ({ category_id: v }))}
         onClick={handleTransactionClick}
       />
     );

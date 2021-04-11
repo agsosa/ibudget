@@ -50,9 +50,9 @@ function TransactionItem({ data, onClick }) {
     <Item onClick={onClick}>
       <ItemContentContainer>
         <LeftContainer>
-          <CategoryIcon category={data.category} />
+          <CategoryIcon category={data.category_id} />
           <FlexCol>
-            <Category>{getCategoryLabel(data.category)}</Category>
+            <Category>{getCategoryLabel(data.category_id)}</Category>
             <Concept>Varios</Concept>
           </FlexCol>
         </LeftContainer>

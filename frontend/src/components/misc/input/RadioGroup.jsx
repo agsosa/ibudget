@@ -13,7 +13,7 @@
 
 import * as React from "react";
 import tw from "twin.macro";
-import { EnumPeriod } from "lib/Enums";
+import { PeriodEnum } from "lib/Enums";
 import { PropTypes } from "prop-types";
 
 const Input = tw.input`m-1`;
@@ -70,7 +70,7 @@ RadioItem.defaultProps = {
 };
 
 RadioItem.propTypes = {
-  value: PropTypes.oneOf(Object.values(EnumPeriod)).isRequired,
+  value: PropTypes.oneOf(Object.values(PeriodEnum)).isRequired,
   label: PropTypes.string,
   checked: PropTypes.bool,
   onChangeCB: PropTypes.func,

@@ -1,16 +1,16 @@
 /* 
-  Dropdown for EnumCategory
+  Dropdown for CategoryEnum
 
   <CategorySelector onCategorySelect={callback} />
 
   props:
-    onCategorySelect: callback(enumCategory) called on value change
+    onCategorySelect: callback(CategoryEnum) called on value change
 */
 
 import * as React from "react";
 import { PropTypes } from "prop-types";
 import ReactSelect from "react-select";
-import { EnumCategory } from "lib/Enums";
+import { CategoryEnum } from "lib/Enums";
 import { getCategoryLabel } from "lib/Helpers";
 import tw, { styled } from "twin.macro";
 import CategoryIcon from "components/dashboard/CategoryIcon";
@@ -71,7 +71,7 @@ function CategorySelector({ onCategorySelect }) {
       onChange={onCategoryChange}
       isSearchable={false}
       formatOptionLabel={CategoryOption}
-      options={Object.values(EnumCategory).map((v) => ({ value: v }))}
+      options={Object.values(CategoryEnum).map((v) => ({ value: v }))}
       name="category"
     />
   );

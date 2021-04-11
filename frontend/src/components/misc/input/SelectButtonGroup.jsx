@@ -37,7 +37,7 @@
 
 import * as React from "react";
 import tw, { styled } from "twin.macro";
-import { EnumPeriod } from "lib/Enums";
+import { PeriodEnum } from "lib/Enums";
 import { PropTypes } from "prop-types";
 
 const Container = tw.div`flex flex-row`;
@@ -107,7 +107,7 @@ SelectButtonItem.defaultProps = {
 };
 
 SelectButtonItem.propTypes = {
-  value: PropTypes.oneOf(Object.values(EnumPeriod)).isRequired,
+  value: PropTypes.oneOf(Object.values(PeriodEnum)).isRequired,
   label: PropTypes.string,
   isSelected: PropTypes.bool,
   roundedLeft: PropTypes.bool,

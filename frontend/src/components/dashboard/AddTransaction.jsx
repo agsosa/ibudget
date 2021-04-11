@@ -24,7 +24,7 @@ import {
 import Button from "react-bulma-components/lib/components/button";
 import Icon from "@mdi/react";
 import { mdiMinus, mdiPlus } from "@mdi/js";
-import { EnumTransactionType } from "lib/Enums";
+import { TransactionTypeEnum } from "lib/Enums";
 import SelectButtonGroup from "components/misc/input/SelectButtonGroup";
 import { TransactionModel } from "lib/Models";
 import { Calendar } from "react-date-range";
@@ -58,8 +58,8 @@ function AddTransaction() {
   const initialState = {
     amount: null, // Number amount of money (required)
     notes: "", // String notes (optional)
-    category: null, // Value of EnumCategory (required)
-    type: EnumTransactionType.OUT, // Value of EnumTransactionType (required)
+    category: null, // Value of CategoryEnum (required)
+    type: TransactionTypeEnum.OUT, // Value of TransactionTypeEnum (required)
     date: null, // date  (required)
     concept: "", // String concept (optional)
   };
@@ -122,14 +122,14 @@ function AddTransaction() {
 
   // Function called on Type button click
   function onTypeButtonClick(value) {
-    if (Object.values(EnumTransactionType).includes(value)) {
+    if (Object.values(TransactionTypeEnum).includes(value)) {
       setState((oldState) => ({
         ...oldState,
         type: value,
       }));
     } else {
       console.error(
-        "onTypeButtonClick received invalid value. Value should be any of EnumTransactionType."
+        "onTypeButtonClick received invalid value. Value should be any of TransactionTypeEnum."
       );
     }
   }
@@ -169,12 +169,12 @@ function AddTransaction() {
         onValueSelect={onTypeButtonClick}
       >
         <SelectButtonGroup.Item
-          value={EnumTransactionType.OUT}
+          value={TransactionTypeEnum.OUT}
           label="Expense"
           borderLeft
         />
         <SelectButtonGroup.Item
-          value={EnumTransactionType.IN}
+          value={TransactionTypeEnum.IN}
           label="Income"
           borderRight
         />
@@ -238,7 +238,7 @@ function AddTransaction() {
           value={state.amount}
         />
         <Icon
-          path={state.type === EnumTransactionType.OUT ? mdiMinus : mdiPlus}
+          path={state.type === TransactionTypeEnum.OUT ? mdiMinus : mdiPlus}
           title="Money amount"
           size={0.9}
           style={{ position: "absolute", left: 5, top: "25%", opacity: 0.2 }}

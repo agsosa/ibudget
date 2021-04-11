@@ -6,7 +6,7 @@ import { subDays } from "date-fns"; // eslint-disable-line
 import tw, { styled } from "twin.macro";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 import ReactSelect from "react-select";
-import { EnumPeriod } from "lib/Enums";
+import { PeriodEnum } from "lib/Enums";
 import { getPeriodLabel } from "lib/Helpers";
 import RadioGroup from "components/misc/input/RadioGroup";
 
@@ -30,28 +30,28 @@ const CloseBtn = tw(
 
 const radioGroupOptions = [
   {
-    value: EnumPeriod.SevenDays,
-    label: getPeriodLabel(EnumPeriod.SevenDays),
+    value: PeriodEnum.SEVEN_DAYS,
+    label: getPeriodLabel(PeriodEnum.SEVEN_DAYS),
   },
   {
-    value: EnumPeriod.ThirtyDays,
-    label: getPeriodLabel(EnumPeriod.ThirtyDays),
+    value: PeriodEnum.THIRTY_DAYS,
+    label: getPeriodLabel(PeriodEnum.THIRTY_DAYS),
   },
   {
-    value: EnumPeriod.NinetyDays,
-    label: getPeriodLabel(EnumPeriod.NinetyDays),
+    value: PeriodEnum.NINETY_DAYS,
+    label: getPeriodLabel(PeriodEnum.NINETY_DAYS),
   },
   {
-    value: EnumPeriod.TwelveMonths,
-    label: getPeriodLabel(EnumPeriod.TwelveMonths),
+    value: PeriodEnum.TWELVE_MONTHS,
+    label: getPeriodLabel(PeriodEnum.TWELVE_MONTHS),
   },
   {
-    value: EnumPeriod.Custom,
-    label: getPeriodLabel(EnumPeriod.Custom),
+    value: PeriodEnum.CUSTOM,
+    label: getPeriodLabel(PeriodEnum.CUSTOM),
   },
 ];
 
-const defaultPeriod = EnumPeriod.ThirtyDays;
+const defaultPeriod = PeriodEnum.THIRTY_DAYS;
 
 export default () => {
   const containterRef = React.useRef(null);
@@ -66,7 +66,7 @@ export default () => {
   ]);
 
   function handleRadioSelect(value) {
-    if (value !== EnumPeriod.Custom) setDropdownOpen(false);
+    if (value !== PeriodEnum.CUSTOM) setDropdownOpen(false);
     setPeriod(value);
   }
 
@@ -107,7 +107,7 @@ export default () => {
         />
 
         <DateComponent
-          hidden={period !== EnumPeriod.Custom}
+          hidden={period !== PeriodEnum.CUSTOM}
           editableDateInputs
           onChange={(item) => setDateRange([item.selection])}
           moveRangeOnFirstSelection={false}

@@ -7,8 +7,8 @@
         concept: string
         amount: number
         date: date
-        type: EnumTransactionType
-        category: EnumCategory
+        type_id: TransactionTypeEnum
+        category_id: CategoryEnum
         notes: string
       }
   
@@ -23,8 +23,8 @@ export const TransactionModel = {
     concept: null,
     amount: null,
     date: null,
-    type: null,
-    category: null,
+    type_id: null,
+    category_id: null,
     notes: null,
   },
   CONCEPT_MAX_CHARS: 25, // max TransactionModel's concept field length
