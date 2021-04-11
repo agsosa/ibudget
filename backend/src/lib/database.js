@@ -9,6 +9,7 @@ class Database {
       port: process.env.DB_PORT,
       user: process.env.DB_USER,
       password: process.env.DB_PASS,
+      database: process.env.DB_DATABASE,
     });
 
     this.connection.connect(function (err) {
@@ -26,14 +27,7 @@ class Database {
   }
 
   execute(query, params) {
-    return this.connection
-      .promise()
-      .execute(query, params)
-      .catch((err) =>
-        console.error(
-          `[Database] Prepared Statement executed with error: ${err}`
-        )
-      );
+    return this.connection.promise().execute(query, params);
   }
 }
 
