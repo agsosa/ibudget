@@ -25,9 +25,34 @@ const CloseBtn = tw(
 
 /* End styled components */
 
+const radioGroupOptions = [
+  {
+    value: EnumPeriod.SevenDays,
+    label: getPeriodLabel(EnumPeriod.SevenDays),
+  },
+  {
+    value: EnumPeriod.ThirtyDays,
+    label: getPeriodLabel(EnumPeriod.ThirtyDays),
+  },
+  {
+    value: EnumPeriod.NinetyDays,
+    label: getPeriodLabel(EnumPeriod.NinetyDays),
+  },
+  {
+    value: EnumPeriod.TwelveMonths,
+    label: getPeriodLabel(EnumPeriod.TwelveMonths),
+  },
+  {
+    value: EnumPeriod.Custom,
+    label: getPeriodLabel(EnumPeriod.Custom),
+  },
+];
+
+const defaultPeriod = EnumPeriod.ThirtyDays;
+
 export default () => {
   const containterRef = React.useRef(null);
-  const [period, setPeriod] = React.useState(EnumPeriod.ThirtyDays);
+  const [period, setPeriod] = React.useState(defaultPeriod);
   const [isDropdownOpen, setDropdownOpen] = React.useState(false);
   const [dateRange, setDateRange] = React.useState([
     {
@@ -72,28 +97,11 @@ export default () => {
     return (
       <DropdownContent show={isDropdownOpen}>
         <CloseBtn onClick={toggleDropdown} />
-        <RadioGroup onValueChange={handleRadioSelect} selectedValue={period}>
-          <RadioGroup.Item
-            value={EnumPeriod.SevenDays}
-            label={getPeriodLabel(EnumPeriod.SevenDays)}
-          />
-          <RadioGroup.Item
-            value={EnumPeriod.ThirtyDays}
-            label={getPeriodLabel(EnumPeriod.ThirtyDays)}
-          />
-          <RadioGroup.Item
-            value={EnumPeriod.NinetyDays}
-            label={getPeriodLabel(EnumPeriod.NinetyDays)}
-          />
-          <RadioGroup.Item
-            value={EnumPeriod.TwelveMonths}
-            label={getPeriodLabel(EnumPeriod.TwelveMonths)}
-          />
-          <RadioGroup.Item
-            value={EnumPeriod.Custom}
-            label={getPeriodLabel(EnumPeriod.Custom)}
-          />
-        </RadioGroup>
+        <RadioGroup
+          onValueChange={handleRadioSelect}
+          value={period}
+          options={radioGroupOptions}
+        />
 
         <DateComponent
           editableDateInputs
