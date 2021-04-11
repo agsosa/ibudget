@@ -25,17 +25,17 @@ const IllustrationContainer = tw.div`flex justify-center md:justify-end items-ce
 
 /* End styled components */
 
-const properties = {
-  heading: "Take control of your financial future",
-  description:
-    "It's time to reclaim control and face your finances. Monitor your income, track your spending and save money. Try it today, it's free!",
-  primaryButtonText: "Get Started",
-  primaryButtonUrl: "/register",
-  imageSrc: DesignIllustration,
-  imageCss: null,
-};
-
 export default () => {
+  const properties = {
+    heading: "Take control of your financial future",
+    description:
+      "It's time to reclaim control and face your finances. Monitor your income, track your spending and save money. Try it today, it's free!",
+    primaryButtonText: "Get Started",
+    primaryButtonUrl: "/register",
+    imageSrc: DesignIllustration,
+    imageCss: null,
+  };
+
   return (
     <>
       <Container>

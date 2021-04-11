@@ -9,7 +9,6 @@
     - small: boolean to indicate if the icon should be 50% smaller (optional)
 */
 
-/* eslint-disable */
 import tw, { styled } from "twin.macro";
 import { EnumCategory } from "lib/Enums";
 import { PropTypes } from "prop-types";
@@ -65,20 +64,10 @@ const getCategoryBackgroundStyle = (enumCategory) => {
   }
 };
 
-const CategoryImage = styled.div(({ category, small }) => [
-  tw`rounded-full bg-contain bg-no-repeat bg-orange-500 bg-center h-12 w-12 mr-4 flex justify-center align-middle`,
-  getCategoryBackgroundStyle(category),
-  small && tw`transform scale-50`,
-]);
-
-//const Icon = tw.i`text-white mt-2 text-3xl`;
-
-/* End styled components */
-
-function CategoryIcon({ category, small }) {
+// Get the associated material design icon for the category
+// TODO: Move to helper?
+const getCategoryMaterialIcon = (category) => {
   let icon;
-
-  // Get the associated FontAwesome class icon for the category
   switch (category) {
     case EnumCategory.SHOPPING:
       icon = mdiCartOutline;
@@ -116,6 +105,20 @@ function CategoryIcon({ category, small }) {
     default:
       icon = null;
   }
+
+  return icon;
+};
+
+const CategoryImage = styled.div(({ category, small }) => [
+  tw`rounded-full bg-contain bg-no-repeat bg-orange-500 bg-center h-12 w-12 mr-4 flex justify-center align-middle`,
+  getCategoryBackgroundStyle(category),
+  small && tw`transform scale-50`,
+]);
+
+/* End styled components */
+
+function CategoryIcon({ category, small }) {
+  const icon = getCategoryMaterialIcon(category);
 
   return (
     <CategoryImage category={category} small={small}>

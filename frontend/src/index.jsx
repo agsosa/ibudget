@@ -6,7 +6,7 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import React from "react";
 import ReactDOM from "react-dom";
-import Routes from "pages/Routes";
+import Routes from "Routes";
 import store from "lib/Store";
 import { Provider } from "react-redux";
 import reportWebVitals from "./reportWebVitals"; // TODO: Setup web vitals

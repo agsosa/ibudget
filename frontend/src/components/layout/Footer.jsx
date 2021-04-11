@@ -5,7 +5,7 @@
 import React from "react";
 import tw from "twin.macro";
 import { Container as ContainerBase } from "third-party/treact/components/misc/Layouts";
-import logo from "images/logo.png";
+import logosrc from "images/logo.png";
 import { APP_NAME } from "lib/Config";
 import { Link } from "react-router-dom";
 
@@ -30,28 +30,36 @@ const CopyrightText = tw.p`text-center mt-10 font-medium tracking-wide text-sm t
 /* End styled components */
 
 export default () => {
+  const copyright = (
+    <CopyrightText>&copy; Copyright 2021 - {APP_NAME}</CopyrightText>
+  );
+
+  const links = (
+    <>
+      <LinkStyle to="/">Home</LinkStyle>
+      <LinkStyle to="/how-it-works">How it Works</LinkStyle>
+      <LinkStyle to="/contact-us">Contact Us</LinkStyle>
+      <LinkStyle to="/privacy-policy">Privacy Policy</LinkStyle>
+      <LinkStyle to="/terms-of-service">Terms of Service</LinkStyle>
+    </>
+  );
+
+  const logo = (
+    <>
+      <LogoImg src={logosrc} />
+      <LogoText>{APP_NAME}</LogoText>
+    </>
+  );
+
   return (
     <Container>
       <Content>
         <Row>
-          <LogoContainer>
-            <LogoImg src={logo} />
-            <LogoText>{APP_NAME}</LogoText>
-          </LogoContainer>
+          <LogoContainer>{logo}</LogoContainer>
 
-          <LinksContainer>
-            <LinkStyle to="/">Home</LinkStyle>
+          <LinksContainer>{links}</LinksContainer>
 
-            <LinkStyle to="/how-it-works">How it Works</LinkStyle>
-
-            <LinkStyle to="/contact-us">Contact Us</LinkStyle>
-
-            <LinkStyle to="/privacy-policy">Privacy Policy</LinkStyle>
-
-            <LinkStyle to="/terms-of-service">Terms of Service</LinkStyle>
-          </LinksContainer>
-
-          <CopyrightText>&copy; Copyright 2021 - {APP_NAME}</CopyrightText>
+          {copyright}
         </Row>
       </Content>
     </Container>

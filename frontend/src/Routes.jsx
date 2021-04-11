@@ -17,9 +17,9 @@ import Navbar from "components/layout/Navbar";
 import Footer from "components/layout/Footer";
 import ScrollToTop from "components/misc/ScrollToTop";
 import AnimationRevealPage from "components/misc/AnimationRevealPage";
-import ContactUsPage from "./ContactUsPage";
-import PrivacyPolicyPage from "./PrivacyPolicyPage";
-import TermsOfServicePage from "./TermsOfServicePage";
+import ContactUsPage from "./pages/ContactUsPage";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
+import TermsOfServicePage from "./pages/TermsOfServicePage";
 
 const StyledDiv = tw.div`font-display min-h-screen min-w-full text-secondary-500`;
 

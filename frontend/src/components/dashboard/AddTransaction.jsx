@@ -54,19 +54,21 @@ const OptionalLabel = tw.text`text-sm font-light`;
 
 /* End styled components */
 
-const initialState = {
-  amount: null, // Number amount of money (required)
-  notes: "", // String notes (optional)
-  category: null, // Value of EnumCategory (required)
-  type: EnumTransactionType.OUT, // Value of EnumTransactionType (required)
-  date: null, // date  (required)
-  concept: "", // String concept (optional)
-};
-
-const OptionalText = <OptionalLabel>Opcional</OptionalLabel>;
-
 function AddTransaction() {
+  const initialState = {
+    amount: null, // Number amount of money (required)
+    notes: "", // String notes (optional)
+    category: null, // Value of EnumCategory (required)
+    type: EnumTransactionType.OUT, // Value of EnumTransactionType (required)
+    date: null, // date  (required)
+    concept: "", // String concept (optional)
+  };
+
   const [state, setState] = React.useState(initialState);
+
+  const OptionalText = <OptionalLabel>Opcional</OptionalLabel>;
+
+  /* Start event handlers */
 
   // Function called on text box input fields
   function onInputChange(evt) {
@@ -77,8 +79,9 @@ function AddTransaction() {
       value = evt.target.checked;
     } */
 
-    // Validate and parse input fields
     if (inputValue) {
+      // Validate input
+
       let parsedInput; // Used to parse fields if needed
       let validInput = false;
 
@@ -147,14 +150,18 @@ function AddTransaction() {
     }));
   }
 
-  const CategoryDropdown = (
+  /* End event handlers */
+
+  /* Start input components */
+
+  const CategoryInput = (
     <InputGroup>
       <InputLabel>Categoría</InputLabel>
       <CategorySelector onCategoryChange={onCategoryChange} />
     </InputGroup>
   );
 
-  const TypeSelect = (
+  const TypeInput = (
     <InputGroup>
       <InputLabel>Tipo de Transacción</InputLabel>
       <SelectButtonGroup
@@ -175,7 +182,7 @@ function AddTransaction() {
     </InputGroup>
   );
 
-  const NoteTextbox = (
+  const NoteInput = (
     <InputGroup>
       <InputLabel>Nota {OptionalText}</InputLabel>
 
@@ -189,7 +196,7 @@ function AddTransaction() {
     </InputGroup>
   );
 
-  const ConceptSelect = (
+  const ConceptInput = (
     <InputGroup>
       <InputLabel>Concepto {OptionalText}</InputLabel>
       <Input
@@ -202,7 +209,7 @@ function AddTransaction() {
     </InputGroup>
   );
 
-  const DateSelect = (
+  const DateInput = (
     <InputGroup>
       <InputLabel>Fecha</InputLabel>
       <Calendar
@@ -244,17 +251,19 @@ function AddTransaction() {
     </InputGroup>
   );
 
+  /* End subcomponents */
+
   return (
     <>
       <InputContainer>
         <LeftContainer>
-          {TypeSelect}
+          {TypeInput}
           {AmountInput}
-          {CategoryDropdown}
-          {NoteTextbox}
+          {CategoryInput}
+          {NoteInput}
         </LeftContainer>
         <RightContainer>
-          {ConceptSelect} {DateSelect}
+          {ConceptInput} {DateInput}
         </RightContainer>
       </InputContainer>
       <ButtonsContainer>
