@@ -16,7 +16,6 @@ import {
   Label,
   Input,
   Textarea,
-  Select,
   Checkbox,
   Radio,
   Help,
@@ -30,11 +29,15 @@ import SelectButtonGroup from "components/misc/SelectButtonGroup";
 import { TransactionModel } from "lib/Models";
 import { Calendar } from "react-date-range";
 import { enUS, es } from "react-date-range/dist/locale";
+import ReactSelect from "react-select";
+import { EnumCategory } from "lib/Enums";
+import CategoryIcon from "./CategoryIcon";
+import { getCategoryLabel } from "lib/Helpers";
 
 /* Start styled components */
 
 const InputContainer = tw.div`flex flex-col md:grid md:grid-cols-2 md:gap-12`;
-const LeftContainer = tw.div`flex-col flex items-center gap-4 md:gap-3`;
+const LeftContainer = tw.div`flex-col flex items-center gap-4 md:gap-2`;
 const RightContainer = tw.div`flex-col flex items-center gap-4`;
 
 const CommonBottonStyle = tw.button`py-2 px-8 lg:px-20 font-semibold text-lg focus:outline-none`;
@@ -51,6 +54,12 @@ const ButtonsContainer = tw.div`w-full justify-center items-center flex flex-col
 const InputGroup = tw.div`flex flex-col items-center mb-3 w-full sm:w-80`;
 const InputLabel = tw.text`text-lg font-semibold mb-2`;
 const OptionalLabel = tw.text`text-sm font-light`;
+
+const Select = tw(ReactSelect)`w-full`;
+const CategoryContainer = styled.div(({ small }) => [
+  tw`flex flex-row items-center`,
+  small && tw`absolute justify-center w-full`,
+]);
 
 /* End styled components */
 
@@ -139,15 +148,40 @@ function AddTransaction() {
     }));
   }
 
+  // Function called on category select
+  function onCategoryChange(item) {
+    setState((oldState) => ({
+      ...oldState,
+      category: item,
+    }));
+  }
+
+  const CategoryOption = ({ value, small }) => (
+    <CategoryContainer small={small}>
+      <CategoryIcon category={value} small={small} />
+      {getCategoryLabel(value)}
+    </CategoryContainer>
+  );
+
+  const SingleValue = ({ getValue }) => (
+    <CategoryOption value={getValue()[0].value} small />
+  );
+
   const CategoryDropdown = (
     <InputGroup>
       <InputLabel>Categoría</InputLabel>
-      <Input
-        onChange={onInputChange}
-        name="concept"
-        type="text"
-        placeholder={`Write something (${TransactionModel.CONCEPT_MAX_CHARS} characters)`}
-        value={state.concept}
+      <Select
+        className="basic-single"
+        classNamePrefix="select"
+        placeholder="Select..."
+        value={state.category}
+        components={{ SingleValue }}
+        isClearable
+        onChange={onCategoryChange}
+        isSearchable={false}
+        formatOptionLabel={CategoryOption}
+        options={Object.values(EnumCategory).map((value) => ({ value }))}
+        name="category"
       />
     </InputGroup>
   );
