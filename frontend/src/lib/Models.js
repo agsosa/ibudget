@@ -1,22 +1,8 @@
-/*
-  TransactionModel
-    shape:
-      {
-        id
-        user_id: 
-        concept: string
-        amount: number
-        date: date // date input by user
-        created_at: date
-        updated_at: date
-        type_id: TransactionTypeEnum
-        category_id: CategoryEnum
-        notes: string
-      }
-  
-    methods:
+/* eslint-disable no-unused-vars */
+import * as API from "lib/API";
+import { TransactionTypeEnum } from "./Enums";
 
-*/
+// TODO: Remove
 export const TransactionModel = {
   name: "TransactionModel",
   state: {
@@ -31,6 +17,7 @@ export const TransactionModel = {
     category_id: null,
     notes: null,
   },
+  // TODO: Move the limits to shared library
   CONCEPT_MAX_CHARS: 25, // max TransactionModel's concept field length
   NOTES_MAX_CHARS: 100, // max TransactionModel's notes field length
   AMOUNT_MIN_NUMBER: 0.01,
@@ -40,25 +27,54 @@ export const TransactionModel = {
 
 /*
   BudgetModel
-    shape:
       { 
         transactions: Array of TransactionModel
       }
 
-    methods:
+    effects:
+      async fetchTransactions() - Update the transactions array with the data from the server
+
+    selectors:
+      currentBalance() - Calculate the current balance taking in account all the transactions amount and type (in/out)
 */
 export const BudgetModel = {
   name: "BudgetModel",
-  state: { transactions: [] },
+  state: {
+    transactions: [],
+  },
   reducers: {
-    increment(state, payload) {
-      return state + payload;
+    // Set the transactions array
+    setTransactions(state, payload) {
+      return Array.isArray(payload)
+        ? { ...state, transactions: payload }
+        : state;
     },
   },
   effects: (dispatch) => ({
-    async incrementAsync(payload) {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      dispatch.count.increment(payload);
+    // Get transactions from backend
+    async fetchTransactions() {
+      const response = await API.getTransactions();
+      const { data, error } = response.data;
+
+      if (!error && data) {
+        // NOTE: The amount field of the transaction models is received as a string (it's a decimal), implement a decimal library to handle it if needed
+        data.forEach((q) => {
+          // Temp. solution
+          q.amount = Number(q.amount); // eslint-disable-line no-param-reassign
+        });
+
+        dispatch.BudgetModel.setTransactions(data);
+      }
+    },
+    // TODO: Implement Delete, create, update
+  }),
+  selectors: (slice, createSelector, hasProps) => ({
+    // Selector to get the current balance (sum of all transactions amount field, depending on transaction type)
+    currentBalance() {
+      const sumTransaction = (a, b) =>
+        b.type === TransactionTypeEnum.OUT ? a - b.amount : a + b.amount;
+
+      return slice((state) => state.transactions.reduce(sumTransaction, 0));
     },
   }),
 };
