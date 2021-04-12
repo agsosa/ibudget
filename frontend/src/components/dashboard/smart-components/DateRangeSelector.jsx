@@ -9,6 +9,7 @@ import ReactSelect from "react-select";
 import { PeriodEnum } from "lib/Enums";
 import { getPeriodLabel } from "lib/Helpers";
 import RadioGroup from "components/misc/input/RadioGroup";
+import { useDispatch, useSelector } from "react-redux";
 
 /* Start styled components */
 
@@ -51,23 +52,26 @@ const radioGroupOptions = [
   },
 ];
 
-const defaultPeriod = PeriodEnum.THIRTY_DAYS;
-
-export default () => {
+const DateRangeSelector = () => {
   const containterRef = React.useRef(null);
-  const [period, setPeriod] = React.useState(defaultPeriod);
   const [isDropdownOpen, setDropdownOpen] = React.useState(false);
+
+  const dispatch = useDispatch();
+  const { selectedPeriod, fromDate, toDate } = useSelector(
+    (state) => state.UserPrefsModel
+  );
+
   const [dateRange, setDateRange] = React.useState([
     {
-      startDate: new Date(),
-      endDate: subDays(new Date(), 30),
+      startDate: fromDate || new Date(),
+      endDate: toDate || subDays(new Date(), 30),
       key: "selection",
     },
   ]);
 
   function handleRadioSelect(value) {
     if (value !== PeriodEnum.CUSTOM) setDropdownOpen(false);
-    setPeriod(value);
+    dispatch({ type: "BudgetModel/fetchTransactions" }, value);
   }
 
   /* Start dropdown component */
@@ -102,12 +106,12 @@ export default () => {
         <CloseBtn onClick={toggleDropdown} />
         <RadioGroup
           onValueChange={handleRadioSelect}
-          value={period}
+          value={selectedPeriod}
           options={radioGroupOptions}
         />
 
         <DateComponent
-          hidden={period !== PeriodEnum.CUSTOM}
+          hidden={selectedPeriod !== PeriodEnum.CUSTOM}
           editableDateInputs
           onChange={(item) => setDateRange([item.selection])}
           moveRangeOnFirstSelection={false}
@@ -123,7 +127,7 @@ export default () => {
       <Select
         isSearchable={false}
         onMenuOpen={toggleDropdown}
-        placeholder={getPeriodLabel(period)}
+        placeholder={getPeriodLabel(selectedPeriod)}
         components={{
           Menu: () => null,
         }}
@@ -132,3 +136,5 @@ export default () => {
     </SelectContainer>
   );
 };
+
+export default DateRangeSelector;
