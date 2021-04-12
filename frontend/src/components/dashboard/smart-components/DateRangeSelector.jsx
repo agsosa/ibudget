@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { DateRange } from "react-date-range";
-import { subDays } from "date-fns"; // eslint-disable-line
+import { format, subDays } from "date-fns"; // eslint-disable-line
 import tw, { styled } from "twin.macro";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 import ReactSelect from "react-select";
@@ -70,11 +70,36 @@ const DateRangeSelector = () => {
   ]);
 
   function handleRadioSelect(value) {
-    if (value !== PeriodEnum.CUSTOM) setDropdownOpen(false);
-    dispatch({ type: "BudgetModel/fetchTransactions" }, value);
+    if (value !== PeriodEnum.CUSTOM) {
+      setDropdownOpen(false);
+    }
+
+    dispatch({
+      type: "UserPrefsModel/setSelectedPeriod",
+      payload: {
+        period: value,
+        fromDate: dateRange[0].startDate,
+        toDate: dateRange[0].endDate,
+      },
+    });
+  }
+
+  function handleDatePickerSelect(item) {
+    console.log(item);
+    setDateRange([item.selection]);
+
+    dispatch({
+      type: "UserPrefsModel/setSelectedPeriod",
+      payload: {
+        period: selectedPeriod,
+        fromDate: item.selection.startDate,
+        toDate: item.selection.endDate,
+      },
+    });
   }
 
   /* Start dropdown component */
+
   function toggleDropdown() {
     setDropdownOpen(!isDropdownOpen);
   }
@@ -113,21 +138,33 @@ const DateRangeSelector = () => {
         <DateComponent
           hidden={selectedPeriod !== PeriodEnum.CUSTOM}
           editableDateInputs
-          onChange={(item) => setDateRange([item.selection])}
+          onChange={handleDatePickerSelect}
           moveRangeOnFirstSelection={false}
           ranges={dateRange}
         />
       </DropdownContent>
     );
   }
+
   /* End dropdown component */
+
+  function getSelectPlaceholder() {
+    if (selectedPeriod !== PeriodEnum.CUSTOM) {
+      return getPeriodLabel(selectedPeriod);
+    }
+
+    console.log("getSelectPlaceholder called");
+    const fromDateFormatted = format(fromDate, "dd/MM/yy");
+    const toDateFormatted = format(toDate, "dd/MM/yy");
+    return `${fromDateFormatted} - ${toDateFormatted}`;
+  }
 
   return (
     <SelectContainer ref={containterRef}>
       <Select
         isSearchable={false}
         onMenuOpen={toggleDropdown}
-        placeholder={getPeriodLabel(selectedPeriod)}
+        placeholder={getSelectPlaceholder()}
         components={{
           Menu: () => null,
         }}
