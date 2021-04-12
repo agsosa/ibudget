@@ -21,6 +21,9 @@
 
         Inside our render:
           <MyModalContentWithHoc ref={modalRef} />
+
+    Props passed to wrapped component:
+      + toggleModal function to toggle the modal
 */
 
 /* eslint-disable react/prop-types */
@@ -95,7 +98,7 @@ function Modal(WrappedComponent, title) {
               </CloseModalButton>
             </Header>
             <ChildrenContainer>
-              <WrappedComponent {...props} />
+              <WrappedComponent toggleModal={toggleModal} {...props} />
             </ChildrenContainer>
           </ModalContent>
         </StyledModal>
