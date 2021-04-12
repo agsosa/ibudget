@@ -21,7 +21,8 @@ Number.prototype.countDecimals = function () {
 };
 
 // Javascript NumberFormat object to format money
-const moneyFormatter = new Intl.NumberFormat("en-US", {
+const moneyFormatter = new Intl.NumberFormat("es-ES", {
+  // TODO: Change format locale by user language settings
   style: "currency",
   currency: "USD",
   minimumFractionDigits: 0,
@@ -161,3 +162,14 @@ export const getCategoryMaterialIcon = (category) => {
 
   return icon;
 };
+
+// Helper function to sort an array of objects by field parameter (swap a,b parameters to switch between asc/desc)
+export function sortByField(a, b, field) {
+  if (a[field] > b[field]) {
+    return -1;
+  }
+  if (a[field] < b[field]) {
+    return 1;
+  }
+  return 0;
+}
