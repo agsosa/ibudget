@@ -1,5 +1,4 @@
 import { init } from "@rematch/core";
-import loadingPlugin from "@rematch/loading";
 import updatedPlugin from "@rematch/updated";
 import selectPlugin from "@rematch/select";
 import persistPlugin from "@rematch/persist";
@@ -27,12 +26,7 @@ const persistConfig = {
 const store = init({
   name: "MainStore",
   models,
-  plugins: [
-    persistPlugin(persistConfig),
-    updatedPlugin(),
-    loadingPlugin(),
-    selectPlugin(),
-  ],
+  plugins: [persistPlugin(persistConfig), updatedPlugin(), selectPlugin()],
 });
 
 export default store;
