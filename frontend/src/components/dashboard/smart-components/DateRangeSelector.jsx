@@ -17,6 +17,7 @@ import { PeriodEnum } from "lib/Enums";
 import { getPeriodLabel } from "lib/Helpers";
 import RadioGroup from "components/misc/input/RadioGroup";
 import { useDispatch, useSelector } from "react-redux";
+import store from "lib/Store";
 
 /* Start styled components */
 
@@ -67,6 +68,11 @@ const DateRangeSelector = () => {
   const { selectedPeriod, fromDate, toDate } = useSelector(
     (state) => state.UserPrefsModel
   );
+
+  const selection = store.select((models) => ({
+    periodLabel: models.UserPrefsModel.formattedSelectedPeriod,
+  }));
+  const { periodLabel } = useSelector(selection);
 
   const [dateRange, setDateRange] = React.useState([
     {
@@ -157,26 +163,12 @@ const DateRangeSelector = () => {
 
   /* End dropdown component */
 
-  /* 
-    Get the placeholder for our Select component
-    if selectedPeriod is CUSTOM, display fromDate - toDate, if not display the period label
-  */
-  function getSelectPlaceholder() {
-    if (selectedPeriod !== PeriodEnum.CUSTOM) {
-      return getPeriodLabel(selectedPeriod);
-    }
-
-    const fromDateFormatted = format(fromDate, "dd/MM/yy");
-    const toDateFormatted = format(toDate, "dd/MM/yy");
-    return `${fromDateFormatted} - ${toDateFormatted}`;
-  }
-
   return (
     <SelectContainer ref={containterRef}>
       <Select
         isSearchable={false}
         onMenuOpen={toggleDropdown}
-        placeholder={getSelectPlaceholder()}
+        placeholder={periodLabel}
         components={{
           Menu: () => null,
         }}
