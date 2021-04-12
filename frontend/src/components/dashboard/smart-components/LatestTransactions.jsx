@@ -15,6 +15,7 @@ import TransactionList from "components/dashboard/TransactionList";
 import { useSelector } from "react-redux";
 import { PropTypes } from "prop-types";
 import { sortByField } from "lib/Helpers";
+import NoDataIndicator from "components/misc/NoDataIndicator";
 
 function LatestTransactions({ limit }) {
   const transactions = useSelector((state) => state.BudgetModel.transactions);
@@ -25,14 +26,18 @@ function LatestTransactions({ limit }) {
     console.log(`Clicked transaction ${transaction}`);
   }
 
-  return (
-    <TransactionList
-      data={transactions
-        .sort((a, b) => sortByField(a, b, "id"))
-        .slice(0, limit)}
-      onClick={handleTransactionClick}
-    />
-  );
+  if (transactions && transactions.length >= 1) {
+    return (
+      <TransactionList
+        data={transactions
+          .sort((a, b) => sortByField(a, b, "id"))
+          .slice(0, limit)}
+        onClick={handleTransactionClick}
+      />
+    );
+  }
+
+  return <NoDataIndicator />;
 }
 
 LatestTransactions.defaultProps = {
