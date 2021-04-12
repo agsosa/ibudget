@@ -27,7 +27,7 @@ const moneyFormatter = new Intl.NumberFormat("es-ES", {
   style: "currency",
   currency: "USD",
   currencyDisplay: "narrowSymbol",
-  minimumFractionDigits: 0,
+  minimumFractionDigits: 1,
 });
 
 /**
