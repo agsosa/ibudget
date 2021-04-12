@@ -1,5 +1,4 @@
 import * as React from "react";
-import CardList from "components/misc/CardList";
 import tw, { styled } from "twin.macro";
 import Gauge from "components/dashboard/charts/Gauge";
 
@@ -17,25 +16,23 @@ const FlowContainer = tw(Container)`lg:flex-row -mb-5 sm:mb-0 mt-2 `;
 
 function MoneyFlowCard() {
   return (
-    <CardList.Item title="Flujo del dinero">
-      <Container>
-        <FlowContainer>
-          <Container>
-            <Description>Últimos 31 dias</Description>
-            <MoneySmall>+$366.55,10</MoneySmall>
-          </Container>
-          <Container>
-            <Description>Ingresos</Description>
-            <MoneySmall>+$366.55,10</MoneySmall>
-          </Container>
-          <Container>
-            <Description>Egresos</Description>
-            <MoneySmall isNegative>-$366.55,10</MoneySmall>
-          </Container>
-        </FlowContainer>
-        <Gauge />
-      </Container>
-    </CardList.Item>
+    <Container>
+      <FlowContainer>
+        <Container>
+          <Description>Últimos 31 dias</Description>
+          <MoneySmall>+$366.55,10</MoneySmall>
+        </Container>
+        <Container>
+          <Description>Ingresos</Description>
+          <MoneySmall>+$366.55,10</MoneySmall>
+        </Container>
+        <Container>
+          <Description>Egresos</Description>
+          <MoneySmall isNegative>-$366.55,10</MoneySmall>
+        </Container>
+      </FlowContainer>
+      <Gauge />
+    </Container>
   );
 }
 

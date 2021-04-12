@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import * as React from "react";
 import Articles from "components/dashboard/Articles";
 import CardList from "components/misc/CardList";
@@ -10,6 +12,12 @@ import LatestTransactionCard from "components/dashboard/cards-content/LatestTran
 import SpendingCard from "components/dashboard/cards-content/SpendingCard";
 import MoneyTrendCard from "components/dashboard/cards-content/MoneyTrendCard";
 import MoneyFlowCard from "components/dashboard/cards-content/MoneyFlowCard";
+import { getMoneyDisplayString } from "lib/Helpers";
+import { useSelector, useDispatch } from "react-redux";
+import store from "lib/Store";
+import logo from "images/logo.png";
+import Icon from "@mdi/react";
+import CloudLoadingIndicator from "./../../components/misc/CloudLoadingIndicator";
 
 /* Start styled components */
 
@@ -28,9 +36,29 @@ sm:py-10 flex flex-col max-w-full`;
 /* End style components */
 
 function DashboardPage() {
-  function Header() {
-    return (
-      <HeaderContainer>
+  /* Handle store */
+
+  const dispatch = useDispatch();
+
+  const selection = store.select((models) => ({
+    balance: models.BudgetModel.currentBalance,
+  }));
+
+  const { balance } = useSelector(selection);
+
+  React.useEffect(() => {
+    dispatch({ type: "BudgetModel/fetchTransactions" });
+  }, []);
+
+  // On View More click
+  function handleLastTransactionsViewMore() {
+    console.log("handleLastTransactionsViewMore");
+  }
+
+  /* End handle store */
+
+  /*      <HeaderContainer>
+        
         <Heading>Hello, Alejandro</Heading>
         <Description>Tu saldo hoy</Description>
         <Money
@@ -44,12 +72,18 @@ function DashboardPage() {
             duration: 2,
           }}
         >
-          $580.000.000
+          {getMoneyDisplayString(balance)}
         </Money>
         <DateRangeContainer>
           <DateRangeLabel>Period: </DateRangeLabel>
           <DateRangeSelector />
         </DateRangeContainer>
+      </HeaderContainer>*/
+
+  function Header() {
+    return (
+      <HeaderContainer>
+        <CloudLoadingIndicator download />
       </HeaderContainer>
     );
   }
@@ -58,14 +92,25 @@ function DashboardPage() {
     <ContentWithPaddingXl>
       <Header />
 
-      <CardList>
-        <LatestTransactionCard />
+      <CardList loading={false}>
+        <CardList.Item
+          title="Últimas transacciones"
+          onViewMoreClick={handleLastTransactionsViewMore}
+        >
+          <LatestTransactionCard />
+        </CardList.Item>
 
-        <MoneyTrendCard />
+        <CardList.Item title="Tendencia del saldo">
+          <MoneyTrendCard />
+        </CardList.Item>
 
-        <SpendingCard />
+        <CardList.Item title="Gastos">
+          <SpendingCard />
+        </CardList.Item>
 
-        <MoneyFlowCard />
+        <CardList.Item title="Flujo del dinero">
+          <MoneyFlowCard />
+        </CardList.Item>
       </CardList>
 
       <Articles />

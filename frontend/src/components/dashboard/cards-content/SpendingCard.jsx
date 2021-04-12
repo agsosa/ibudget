@@ -1,5 +1,4 @@
 import * as React from "react";
-import CardList from "components/misc/CardList";
 import tw, { styled } from "twin.macro";
 import PieChart from "components/dashboard/charts/PieChart";
 
@@ -15,13 +14,11 @@ const Container = tw.div`w-full flex flex-col items-center -mt-2`;
 
 function SpendingCard() {
   return (
-    <CardList.Item title="Gastos">
-      <Container>
-        <Description>Últimos 31 dias</Description>
-        <MoneySmall isNegative>-$366.55,10</MoneySmall>
-        <PieChart />
-      </Container>
-    </CardList.Item>
+    <Container>
+      <Description>Últimos 31 dias</Description>
+      <MoneySmall isNegative>-$366.55,10</MoneySmall>
+      <PieChart />
+    </Container>
   );
 }
 
