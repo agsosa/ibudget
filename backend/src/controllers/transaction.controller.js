@@ -19,3 +19,15 @@ exports.findAll = function (req, res) {
       utils.sendFailedResponse(res, err, 400);
     });
 };
+
+exports.create = function (req, res) {
+  TransactionModel.create(req.body)
+    .then((result) => {
+      utils.sendSuccessResponse(
+        res,
+        "Transaction successfully created",
+        result
+      );
+    })
+    .catch((err) => utils.sendFailedResponse(res, err, 500));
+};

@@ -1,30 +1,62 @@
-const { validateShape } = require("@lib/utils");
 const database = require("@lib/database");
 const Joi = require("joi");
 
 const TABLE_NAME = "transactions";
 const TransactionModel = {
-  // TODO: Use shared limits and enums to validate
   infoSchema: Joi.object({
-    amount: Joi.number(),
-    category_id: Joi.number(),
-    type_id: Joi.number(),
-    date: Joi.date(),
-    concept: Joi.string().optional(),
-    notes: Joi.string().optional(),
+    amount: Joi.number().required(), // TODO: Use shared limits and enums to validate
+    category_id: Joi.number().required(), // TODO: Use shared limits and enums to validate
+    type_id: Joi.number().required(), // TODO: Use shared limits and enums to validate
+    date: Joi.date().required(),
+    concept: Joi.string().optional(), // TODO: Use shared limits and enums to validate
+    notes: Joi.string().optional(), // TODO: Use shared limits and enums to validate
   }),
 };
 
-TransactionModel.create = (user_id, transaction_info) => {
-  // TODO: Validate user_id
+TransactionModel.create = (transaction_info) => {
+  return new Promise((resolve, reject) => {
+    // Joi validation
+    const isValidInfo =
+      transaction_info &&
+      TransactionModel.infoSchema.validate(transaction_info);
+    // Joi: If the info is not valid then isValidInfo.error will exist and details.message will exist
 
-  const isValidInfo = TransactionModel.infoSchema.validate(transaction_info);
+    if (!isValidInfo || isValidInfo.error)
+      reject(
+        `The specified transaction info is not valid. ${
+          isValidInfo ? isValidInfo.error : ""
+        }`
+      );
 
-  console.log(JSON.stringify(isValidInfo));
+    const user_id = 0; // TODO: Add user_id param, validate user_id
 
-  // If the info is not valid then isValidInfo.error will exist and details.message will exist
+    const {
+      amount,
+      category_id,
+      type_id,
+      concept,
+      notes,
+      date,
+    } = transaction_info;
 
-  return isValidInfo;
+    const query = `INSERT INTO ${TABLE_NAME} (amount, category_id, type_id, concept, notes, user_id, date) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+    const params = [
+      amount,
+      category_id,
+      type_id,
+      concept || null,
+      notes || null,
+      user_id,
+      new Date(date),
+    ];
+
+    database
+      .execute(query, params)
+      .then(([rows]) => {
+        resolve({ ...transaction_info, user_id, id: rows.insertId });
+      })
+      .catch((err) => reject(err));
+  });
 };
 
 TransactionModel.delete = (id) => {
