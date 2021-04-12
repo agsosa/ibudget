@@ -6,6 +6,7 @@ description blabla
 #### Used frameworks/libs:
 - React.js (hooks)
 - Rematch (Redux)
+- i18next
 - Tailwind CSS
 - styled-components, twin.macro, Framer Motion
 - Treact landing page components/utilities
