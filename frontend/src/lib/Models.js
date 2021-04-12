@@ -76,5 +76,35 @@ export const BudgetModel = {
 
       return slice((state) => state.transactions.reduce(sumTransaction, 0));
     },
+    /* Selector to get the balance historial from a date. 
+    Returns an array of {date: (js Date), balance: (number))}, 
+    with date >= fromDate, 
+    date unique (it will accumulate all the transaction amounts for the same date)
+    */
+    balanceHistorial: hasProps(function (models, fromDate) {
+      const result = []; // Should be array of {date: js date, balance: number}. Date should be unique
+
+      const buildResult = (q) => {
+        const current = result.find((r) => r.date === q.date); // Check if we already have this date added to our result array
+
+        if (current) {
+          // If we already have the date on our result array, then use it to accumulate the current amount
+          current.balance =
+            q.type_id === TransactionTypeEnum.OUT
+              ? current.balance - q.amount
+              : current.balance + q.amount;
+        } else result.push({ date: q.date, balance: q.amount });
+      };
+
+      return slice((state) => state.transactions.map(buildResult));
+    }),
+    // Selector to get the transactions list from a date
+    transactionsFromDate: hasProps(function (models, fromDate) {
+      return slice((state) =>
+        state.transactions.filter(
+          (q) => q.date >= fromDate.setHours(0, 0, 0, 0)
+        )
+      );
+    }),
   }),
 };
