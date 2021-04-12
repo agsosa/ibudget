@@ -31,6 +31,8 @@ import { Calendar } from "react-date-range";
 import { enUS, es } from "react-date-range/dist/locale";
 import CategorySelector from "components/dashboard/CategorySelector";
 import CloudLoadingIndicator from "components/misc/CloudLoadingIndicator";
+import LoadingOverlay from "components/layout/LoadingOverlay";
+import Modal from "components/misc/Modal";
 
 /* Start styled components */
 
@@ -55,7 +57,7 @@ const OptionalLabel = tw.text`text-sm font-light`;
 
 /* End styled components */
 
-function AddTransaction() {
+function AddTransactionModal() {
   const initialState = {
     amount: null, // Number amount of money (required)
     notes: "", // String notes (optional)
@@ -71,6 +73,10 @@ function AddTransaction() {
   const OptionalText = <OptionalLabel>Opcional</OptionalLabel>;
 
   /* Start event handlers */
+
+  // Function called on Add transaction button click
+  // Parameter closeModal: set to true to close the parent modal
+  function onAddTransactionButtonClick(closeModal) {}
 
   // Function called on text box input fields
   function onInputChange(evt) {
@@ -281,8 +287,12 @@ function AddTransaction() {
           <CloudLoadingIndicator upload />
         ) : (
           <>
-            <PrimaryButton>Add Transaction</PrimaryButton>
-            <SecondaryButton>Add and Create another</SecondaryButton>
+            <PrimaryButton onClick={() => onAddTransactionButtonClick(true)}>
+              Add Transaction
+            </PrimaryButton>
+            <SecondaryButton onClick={onAddTransactionButtonClick}>
+              Add and Create another
+            </SecondaryButton>
           </>
         )}
       </ButtonsContainer>
@@ -290,4 +300,5 @@ function AddTransaction() {
   );
 }
 
-export default AddTransaction;
+const withModalHoc = Modal(AddTransactionModal, "Add Transaction");
+export default withModalHoc;
