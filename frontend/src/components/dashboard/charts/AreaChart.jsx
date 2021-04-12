@@ -13,11 +13,12 @@ function Chart({ data }) {
     xField: "date",
     yField: "balance",
     xAxis: { tickCount: 5 },
-    slider: {
+    smooth: true,
+    /* slider: {
       start: 0,
       end: 1,
       trendCfg: { isArea: true },
-    },
+    }, */
   };
 
   return <Area {...config} />;
