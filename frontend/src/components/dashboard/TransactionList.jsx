@@ -15,7 +15,6 @@
 import * as React from "react";
 import tw, { styled } from "twin.macro";
 import { PropTypes } from "prop-types";
-import { TransactionModel } from "lib/Models";
 import { getCategoryLabel, getMoneyDisplayString } from "lib/Helpers";
 import { TransactionTypeEnum } from "lib/Enums";
 import format from "date-fns/format";
@@ -96,7 +95,7 @@ TransactionItem.defaultProps = {
 };
 
 TransactionItem.propTypes = {
-  data: PropTypes.objectOf(TransactionModel.state).isRequired,
+  data: PropTypes.object.isRequired,
   onClick: PropTypes.func,
 };
 
@@ -104,7 +103,7 @@ TransactionList.defaultProps = {
   data: null,
 };
 TransactionList.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.objectOf(TransactionModel.state)),
+  data: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default TransactionList;
