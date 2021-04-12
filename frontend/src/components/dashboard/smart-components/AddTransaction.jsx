@@ -1,7 +1,7 @@
 /*
   Smart component (Interacting with BudgetModel)
 
-  Component (FORM) to create a new TransactionModel
+  Component to create a new TransactionModel
 
   Usage:
     <AddTransaction />
@@ -30,6 +30,7 @@ import { TransactionModel } from "lib/Models";
 import { Calendar } from "react-date-range";
 import { enUS, es } from "react-date-range/dist/locale";
 import CategorySelector from "components/dashboard/CategorySelector";
+import CloudLoadingIndicator from "components/misc/CloudLoadingIndicator";
 
 /* Start styled components */
 
@@ -65,6 +66,7 @@ function AddTransaction() {
   };
 
   const [state, setState] = React.useState(initialState);
+  const [loading, setLoading] = React.useState(true);
 
   const OptionalText = <OptionalLabel>Opcional</OptionalLabel>;
 
@@ -157,7 +159,10 @@ function AddTransaction() {
   const CategoryInput = (
     <InputGroup>
       <InputLabel>Categoría</InputLabel>
-      <CategorySelector onCategoryChange={onCategoryChange} />
+      <CategorySelector
+        disabled={loading}
+        onCategoryChange={onCategoryChange}
+      />
     </InputGroup>
   );
 
@@ -165,6 +170,7 @@ function AddTransaction() {
     <InputGroup>
       <InputLabel>Tipo de Transacción</InputLabel>
       <SelectButtonGroup
+        disabled={loading}
         selectedValue={state.type}
         onValueSelect={onTypeButtonClick}
       >
@@ -188,6 +194,7 @@ function AddTransaction() {
 
       <Textarea
         name="notes"
+        disabled={loading}
         value={state.notes}
         resizable={false}
         onChange={onInputChange}
@@ -202,6 +209,7 @@ function AddTransaction() {
       <Input
         onChange={onInputChange}
         name="concept"
+        disabled={loading}
         type="text"
         placeholder={`Write something (${TransactionModel.CONCEPT_MAX_CHARS} characters)`}
         value={state.concept}
@@ -213,6 +221,7 @@ function AddTransaction() {
     <InputGroup>
       <InputLabel>Fecha</InputLabel>
       <Calendar
+        isDisabled={loading}
         onChange={onCalendarChange}
         locale={es} // TODO: Automatically get calendar locale
         date={state.date}
@@ -226,6 +235,7 @@ function AddTransaction() {
 
       <Control>
         <Input
+          disabled={loading}
           onChange={onInputChange}
           name="amount"
           type="number"
@@ -267,8 +277,14 @@ function AddTransaction() {
         </RightContainer>
       </InputContainer>
       <ButtonsContainer>
-        <PrimaryButton>Add Transaction</PrimaryButton>
-        <SecondaryButton>Add and Create another</SecondaryButton>
+        {loading ? (
+          <CloudLoadingIndicator upload />
+        ) : (
+          <>
+            <PrimaryButton>Add Transaction</PrimaryButton>
+            <SecondaryButton>Add and Create another</SecondaryButton>
+          </>
+        )}
       </ButtonsContainer>
     </>
   );

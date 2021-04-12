@@ -5,6 +5,7 @@
     Props:
       selectedValue: current selected value, it will select any child SelectButtonGroup.Item with this value (required)(any)
       onValueSelect: callback to be called on any child SelectButtonGroup.Item click (function(value))
+      disabled: boolean to indicate disabled status (optional)(bool)
 
   SelectButtonGroup.Item
     Individual item
@@ -15,6 +16,7 @@
       rounded: apply rounded style (optional)(bool)
       roundedLeft: apply left rounded style (optional)(bool)
       roundedRight: apply right rounded style (optional)(bool)
+      disabled: boolean to indicate disabled status (optional)(bool)
 
       isSelected: condition to check/uncheck the radio (bool) (managed by SelectButtonGroup)
       onClickCB: callback to be called on check (function(value)) (managed by SelectButtonGroup's onValueSelect)
@@ -42,12 +44,13 @@ import { PropTypes } from "prop-types";
 
 const Container = tw.div`flex flex-row`;
 const SelectButton = styled.button(
-  ({ isSelected, roundedLeft, roundedRight, rounded }) => [
+  ({ isSelected, roundedLeft, roundedRight, rounded, disabled }) => [
     tw`bg-primary-200 hocus:outline-none px-6 py-1 transform hover:scale-110 hover:z-50 transition duration-200 ease-in-out`,
     isSelected && tw`bg-primary-500 text-white font-semibold`,
     roundedLeft && tw`rounded-l-lg`,
     roundedRight && tw`rounded-r-lg`,
     rounded && tw`rounded-lg`,
+    disabled && tw`bg-gray-500 hover:scale-100 text-gray-800`,
   ]
 );
 
@@ -57,11 +60,13 @@ function SelectButtonItem({
   isSelected,
   roundedLeft,
   roundedRight,
+  disabled,
   rounded,
   onClickCB,
 }) {
   return (
     <SelectButton
+      disabled={disabled}
       isSelected={isSelected}
       roundedLeft={roundedLeft}
       roundedRight={roundedRight}
@@ -76,7 +81,12 @@ function SelectButtonItem({
   );
 }
 
-function SelectButtonGroup({ onValueSelect, children, selectedValue }) {
+function SelectButtonGroup({
+  onValueSelect,
+  children,
+  selectedValue,
+  disabled,
+}) {
   const childrenArray = React.Children.map(children, (child) => {
     if (child) {
       return React.cloneElement(
@@ -85,6 +95,7 @@ function SelectButtonGroup({ onValueSelect, children, selectedValue }) {
           ? {
               isSelected: child.props.value === selectedValue,
               onClickCB: onValueSelect,
+              disabled,
             }
           : {}
       );
@@ -104,6 +115,7 @@ SelectButtonItem.defaultProps = {
   roundedLeft: false,
   roundedRight: false,
   rounded: false,
+  disabled: false,
 };
 
 SelectButtonItem.propTypes = {
@@ -114,17 +126,20 @@ SelectButtonItem.propTypes = {
   roundedRight: PropTypes.bool,
   rounded: PropTypes.bool,
   onClickCB: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 SelectButtonGroup.defaultProps = {
   children: null,
   onValueSelect: null,
+  disabled: false,
 };
 
 SelectButtonGroup.propTypes = {
   children: PropTypes.node,
   onValueSelect: PropTypes.func,
   selectedValue: PropTypes.any.isRequired, // eslint-disable-line
+  disabled: PropTypes.bool,
 };
 
 export default SelectButtonGroup;

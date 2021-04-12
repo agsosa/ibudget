@@ -5,6 +5,7 @@
 
   props:
     onCategorySelect: callback(CategoryEnum) called on value change
+    disabled: boolean to indicate if the input is disabled
 */
 
 import * as React from "react";
@@ -52,7 +53,7 @@ SingleValue.propTypes = {
 };
 
 // Exported component
-function CategorySelector({ onCategorySelect }) {
+function CategorySelector({ onCategorySelect, disabled }) {
   const [value, setValue] = React.useState(null);
 
   function onCategoryChange(item) {
@@ -62,6 +63,7 @@ function CategorySelector({ onCategorySelect }) {
 
   return (
     <Select
+      isDisabled={disabled}
       className="basic-single"
       classNamePrefix="select"
       placeholder="Select..."
@@ -79,10 +81,12 @@ function CategorySelector({ onCategorySelect }) {
 
 CategorySelector.defaultProps = {
   onCategorySelect: null,
+  disabled: false,
 };
 
 CategorySelector.propTypes = {
   onCategorySelect: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 export default CategorySelector;
