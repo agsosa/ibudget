@@ -11,11 +11,14 @@
       data: Array of TransactionModel objects to display
 */
 
+/* eslint-disable camelcase */
 import * as React from "react";
 import tw, { styled } from "twin.macro";
 import { PropTypes } from "prop-types";
-import { getCategoryLabel } from "lib/Helpers";
 import { TransactionModel } from "lib/Models";
+import { getCategoryLabel, getMoneyDisplayString } from "lib/Helpers";
+import { TransactionTypeEnum } from "lib/Enums";
+import format from "date-fns/format";
 import CategoryIcon from "./CategoryIcon";
 
 /* Start styled components */
@@ -46,19 +49,24 @@ const LeftContainer = tw.div`flex flex-row justify-self-start ml-5 sm:ml-0`;
 /* End styled components */
 
 function TransactionItem({ data, onClick }) {
+  const { category_id, concept, date, amount, type_id } = data;
+
   return (
     <Item onClick={onClick}>
       <ItemContentContainer>
         <LeftContainer>
-          <CategoryIcon category={data.category_id} />
+          <CategoryIcon category={category_id} />
           <FlexCol>
-            <Category>{getCategoryLabel(data.category_id)}</Category>
-            <Concept>Varios</Concept>
+            <Category>{getCategoryLabel(category_id)}</Category>
+            <Concept>{concept || "(sin concepto)"}</Concept>
           </FlexCol>
         </LeftContainer>
         <RightContainer>
-          <Amount isNegative>-$500.230,50</Amount>
-          <Date>4/21/2021, 10:00 PM</Date>
+          <Amount isNegative={type_id === TransactionTypeEnum.OUT}>
+            {type_id === TransactionTypeEnum.OUT ? "-" : "+"}
+            {getMoneyDisplayString(amount)}
+          </Amount>
+          <Date>{format(date, "dd-MM-yy")}</Date>
         </RightContainer>
       </ItemContentContainer>
     </Item>
