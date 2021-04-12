@@ -24,7 +24,7 @@ description blabla
 - Joi (data validation)
 
 #### Tests/Documentation:
-- API documentation (Postman): https://documenter.getpostman.com/view/13863838/TzCV45Ku#c712334d-09c9-4973-83b0-24ab6e862b07
+- API documentation (Postman): https://documenter.getpostman.com/view/13863838/TzCV45Ku
 
 ## How to deploy
 - Set dotenv vars prepare mysql database bla bla
