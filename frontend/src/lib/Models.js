@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+/* eslint-disable */
 import * as API from "lib/API";
 import { subDays, subMonths, format } from "date-fns";
 import { getPeriodLabel } from "lib/Helpers";
@@ -51,6 +52,12 @@ export const BudgetModel = {
         ? { ...state, transactions: payload }
         : state;
     },
+    addTransaction(state, payload) {
+      // TODO: Add payload validation
+      return Object.isObject(payload)
+        ? { ...state, transactions: [...state.transactions, payload] }
+        : state;
+    },
   },
   effects: (dispatch) => ({
     /* 
@@ -62,7 +69,7 @@ export const BudgetModel = {
     fetchTransactions(payload) {
       API.getTransactions()
         .then((response) => {
-          const { data, error } = response.data;
+          const { data, error } = response;
 
           if (!error && data) {
             // NOTE: The amount field of the transaction models is received as a string (it's a decimal), implement a decimal library to handle it if needed
@@ -70,6 +77,8 @@ export const BudgetModel = {
               q.date = new Date(q.date); // eslint-disable-line no-param-reassign
               q.amount = Number(q.amount); // eslint-disable-line no-param-reassign
             });
+
+            this.setTransactions(data);
           }
 
           return response;
@@ -79,7 +88,28 @@ export const BudgetModel = {
           if (payload && payload.callback) payload.callback(result);
         });
     },
-    // TODO: Implement Delete, create, update
+    createTransaction(payload) {
+      API.createTransaction(payload.transactionInfo)
+        .then((response) => {
+          const { data, error } = response;
+
+          if (!error && data) {
+            data.forEach((q) => {
+              q.date = new Date(q.date); // eslint-disable-line no-param-reassign
+              q.amount = Number(q.amount); // eslint-disable-line no-param-reassign
+            });
+
+            this.addTransaction(data);
+          }
+
+          return response;
+        })
+        .catch((error) => error)
+        .then((result) => {
+          if (payload && payload.callback) payload.callback(result);
+        });
+    },
+    // TODO: Implement Delete,  update
   }),
   selectors: (slice, createSelector, hasProps) => ({
     // Selector to get the current balance (sum of all transactions amount field, depending on transaction type)
@@ -187,7 +217,6 @@ export const UserPrefsModel = {
     // Selector to get the current selected period label (string) (for selectedPeriod = PeriodEnum.CUSTOM it will return something like "11/04/2021 - 12/04/2021")
     formattedSelectedPeriod() {
       return createSelector(slice, (state) => {
-        console.log(state);
         if (
           state.selectedPeriod === PeriodEnum.CUSTOM &&
           state.fromDate &&
