@@ -72,7 +72,7 @@ export const BudgetModel = {
     // Selector to get the current balance (sum of all transactions amount field, depending on transaction type)
     currentBalance() {
       const sumTransaction = (a, b) =>
-        b.type === TransactionTypeEnum.OUT ? a - b.amount : a + b.amount;
+        b.type_id === TransactionTypeEnum.OUT ? a - b.amount : a + b.amount;
 
       return slice((state) => state.transactions.reduce(sumTransaction, 0));
     },
