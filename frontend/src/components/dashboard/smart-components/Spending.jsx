@@ -12,7 +12,7 @@ const Container = tw.div`w-full flex flex-col items-center -mt-2`;
 
 /* End style components */
 
-function SpendingCard() {
+function Spending() {
   return (
     <Container>
       <Description>Últimos 31 dias</Description>
@@ -22,4 +22,4 @@ function SpendingCard() {
   );
 }
 
-export default SpendingCard;
+export default Spending;

@@ -14,7 +14,7 @@ const FlowContainer = tw(Container)`lg:flex-row -mb-5 sm:mb-0 mt-2 `;
 
 /* End style components */
 
-function MoneyFlowCard() {
+function MoneyFlow() {
   return (
     <Container>
       <FlowContainer>
@@ -36,4 +36,4 @@ function MoneyFlowCard() {
   );
 }
 
-export default MoneyFlowCard;
+export default MoneyFlow;
