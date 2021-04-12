@@ -12,7 +12,7 @@ import {
   mdiAccount,
   mdiDotsVertical,
 } from "@mdi/js";
-import { CategoryEnum, PeriodEnum } from "./Enums";
+import { CategoryEnum, PeriodEnum, TransactionTypeEnum } from "./Enums";
 
 // Add countDecimals() to Number
 /* eslint-disable no-extend-native */
@@ -55,6 +55,11 @@ export function getPeriodLabel(periodEnum) {
     default:
       return "Invalid period";
   }
+}
+
+// Function to get the symbol (+ or -) string for a TransactionTypeEnum value (example: getTransactionTypeSymbol(TransactionTypeEnum.OUT) = "-")
+export function getTransactionTypeSymbol(transactionTypeEnum) {
+  return transactionTypeEnum === TransactionTypeEnum.OUT ? "-" : "+";
 }
 
 // Function to convert a CategoryEnum value to a label
