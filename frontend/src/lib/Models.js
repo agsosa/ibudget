@@ -53,20 +53,31 @@ export const BudgetModel = {
     },
   },
   effects: (dispatch) => ({
-    // Get transactions from backend
-    async fetchTransactions() {
-      const response = await API.getTransactions();
-      const { data, error } = response.data;
+    /* 
+      Get transactions from backend. 
+      - Optional payload parameter { callback: function(result) } 
+          callback will be a function called with a result object ({ error: boolean, message: string, data?: any })
+          after the request promise is resolved/rejected
+    */
+    fetchTransactions(payload) {
+      API.getTransactions()
+        .then((response) => {
+          const { data, error } = response.data;
 
-      if (!error && data) {
-        // NOTE: The amount field of the transaction models is received as a string (it's a decimal), implement a decimal library to handle it if needed
-        data.forEach((q) => {
-          q.date = new Date(q.date); // eslint-disable-line no-param-reassign
-          q.amount = Number(q.amount); // eslint-disable-line no-param-reassign
+          if (!error && data) {
+            // NOTE: The amount field of the transaction models is received as a string (it's a decimal), implement a decimal library to handle it if needed
+            data.forEach((q) => {
+              q.date = new Date(q.date); // eslint-disable-line no-param-reassign
+              q.amount = Number(q.amount); // eslint-disable-line no-param-reassign
+            });
+          }
+
+          return response;
+        })
+        .catch((error) => error)
+        .then((result) => {
+          if (payload && payload.callback) payload.callback(result);
         });
-
-        dispatch.BudgetModel.setTransactions(data);
-      }
     },
     // TODO: Implement Delete, create, update
   }),
