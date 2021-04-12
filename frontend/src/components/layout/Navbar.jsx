@@ -18,7 +18,7 @@ import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 import { APP_NAME } from "lib/Config";
 import Modal from "components/misc/Modal";
 import { PropTypes } from "prop-types";
-import AddTransaction from "components/dashboard/AddTransactionModal";
+import AddTransaction from "components/dashboard/smart-components/AddTransaction";
 
 /* Start styled components */
 
