@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import * as API from "lib/API";
-import { subDays, subMonths } from "date-fns";
+import { subDays, subMonths, format } from "date-fns";
+import { getPeriodLabel } from "lib/Helpers";
 import { TransactionTypeEnum, PeriodEnum } from "./Enums";
 
 // TODO: Remove
@@ -77,14 +78,17 @@ export const BudgetModel = {
 
       return slice((state) => state.transactions.reduce(sumTransaction, 0));
     },
-    // Selector to get the transactions list from a date
-    transactionsFromDate: hasProps(function (models, fromDate) {
-      return slice((state) =>
-        state.transactions.filter(
-          (q) => q.date >= fromDate.setHours(0, 0, 0, 0)
-        )
+    // Selector to get the transactions list filtered by date to be in the range of UserPrefsModel fromDate and toDate
+    transactionsFromSelectedPeriod() {
+      return createSelector(
+        slice, // shortcut for (rootState) => rootState.BudgetModel
+        (rootState) => rootState.UserPrefsModel,
+        ({ transactions }, userPrefs) =>
+          transactions.filter(
+            (q) => q.date >= userPrefs.fromDate && q.date <= userPrefs.toDate
+          )
       );
-    }),
+    },
   }),
 };
 
@@ -100,7 +104,7 @@ export const BudgetModel = {
       setSelectedPeriod(payload)
         Payload: { selectedPeriod: value of PeriodEnum, fromDate: should be a valid JS date if period is PeriodEnum.CUSTOM, toDate: same as fromDate}
         Update selectedPeriod, fromDate and toDate fields. fromDate and toDate will be calculated depending on the passed selectedPeriod via payload.
-        
+
     selectors:
 
 */
@@ -168,5 +172,23 @@ export const UserPrefsModel = {
     },
   },
   effects: (dispatch) => ({}),
-  selectors: (slice, createSelector, hasProps) => ({}),
+  selectors: (slice, createSelector, hasProps) => ({
+    // Selector to get the current selected period label (string) (for selectedPeriod = PeriodEnum.CUSTOM it will return something like "11/04/2021 - 12/04/2021")
+    formattedSelectedPeriod() {
+      return createSelector(slice, (state) => {
+        console.log(state);
+        if (
+          state.selectedPeriod === PeriodEnum.CUSTOM &&
+          state.fromDate &&
+          state.toDate
+        ) {
+          const fromDateFormatted = format(state.fromDate, "dd/MM/yy");
+          const toDateFormatted = format(state.toDate, "dd/MM/yy");
+          return `${fromDateFormatted} - ${toDateFormatted}`;
+        }
+
+        return getPeriodLabel(state.selectedPeriod);
+      });
+    },
+  }),
 };
