@@ -30,20 +30,21 @@ cursor-pointer
 hocus:bg-primary-100`;
 
 const ItemContentContainer = tw.div`
-flex justify-center sm:grid sm:grid-cols-2 
+flex sm:grid sm:grid-cols-2 
 sm:grid-rows-1 align-middle -ml-10 sm:ml-0`;
 
 const List = tw.ul``;
 const Amount = styled.text(({ isNegative }) => [
-  tw`sm:text-right`,
+  tw`text-right`,
   isNegative ? tw`text-red-600` : tw`text-green-600`,
 ]);
-const Date = tw.text`text-gray-500 sm:text-right text-xs`;
-const Category = tw.text`text-black text-base hidden sm:flex hocus:text-primary-500`;
-const Concept = tw.text`text-gray-500 text-sm hidden sm:flex`; // TODO: Shrink text
+const Date = tw.text`text-gray-500 text-right text-xs`;
+const Category = tw.text`text-black text-base hocus:text-primary-500  overflow-visible`;
+const Concept = tw.text`text-gray-500 text-sm overflow-hidden`; // TODO: Shrink text
 const FlexCol = tw.div`flex flex-col`;
-const RightContainer = tw(FlexCol)`sm:justify-self-end `;
-const LeftContainer = tw.div`flex flex-row justify-self-start ml-5 sm:ml-0`;
+const CategoryConceptContainer = tw(FlexCol)`ml-3 justify-center`;
+const RightContainer = tw(FlexCol)`justify-self-end w-full`;
+const LeftContainer = tw.div`flex flex-row ml-6 sm:ml-0`;
 
 /* End styled components */
 
@@ -55,10 +56,10 @@ function TransactionItem({ data, onClick }) {
       <ItemContentContainer>
         <LeftContainer>
           <CategoryIcon category={category_id} />
-          <FlexCol>
+          <CategoryConceptContainer>
             <Category>{getCategoryLabel(category_id)}</Category>
             <Concept>{concept || "(sin concepto)"}</Concept>
-          </FlexCol>
+          </CategoryConceptContainer>
         </LeftContainer>
         <RightContainer>
           <Amount isNegative={type_id === TransactionTypeEnum.OUT}>

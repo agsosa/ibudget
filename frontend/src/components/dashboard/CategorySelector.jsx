@@ -22,14 +22,14 @@ const CategoryContainer = styled.div(({ small }) => [
   tw`flex flex-row items-center`,
   small && tw`absolute justify-center w-full`,
 ]);
-
+const CategoryLabel = styled.div(({ small }) => [tw`ml-3`, small && tw`ml-0`]);
 /* End styled components */
 
 // Component to render the selector value and option labels
 const CategoryOption = ({ value, small }) => (
   <CategoryContainer small={small}>
     <CategoryIcon category={value} small={small} />
-    {getCategoryLabel(value)}
+    <CategoryLabel small={small}>{getCategoryLabel(value)}</CategoryLabel>
   </CategoryContainer>
 );
 
@@ -42,7 +42,7 @@ CategoryOption.propTypes = {
   small: PropTypes.bool,
 };
 
-// Component to render the selector value
+// Component to render the selected selector value
 const SingleValue = ({ getValue }) => (
   <CategoryOption value={getValue()[0].value} small />
 );

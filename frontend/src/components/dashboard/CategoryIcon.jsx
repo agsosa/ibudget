@@ -19,7 +19,7 @@ import {
 } from "lib/Helpers";
 
 const CategoryImage = styled.div(({ category, small }) => [
-  tw`rounded-full bg-contain bg-no-repeat bg-orange-500 bg-center h-12 w-12 mr-4 flex justify-center align-middle`,
+  tw`rounded-full bg-orange-500 h-12 w-12 flex justify-center`,
   getCategoryBackgroundStyle(category),
   small && tw`transform scale-50`,
 ]);
