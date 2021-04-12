@@ -26,6 +26,7 @@ const moneyFormatter = new Intl.NumberFormat("es-ES", {
   // TODO: Change format locale by user language settings
   style: "currency",
   currency: "USD",
+  currencyDisplay: "narrowSymbol",
   minimumFractionDigits: 0,
 });
 
