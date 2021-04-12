@@ -77,7 +77,7 @@ const DateRangeSelector = () => {
     dispatch({
       type: "UserPrefsModel/setSelectedPeriod",
       payload: {
-        period: value,
+        selectedPeriod: value,
         fromDate: dateRange[0].startDate,
         toDate: dateRange[0].endDate,
       },
@@ -91,7 +91,7 @@ const DateRangeSelector = () => {
     dispatch({
       type: "UserPrefsModel/setSelectedPeriod",
       payload: {
-        period: selectedPeriod,
+        selectedPeriod: selectedPeriod,
         fromDate: item.selection.startDate,
         toDate: item.selection.endDate,
       },

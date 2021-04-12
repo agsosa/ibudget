@@ -96,8 +96,11 @@ export const BudgetModel = {
         toDate: js date
       }
 
-    effects:
-
+    reducers:
+      setSelectedPeriod(payload)
+        Payload: { selectedPeriod: value of PeriodEnum, fromDate: should be a valid JS date if period is PeriodEnum.CUSTOM, toDate: same as fromDate}
+        Update selectedPeriod, fromDate and toDate fields. fromDate and toDate will be calculated depending on the passed selectedPeriod via payload.
+        
     selectors:
 
 */
@@ -109,14 +112,14 @@ export const UserPrefsModel = {
     toDate: null,
   },
   reducers: {
-    // Payload: { period: value of PeriodEnum, fromDate: should be a valid JS date if period is PeriodEnum.CUSTOM, toDate: same as fromDate}
     setSelectedPeriod(state, payload) {
-      if (payload.period != null)
-        if (Object.values(PeriodEnum).includes(payload.period)) {
+      if (payload.selectedPeriod != null)
+        if (Object.values(PeriodEnum).includes(payload.selectedPeriod)) {
           let fromDate;
           let toDate;
 
-          switch (payload.period) {
+          // Set fromDate and toDate
+          switch (payload.selectedPeriod) {
             case PeriodEnum.SEVEN_DAYS:
               fromDate = subDays(new Date(), 7);
               toDate = new Date();
@@ -134,6 +137,7 @@ export const UserPrefsModel = {
               toDate = new Date();
               break;
             case PeriodEnum.CUSTOM:
+              // If the selected period is custom, we want to use the provided fromDate and toDate via the payload parameter
               if (payload.fromDate && payload.toDate) {
                 if (fromDate >= toDate) {
                   const aux = toDate;
@@ -149,10 +153,11 @@ export const UserPrefsModel = {
               return state;
           }
 
+          // Save state if the calculated fromDate and toDate are valid
           if (fromDate && toDate) {
             return {
               ...state,
-              selectedPeriod: payload.period,
+              selectedPeriod: payload.selectedPeriod,
               fromDate,
               toDate,
             };
