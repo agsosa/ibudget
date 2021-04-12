@@ -2,23 +2,31 @@
   Cards components (list or individual)
 
   Usage:
-    - For a single card use
-        <CardList.Item>
-          (content)
-        </CardList.Item>
+    For a list of cards wrap every CardList.Item with <CardList></CardList>
+
+      Props:
+        - loading: To display a loading skeleton on every card item (bool, optional)
+
+  CardList.Item:
+    Can be used as a single card or inside CardList
+
+      <CardList.Item>
+        (content)
+      </CardList.Item>
 
       CardList.Item Props:
-        - title: string to display as title
-        - onViewMoreClick: callback to enable a View More button
-
-    - For a list of cards wrap every CardList.Item with <CardList></CardList>
+        - title: to display a title (string, optional)
+        - onViewMoreClick: enable a View More button (callback, optional)
+        - loading: Display a loading skeleton (bool, optional)
 */
 
+/* eslint-disable */
 import React from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import { PropTypes } from "prop-types";
+import Skeleton from "react-loading-skeleton";
 
 /* Start styled components */
 
@@ -63,9 +71,11 @@ const CardHeader = styled.div`
   }
 `;
 
+const CustomSkeleton = tw(Skeleton)`mt-5 min-w-full`;
+
 /* End styled components */
 
-function CardItem({ title, onViewMoreClick, children }) {
+function CardItem({ title, onViewMoreClick, children, loading }) {
   return (
     <CardBlock featured>
       <CardHeader>
@@ -76,14 +86,26 @@ function CardItem({ title, onViewMoreClick, children }) {
             <ViewMoreBtn onClick={onViewMoreClick}>View more</ViewMoreBtn>
           )}
         </span>
-        {children && <div className="childrenContainer">{children}</div>}
+        {loading ? (
+          <CustomSkeleton count={5} height={50} width={100} />
+        ) : (
+          children && <div className="childrenContainer">{children}</div>
+        )}
       </CardHeader>
     </CardBlock>
   );
 }
 
-function CardList({ children }) {
-  return <CardsContainer>{children}</CardsContainer>;
+function CardList({ children, loading }) {
+  // Pass the loading props to all CardList.Item children
+  const childrenWithProps = React.Children.map(children, (child) => {
+    if (React.isValidElement(child) && child.type === CardItem) {
+      return React.cloneElement(child, { loading: loading });
+    }
+    return child;
+  });
+
+  return <CardsContainer>{childrenWithProps}</CardsContainer>;
 }
 
 CardList.Item = CardItem;
@@ -93,20 +115,24 @@ CardItem.defaultProps = {
   title: "",
   onViewMoreClick: null,
   children: null,
+  loading: false,
 };
 
 CardItem.propTypes = {
   title: PropTypes.string,
   onViewMoreClick: PropTypes.element,
   children: PropTypes.node,
+  loading: PropTypes.bool,
 };
 
 CardList.defaultProps = {
   children: null,
+  loading: false,
 };
 
 CardList.propTypes = {
   children: PropTypes.node,
+  loading: PropTypes.bool,
 };
 
 export default CardList;
