@@ -1,6 +1,11 @@
 import * as React from "react";
 import tw, { styled } from "twin.macro";
 import Gauge from "components/dashboard/charts/Gauge";
+import store from "lib/Store";
+import { useSelector } from "react-redux";
+import { TransactionTypeEnum } from "lib/Enums";
+import { getMoneyDisplayString } from "lib/Helpers";
+import NoDataIndicator from "components/misc/NoDataIndicator";
 
 /* Start styled components */
 
@@ -15,25 +20,58 @@ const FlowContainer = tw(Container)`lg:flex-row -mb-5 sm:mb-0 mt-2 `;
 /* End style components */
 
 function MoneyFlow() {
-  return (
-    <Container>
-      <FlowContainer>
-        <Container>
-          <Description>Últimos 31 dias</Description>
-          <MoneySmall>+$366.55,10</MoneySmall>
-        </Container>
-        <Container>
-          <Description>Ingresos</Description>
-          <MoneySmall>+$366.55,10</MoneySmall>
-        </Container>
-        <Container>
-          <Description>Egresos</Description>
-          <MoneySmall isNegative>-$366.55,10</MoneySmall>
-        </Container>
-      </FlowContainer>
-      <Gauge />
-    </Container>
+  const selection = store.select((models) => ({
+    periodLabel: models.UserPrefsModel.formattedSelectedPeriod,
+    transactions: models.BudgetModel.transactionsFromSelectedPeriod,
+  }));
+  const { periodLabel, transactions } = useSelector(selection);
+
+  const spending = transactions.reduce(
+    (a, b) => (b.type_id === TransactionTypeEnum.OUT ? a + b.amount : a),
+    0
   );
+  const income = transactions.reduce(
+    (a, b) => (b.type_id === TransactionTypeEnum.IN ? a + b.amount : a),
+    0
+  );
+  const flow = transactions.reduce(
+    (a, b) =>
+      b.type_id === TransactionTypeEnum.OUT ? a - b.amount : a + b.amount,
+    0
+  );
+
+  if (transactions && transactions.length >= 1) {
+    return (
+      <Container>
+        <FlowContainer>
+          <Container>
+            <Description>{periodLabel}</Description>
+            <MoneySmall isNegative={flow < 0}>
+              {flow < 0 ? "-" : "+"}
+              {getMoneyDisplayString(Math.abs(flow))}
+            </MoneySmall>
+          </Container>
+          <Container>
+            <Description>Ingresos</Description>
+            <MoneySmall>+{getMoneyDisplayString(Math.abs(income))}</MoneySmall>
+          </Container>
+          <Container>
+            <Description>Egresos</Description>
+            <MoneySmall isNegative>
+              -{getMoneyDisplayString(Math.abs(spending))}
+            </MoneySmall>
+          </Container>
+        </FlowContainer>
+        <Gauge
+          description="Capacidad de ahorro"
+          totalValue={income}
+          measureValue={flow}
+        />
+      </Container>
+    );
+  }
+
+  return <NoDataIndicator />;
 }
 
 export default MoneyFlow;
