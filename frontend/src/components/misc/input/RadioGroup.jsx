@@ -43,7 +43,7 @@ function RadioGroup({ onValueChange, options, value }) {
     <InputGroup>
       {Array.isArray(options) &&
         options.map((o) => {
-          if (o.value) {
+          if (o.value != null) {
             return React.createElement(RadioItem, {
               value: o.value,
               label: o.label,
