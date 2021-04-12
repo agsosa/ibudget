@@ -1,29 +1,15 @@
 import * as React from "react";
 import { Area } from "@ant-design/charts";
+import PropTypes from "prop-types";
 
-function Chart() {
-  const [data, setData] = React.useState([]);
+// [ { Date: date, label: data }]
 
-  const asyncFetch = () => {
-    fetch(
-      "https://gw.alipayobjects.com/os/bmw-prod/1d565782-dde4-4bb6-8946-ea6a38ccf184.json"
-    )
-      .then((response) => response.json())
-      .then((json) => setData(json))
-      .catch((error) => {
-        console.log("fetch data failed", error);
-      });
-  };
-
-  React.useEffect(() => {
-    asyncFetch();
-  }, []);
-
+function Chart({ data }) {
   const config = {
     data,
     areaStyle: { fill: "l(270) 0:#ffffff 0.5:#7ec2f3 1:#1890ff" },
     xField: "Date",
-    yField: "scales",
+    yField: "Balance",
     xAxis: { tickCount: 5 },
     slider: {
       start: 0,
@@ -34,5 +20,11 @@ function Chart() {
 
   return <Area {...config} />;
 }
+
+Chart.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({ Date: PropTypes.date, Balance: PropTypes.Number })
+  ).isRequired,
+};
 
 export default React.memo(Chart);
