@@ -43,7 +43,7 @@ const Amount = styled.text(({ isNegative }) => [
   isNegative ? tw`text-red-600` : tw`text-green-600`,
 ]);
 const Date = tw.text`text-gray-500 text-right text-xs`;
-const Category = tw.text`text-black text-base hover:text-primary-500  overflow-visible`;
+const Category = tw.text`text-black text-base overflow-visible`;
 const Concept = tw.text`text-gray-500 text-sm overflow-hidden`; // TODO: Shrink text
 const FlexCol = tw.div`flex flex-col`;
 const CategoryConceptContainer = tw(FlexCol)`ml-3 justify-center`;

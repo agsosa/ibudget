@@ -25,7 +25,7 @@ function Chart({ data }) {
 
 Chart.propTypes = {
   data: PropTypes.arrayOf(
-    PropTypes.shape({ Date: PropTypes.date, Balance: PropTypes.Number })
+    PropTypes.shape({ date: PropTypes.date, balance: PropTypes.Number })
   ).isRequired,
 };
 

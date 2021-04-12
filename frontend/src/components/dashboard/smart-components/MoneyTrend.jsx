@@ -17,7 +17,7 @@ import { sortByField } from "lib/Helpers";
 import NoDataIndicator from "components/misc/NoDataIndicator";
 
 function MoneyTrend() {
-  // Get transactions from store
+  // Get transactions with selected period from store
   const selection = store.select((models) => ({
     transactions: models.BudgetModel.transactionsFromSelectedPeriod,
   }));
