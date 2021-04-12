@@ -1,18 +1,29 @@
 /* 
-  Responsive modal component
+  Higher order component to display another component in a modal (responsive)
 
   Usage:
-    const modalRef = React.useRef(); // Create ref to be able to open the modal
+    Pass the wrapped component as first parameter and a title string as a second parameter.
 
-    modalRef.current.toggle(); // Open modal
+    example:
+      1) Define the content component
 
-    <Modal ref={modalRef} title="My modal">
-      (content)
-    </Modal>
+      function MyModalContent() {
+        ....
+      }
 
-  Props:
-    title: optional string to display as title
+      const MyModalContentWithHoc = Modal(MyModalContent, "My modal Content");;
+      export default MyModalContentWithHoc;
+
+      2) Use the content component wrapped with this HoC in another component
+        const modalRef = React.useRef(); // Define a ref to be able to show the modal
+
+        modalRef.current.toggle(); // Use toggle() to show the modal (by default it will be hidden)
+
+        Inside our render:
+          <MyModalContentWithHoc ref={modalRef} />
 */
+
+/* eslint-disable react/prop-types */
 
 import * as React from "react";
 import tw, { styled } from "twin.macro";
@@ -32,7 +43,6 @@ const StyledModal = styled(ReactModalAdapter)`
   }
 `;
 
-// absolute inset-x-0 w-3/4 md:w-2/5 mx-auto my-auto bottom-1/2    left: 50%;transform: translateX(-50%);
 const ModalContent = tw(motion.div)`
 p-6 z-50
 md:max-w-screen-md w-screen h-screen md:h-full overflow-auto
@@ -46,48 +56,52 @@ const ChildrenContainer = tw.div`sm:px-5 mt-8 sm:pb-2 pb-4`;
 
 /* End styled components */
 
-function Modal({ children, title }, ref) {
-  const [modalIsOpen, setModalIsOpen] = React.useState(false);
+function Modal(WrappedComponent, title) {
+  return React.forwardRef((props, ref) => {
+    const [modalIsOpen, setModalIsOpen] = React.useState(false);
 
-  const toggleModal = () => {
-    setModalIsOpen(!modalIsOpen);
-  };
+    const toggleModal = () => {
+      setModalIsOpen(!modalIsOpen);
+    };
 
-  React.useImperativeHandle(ref, () => ({
-    toggle() {
-      toggleModal();
-    },
-  }));
+    React.useImperativeHandle(ref, () => ({
+      toggle() {
+        toggleModal();
+      },
+    }));
 
-  return (
-    <>
-      <StyledModal
-        className="mainModal"
-        isOpen={modalIsOpen}
-        onRequestClose={toggleModal}
-        shouldCloseOnOverlayClick
-      >
-        <ModalContent
-          initial={{ y: 200 }}
-          animate={{ y: 0 }}
-          transition={{
-            type: "spring",
-            ease: "easeIn",
-            stiffness: 100,
-            duration: 0.2,
-          }}
+    return (
+      <>
+        <StyledModal
+          className="mainModal"
+          isOpen={modalIsOpen}
+          onRequestClose={toggleModal}
+          shouldCloseOnOverlayClick
         >
-          <Header>
-            <Title>{title}</Title>
-            <CloseModalButton onClick={toggleModal}>
-              <CloseIcon />
-            </CloseModalButton>
-          </Header>
-          <ChildrenContainer>{children}</ChildrenContainer>
-        </ModalContent>
-      </StyledModal>
-    </>
-  );
+          <ModalContent
+            initial={{ y: 200 }}
+            animate={{ y: 0 }}
+            transition={{
+              type: "spring",
+              ease: "easeIn",
+              stiffness: 100,
+              duration: 0.2,
+            }}
+          >
+            <Header>
+              <Title>{title}</Title>
+              <CloseModalButton onClick={toggleModal}>
+                <CloseIcon />
+              </CloseModalButton>
+            </Header>
+            <ChildrenContainer>
+              <WrappedComponent {...props} />
+            </ChildrenContainer>
+          </ModalContent>
+        </StyledModal>
+      </>
+    );
+  });
 }
 
 Modal.defaultProps = {
@@ -100,4 +114,4 @@ Modal.propTypes = {
   title: PropTypes.string,
 };
 
-export default React.forwardRef(Modal);
+export default Modal;
