@@ -54,7 +54,7 @@ function MoneyTrend() {
     };
 
     // Sort by date ascending and map the buildChartData function
-    transactions.sort((a, b) => sortByField(b, a, "date")).map(buildChartData);
+    transactions.sort((b, a) => sortByField(b, a, "date")).map(buildChartData);
 
     return <Chart data={chartData} />;
   }
