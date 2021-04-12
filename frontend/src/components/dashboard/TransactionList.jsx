@@ -15,7 +15,11 @@
 import * as React from "react";
 import tw, { styled } from "twin.macro";
 import { PropTypes } from "prop-types";
-import { getCategoryLabel, getMoneyDisplayString } from "lib/Helpers";
+import {
+  getCategoryLabel,
+  getMoneyDisplayString,
+  getTransactionTypeSymbol,
+} from "lib/Helpers";
 import { TransactionTypeEnum } from "lib/Enums";
 import format from "date-fns/format";
 import CategoryIcon from "./CategoryIcon";
@@ -25,9 +29,9 @@ import CategoryIcon from "./CategoryIcon";
 const Item = tw.li`
 w-full mx-auto border-b 
 py-3 sm:py-2 px-2 mb-4
-transition duration-700 ease-in-out
+transition duration-500 ease-in-out
 cursor-pointer
-hocus:bg-primary-100`;
+transform hover:scale-105`;
 
 const ItemContentContainer = tw.div`
 flex sm:grid sm:grid-cols-2 
@@ -39,7 +43,7 @@ const Amount = styled.text(({ isNegative }) => [
   isNegative ? tw`text-red-600` : tw`text-green-600`,
 ]);
 const Date = tw.text`text-gray-500 text-right text-xs`;
-const Category = tw.text`text-black text-base hocus:text-primary-500  overflow-visible`;
+const Category = tw.text`text-black text-base hover:text-primary-500  overflow-visible`;
 const Concept = tw.text`text-gray-500 text-sm overflow-hidden`; // TODO: Shrink text
 const FlexCol = tw.div`flex flex-col`;
 const CategoryConceptContainer = tw(FlexCol)`ml-3 justify-center`;
@@ -63,7 +67,7 @@ function TransactionItem({ data, onClick }) {
         </LeftContainer>
         <RightContainer>
           <Amount isNegative={type_id === TransactionTypeEnum.OUT}>
-            {type_id === TransactionTypeEnum.OUT ? "-" : "+"}
+            {getTransactionTypeSymbol(type_id)}
             {getMoneyDisplayString(amount)}
           </Amount>
           <Date>{format(date, "dd-MM-yy")}</Date>
