@@ -1,15 +1,14 @@
 /*
   Smart component
 
-  TODO: Remove hard coded slice limit 5. Add pagination or something
-
 */
 
 import * as React from "react";
 import TransactionList from "components/dashboard/TransactionList";
 import { useSelector } from "react-redux";
+import { PropTypes } from "prop-types";
 
-function LatestTransactions() {
+function LatestTransactions({ limit }) {
   const transactions = useSelector((state) => state.BudgetModel.transactions);
 
   // On Transaction click
@@ -19,10 +18,18 @@ function LatestTransactions() {
 
   return (
     <TransactionList
-      data={transactions.slice(0, 5)}
+      data={transactions.slice(0, limit)}
       onClick={handleTransactionClick}
     />
   );
 }
+
+LatestTransactions.defaultProps = {
+  limit: 5,
+};
+
+LatestTransactions.propTypes = {
+  limit: PropTypes.number,
+};
 
 export default LatestTransactions;
