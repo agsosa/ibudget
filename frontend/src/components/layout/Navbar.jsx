@@ -16,9 +16,8 @@ import logo from "images/logo.png";
 import { ReactComponent as MenuIcon } from "feather-icons/dist/icons/menu.svg";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 import { APP_NAME } from "lib/Config";
-import Modal from "components/misc/Modal";
 import { PropTypes } from "prop-types";
-import AddTransaction from "components/dashboard/smart-components/AddTransaction";
+import AddTransaction from "components/dashboard/smart-components/AddTransactionModal";
 
 /* Start styled components */
 
@@ -202,9 +201,7 @@ export default () => {
           </NavToggle>
         </MobileNavLinksContainer>
 
-        <Modal ref={modalRef} title="Add Transaction">
-          <AddTransaction />
-        </Modal>
+        <AddTransaction ref={modalRef} />
       </HeaderContainer>
     </Header>
   );
