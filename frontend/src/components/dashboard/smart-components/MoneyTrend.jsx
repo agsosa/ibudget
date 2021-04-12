@@ -1,4 +1,12 @@
-/* eslint-disable */
+/*
+  Smart component (Interacting with BudgetModel, UserPrefsModel)
+
+  Component to display the balance historial (BudgetModel) for a date range (UserPrefsModel) on a chart
+
+  Usage:
+    <MoneyTrend />
+*/
+
 import * as React from "react";
 import Chart from "components/dashboard/charts/AreaChart";
 import { useSelector } from "react-redux";

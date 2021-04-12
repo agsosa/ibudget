@@ -8,7 +8,7 @@
     download: Display with down arrow (bool, optional)
     upload: Display with up arrow (bool, optional)
 
-    to display without an arrow just don't set the props
+    * to display without an arrow just don't set the props
 */
 
 import PropTypes from "prop-types";

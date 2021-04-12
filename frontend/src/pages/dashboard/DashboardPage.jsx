@@ -1,3 +1,9 @@
+/*
+  Smart component (Interacting with BudgetModel)
+
+  Main dashboard page
+*/
+
 /* eslint-disable */
 
 import * as React from "react";

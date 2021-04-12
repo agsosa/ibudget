@@ -1,3 +1,7 @@
+/*
+  Privacy policy page
+*/
+
 function PrivacyPolicyPage() {
   return <></>;
 }

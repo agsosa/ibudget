@@ -1,3 +1,7 @@
+/*
+  ant-design Area chart implementation
+*/
+
 import * as React from "react";
 import { Area } from "@ant-design/charts";
 import PropTypes from "prop-types";

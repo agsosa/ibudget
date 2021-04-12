@@ -1,4 +1,11 @@
-// TODO: Fix range selection not working inside absolute containers
+/*
+  Smart component (Interacting with UserPrefsModel)
+
+  PeriodEnum selector with dropdown and custom range.
+
+  Usage:
+    <DateRangeSelector/>
+*/
 
 import * as React from "react";
 import { DateRange } from "react-date-range";
@@ -74,6 +81,7 @@ const DateRangeSelector = () => {
       setDropdownOpen(false);
     }
 
+    // Update our stored selected period
     dispatch({
       type: "UserPrefsModel/setSelectedPeriod",
       payload: {
@@ -84,14 +92,15 @@ const DateRangeSelector = () => {
     });
   }
 
+  // Called when a range or date is selected on the date range picker component
   function handleDatePickerSelect(item) {
-    console.log(item);
-    setDateRange([item.selection]);
+    setDateRange([item.selection]); // Update state used by the picker component
 
+    // Update our stored fromDate and toDate
     dispatch({
       type: "UserPrefsModel/setSelectedPeriod",
       payload: {
-        selectedPeriod: selectedPeriod,
+        selectedPeriod,
         fromDate: item.selection.startDate,
         toDate: item.selection.endDate,
       },
@@ -124,7 +133,7 @@ const DateRangeSelector = () => {
     };
   }, [isDropdownOpen]); // Add isDropdownOpen as dependency to re-register listener on state update
 
-  // Dropdown component
+  // Dropdown component (hidden if isDropdownOpen is false)
   function Dropdown() {
     return (
       <DropdownContent show={isDropdownOpen}>
@@ -148,12 +157,15 @@ const DateRangeSelector = () => {
 
   /* End dropdown component */
 
+  /* 
+    Get the placeholder for our Select component
+    if selectedPeriod is CUSTOM, display fromDate - toDate, if not display the period label
+  */
   function getSelectPlaceholder() {
     if (selectedPeriod !== PeriodEnum.CUSTOM) {
       return getPeriodLabel(selectedPeriod);
     }
 
-    console.log("getSelectPlaceholder called");
     const fromDateFormatted = format(fromDate, "dd/MM/yy");
     const toDateFormatted = format(toDate, "dd/MM/yy");
     return `${fromDateFormatted} - ${toDateFormatted}`;

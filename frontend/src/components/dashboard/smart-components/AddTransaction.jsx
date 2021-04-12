@@ -1,5 +1,5 @@
 /*
-  Smart component
+  Smart component (Interacting with BudgetModel)
 
   Component (FORM) to create a new TransactionModel
 

@@ -14,13 +14,14 @@ import {
 } from "@mdi/js";
 import { CategoryEnum, PeriodEnum } from "./Enums";
 
+// Add countDecimals() to Number
 /* eslint-disable no-extend-native */
 Number.prototype.countDecimals = function () {
   if (Math.floor(this.valueOf()) === this.valueOf()) return 0;
   return this.toString().split(".")[1].length || 0;
 };
 
-// Javascript NumberFormat object to format money
+// Javascript NumberFormat object to format money (NOTE: use getMoneyDisplayString)
 const moneyFormatter = new Intl.NumberFormat("es-ES", {
   // TODO: Change format locale by user language settings
   style: "currency",
@@ -55,6 +56,7 @@ export function getPeriodLabel(periodEnum) {
       return "Invalid period";
   }
 }
+
 // Function to convert a CategoryEnum value to a label
 export function getCategoryLabel(categoryEnum) {
   switch (categoryEnum) {

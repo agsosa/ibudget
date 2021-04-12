@@ -1,3 +1,9 @@
+/*
+  Terms of service page
+
+  TODO: remove hard coded terms
+*/
+
 import {
   Container,
   ContentWithPaddingXl,

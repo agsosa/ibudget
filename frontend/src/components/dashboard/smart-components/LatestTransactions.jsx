@@ -1,6 +1,13 @@
 /*
-  Smart component
+  Smart component (Interacting with BudgetModel)
 
+  Display a list of the latest transactions.
+
+  Usage:
+    <LatestTransactions />
+
+  props:
+    limit: maximum amount of transactions to display (number, optional, default = 5)
 */
 
 import * as React from "react";
@@ -14,6 +21,7 @@ function LatestTransactions({ limit }) {
 
   // On Transaction click
   function handleTransactionClick(transaction) {
+    // TODO: Implement via props or directly
     console.log(`Clicked transaction ${transaction}`);
   }
 
