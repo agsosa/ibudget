@@ -6,7 +6,7 @@ import CardList from "components/misc/CardList";
 import tw from "twin.macro";
 import { ContentWithPaddingXl as ContentBase } from "third-party/treact/components/misc/Layouts";
 import { SectionHeading } from "third-party/treact/components/misc/Headings";
-import DateRangeSelector from "components/misc/input/DateRangeSelector";
+import DateRangeSelector from "components/dashboard/smart-components/DateRangeSelector";
 import { motion } from "framer-motion";
 import LatestTransactions from "components/dashboard/smart-components/LatestTransactions";
 import Spending from "components/dashboard/smart-components/Spending";
