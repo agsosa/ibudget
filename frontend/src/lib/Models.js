@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import * as API from "lib/API";
-import { TransactionTypeEnum } from "./Enums";
+import { subDays, subMonths } from "date-fns";
+import { TransactionTypeEnum, PeriodEnum } from "./Enums";
 
 // TODO: Remove
 export const TransactionModel = {
@@ -85,4 +86,82 @@ export const BudgetModel = {
       );
     }),
   }),
+};
+
+/*
+  UserPrefsModel
+      { 
+        selectedPeriod: value of PeriodEnum
+        fromDate: js date
+        toDate: js date
+      }
+
+    effects:
+
+    selectors:
+
+*/
+export const UserPrefsModel = {
+  name: "UserPrefsModel",
+  state: {
+    selectedPeriod: PeriodEnum.THIRTY_DAYS,
+    fromDate: null,
+    toDate: null,
+  },
+  reducers: {
+    // Payload: { period: value of PeriodEnum, fromDate: should be a valid JS date if period is PeriodEnum.CUSTOM, toDate: same as fromDate}
+    setSelectedPeriod(state, payload) {
+      if (payload.period != null)
+        if (Object.values(PeriodEnum).includes(payload.period)) {
+          let fromDate;
+          let toDate;
+
+          switch (payload.period) {
+            case PeriodEnum.SEVEN_DAYS:
+              fromDate = subDays(new Date(), 7);
+              toDate = new Date();
+              break;
+            case PeriodEnum.THIRTY_DAYS:
+              fromDate = subDays(new Date(), 30);
+              toDate = new Date();
+              break;
+            case PeriodEnum.NINETY_DAYS:
+              fromDate = subDays(new Date(), 90);
+              toDate = new Date();
+              break;
+            case PeriodEnum.TWELVE_MONTHS:
+              fromDate = subMonths(new Date(), 12);
+              toDate = new Date();
+              break;
+            case PeriodEnum.CUSTOM:
+              if (payload.fromDate && payload.toDate) {
+                if (fromDate >= toDate) {
+                  const aux = toDate;
+                  fromDate = toDate;
+                  toDate = aux;
+                }
+
+                fromDate = payload.fromDate;
+                toDate = payload.toDate;
+              }
+              break;
+            default:
+              return state;
+          }
+
+          if (fromDate && toDate) {
+            return {
+              ...state,
+              selectedPeriod: payload.period,
+              fromDate,
+              toDate,
+            };
+          }
+        }
+
+      return state;
+    },
+  },
+  effects: (dispatch) => ({}),
+  selectors: (slice, createSelector, hasProps) => ({}),
 };
