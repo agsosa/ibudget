@@ -4,8 +4,12 @@ description blabla
 
 ## Frontend
 #### Used frameworks/libs:
-- React.js
+- React.js (hooks)
+- Rematch (Redux)
 - Tailwind CSS
+- styled-components, twin.macro, Framer Motion
+- Treact landing page components/utilities
+- ant-design charts
 
 #### Tests/Documentation:
 - que
@@ -15,7 +19,7 @@ description blabla
 - Node.js
 - Express.js
 - MySQL
-- Passport (authentification)
+- Passport (auth)
 - Joi (data validation)
 
 #### Tests/Documentation:
