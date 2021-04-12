@@ -1,21 +1,24 @@
 import * as React from "react";
 import TransactionList from "components/dashboard/TransactionList";
-import { CategoryEnum } from "lib/Enums";
+import PropTypes from "prop-types";
 
-function LatestTransactionCard() {
+function LatestTransactionCard({ data }) {
   // On Transaction click
   function handleTransactionClick(transaction) {
     console.log(`Clicked transaction ${transaction}`);
   }
 
   return (
-    <TransactionList
-      data={Object.values(CategoryEnum)
-        .slice(0, 5)
-        .map((v) => ({ category_id: v }))}
-      onClick={handleTransactionClick}
-    />
+    <TransactionList data={data.slice(0, 5)} onClick={handleTransactionClick} />
   );
 }
+
+LatestTransactionCard.defaultProps = {
+  data: [],
+};
+
+LatestTransactionCard.propTypes = {
+  data: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+};
 
 export default LatestTransactionCard;
