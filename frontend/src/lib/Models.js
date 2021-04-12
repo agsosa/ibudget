@@ -59,7 +59,7 @@ export const BudgetModel = {
       if (!error && data) {
         // NOTE: The amount field of the transaction models is received as a string (it's a decimal), implement a decimal library to handle it if needed
         data.forEach((q) => {
-          // Temp. solution
+          q.date = new Date(q.date); // eslint-disable-line no-param-reassign
           q.amount = Number(q.amount); // eslint-disable-line no-param-reassign
         });
 
