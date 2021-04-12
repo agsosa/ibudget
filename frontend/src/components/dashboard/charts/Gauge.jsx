@@ -1,8 +1,18 @@
-// TODO: Move description label to props?
+/* 
 
-import React, { useState, useEffect } from "react";
+
+GaugeImpl.propTypes = {
+  description: PropTypes.string,
+  totalValue: PropTypes.number.isRequired,
+  measureValue: PropTypes.number.isRequired,
+};
+
+*/
+
+import * as React from "react";
 import { Gauge } from "@ant-design/charts";
 import tw, { styled } from "twin.macro";
+import PropTypes from "prop-types";
 
 /* Start styled components */
 
@@ -24,8 +34,8 @@ function getStatusText(percent) {
   return "Excelente";
 }
 
-export default () => {
-  const [percent, setPercent] = useState(0);
+function GaugeImpl({ description, totalValue, measureValue }) {
+  const [percent, setPercent] = React.useState(0);
 
   const config = {
     percent,
@@ -42,24 +52,30 @@ export default () => {
     },
   };
 
-  useEffect(() => {
-    let data = percent;
-    const interval = setInterval(function () {
-      if (data >= 1) {
-        clearInterval(interval);
-      }
-      data += 0.1;
-      setPercent(data);
-    }, 700);
-  }, []);
+  React.useEffect(() => {
+    const goalPercent = totalValue > 0 ? measureValue / totalValue : 0.01;
+    setPercent(goalPercent);
+  }, [totalValue, measureValue]);
 
   return (
     <Responsive>
       <Gauge {...config} />
       <TextContainer>
         <Status percent={percent}>{getStatusText(percent)}</Status>
-        <Description>Capacidad de ahorro</Description>
+        {description && <Description>{description}</Description>}
       </TextContainer>
     </Responsive>
   );
+}
+
+GaugeImpl.defaultProps = {
+  description: "",
 };
+
+GaugeImpl.propTypes = {
+  description: PropTypes.string,
+  totalValue: PropTypes.number.isRequired,
+  measureValue: PropTypes.number.isRequired,
+};
+
+export default GaugeImpl;
