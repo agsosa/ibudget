@@ -7,6 +7,7 @@ import * as React from "react";
 import TransactionList from "components/dashboard/TransactionList";
 import { useSelector } from "react-redux";
 import { PropTypes } from "prop-types";
+import { sortByField } from "lib/Helpers";
 
 function LatestTransactions({ limit }) {
   const transactions = useSelector((state) => state.BudgetModel.transactions);
@@ -18,7 +19,9 @@ function LatestTransactions({ limit }) {
 
   return (
     <TransactionList
-      data={transactions.slice(0, limit)}
+      data={transactions
+        .sort((a, b) => sortByField(a, b, "id"))
+        .slice(0, limit)}
       onClick={handleTransactionClick}
     />
   );
