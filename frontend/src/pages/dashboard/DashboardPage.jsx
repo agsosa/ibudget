@@ -8,10 +8,10 @@ import { ContentWithPaddingXl as ContentBase } from "third-party/treact/componen
 import { SectionHeading } from "third-party/treact/components/misc/Headings";
 import DateRangeSelector from "components/misc/input/DateRangeSelector";
 import { motion } from "framer-motion";
-import LatestTransactionCard from "components/dashboard/smart-components/LatestTransactions";
-import SpendingCard from "components/dashboard/smart-components/Spending";
-import MoneyTrendCard from "components/dashboard/smart-components/MoneyTrend";
-import MoneyFlowCard from "components/dashboard/smart-components/MoneyFlow";
+import LatestTransactions from "components/dashboard/smart-components/LatestTransactions";
+import Spending from "components/dashboard/smart-components/Spending";
+import MoneyTrend from "components/dashboard/smart-components/MoneyTrend";
+import MoneyFlow from "components/dashboard/smart-components/MoneyFlow";
 import { getMoneyDisplayString } from "lib/Helpers";
 import { useSelector, useDispatch } from "react-redux";
 import store from "lib/Store";
@@ -51,7 +51,7 @@ function DashboardPage() {
   React.useEffect(() => {
     dispatch({ type: "BudgetModel/fetchTransactions" });
 
-    setTimeout(() => setLoading(false), 2000); // TODO: Remove
+    setTimeout(() => setLoading(false), 1); // TODO: Remove
   }, []);
 
   /* End handle store */
@@ -103,19 +103,19 @@ function DashboardPage() {
           title="Últimas transacciones"
           onViewMoreClick={handleLastTransactionsViewMore}
         >
-          <LatestTransactionCard />
+          <LatestTransactions limit={5} />
         </CardList.Item>
 
         <CardList.Item title="Tendencia del saldo">
-          <MoneyTrendCard />
+          <MoneyTrend />
         </CardList.Item>
 
         <CardList.Item title="Gastos">
-          <SpendingCard />
+          <Spending />
         </CardList.Item>
 
         <CardList.Item title="Flujo del dinero">
-          <MoneyFlowCard />
+          <MoneyFlow />
         </CardList.Item>
       </CardList>
 
