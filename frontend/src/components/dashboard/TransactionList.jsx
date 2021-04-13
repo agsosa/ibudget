@@ -1,6 +1,3 @@
-// TODO: Implement data prop for TransactionList.Item
-// TODO: Implement onClick for TransactionList
-
 /* 
   TransactionList: Component to display the information of various or a single TransactionModel object
 
@@ -78,7 +75,7 @@ function TransactionItem({ data, onClick }) {
   );
 }
 
-function TransactionList({ data }) {
+function TransactionList({ data, limit }) {
   const modalRef = React.useRef();
   const [clickedTransaction, setClickedTransaction] = React.useState(null); // Used to pass it to the edit modal via prop
 
@@ -92,7 +89,7 @@ function TransactionList({ data }) {
       <List>
         {(data &&
           Array.isArray(data) &&
-          data.map((item) => {
+          data.slice(0, limit).map((item) => {
             return React.createElement(TransactionItem, {
               data: item,
               onClick: () => {
@@ -127,9 +124,12 @@ TransactionItem.propTypes = {
 
 TransactionList.defaultProps = {
   data: null,
+  limit: 5,
 };
+
 TransactionList.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object),
+  limit: PropTypes.number,
 };
 
 export default TransactionList;
