@@ -29,7 +29,7 @@ function LatestTransactions({ limit }) {
     return (
       <TransactionList
         data={transactions
-          .sort((a, b) => new Date(b.date) - new Date(a.date))
+          .sort((a, b) => new Date(b.date) - new Date(a.date) || b.id - a.id)
           .slice(0, limit)}
         onClick={handleTransactionClick}
       />
