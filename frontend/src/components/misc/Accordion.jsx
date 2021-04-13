@@ -19,15 +19,15 @@ import { PropTypes } from "prop-types";
 
 /* Start styled components */
 
-const AccordionContainer = tw.dl`max-w-4xl relative`;
+const AccordionContainer = tw.dl`max-w-4xl`;
 const Accordion = tw.div`
 select-none 
-mt-2 px-4 sm:px-5 py-3 sm:py-2 
+mt-2 px-2 md:px-4 py-2 sm:-ml-5
  text-gray-800 `;
-const AccordionHeader = tw.dt`flex cursor-pointer justify-between items-center p-5 hover:text-primary-500 transition duration-300`;
+const AccordionHeader = tw.dt`flex cursor-pointer  items-center p-5 hover:text-primary-500 transition duration-300`;
 const AccordionTitle = tw.span`text-lg lg:text-xl font-semibold`;
 const AccordionToggleIcon = motion.custom(styled.span`
-  ${tw`ml-2 transition duration-300`}
+  ${tw`mr-5 transition duration-300`}
   svg {
     ${tw`w-6 h-6`}
   }
@@ -56,7 +56,6 @@ const AccordionExport = ({ items, isMulti }) => {
               toggleItem(index);
             }}
           >
-            <AccordionTitle>{item.title}</AccordionTitle>
             <AccordionToggleIcon
               variants={{
                 collapsed: { rotate: 0 },
@@ -71,6 +70,7 @@ const AccordionExport = ({ items, isMulti }) => {
             >
               <ChevronDownIcon />
             </AccordionToggleIcon>
+            <AccordionTitle>{item.title}</AccordionTitle>
           </AccordionHeader>
           <AccordionContent
             variants={{
