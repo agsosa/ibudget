@@ -155,7 +155,6 @@ export default () => {
   const collapseBreakpointCss = collapseBreakPointCssMap.lg;
 
   function handleAddTransactionClick() {
-    toggleNavbar();
     modalRef.current.toggle();
   }
 
@@ -166,7 +165,6 @@ export default () => {
       {isLogged ? (
         <>
           <MemberLinks onAddTransactionClick={handleAddTransactionClick} />
-          <AddTransaction ref={modalRef} title="Add Transaction" />
         </>
       ) : (
         <GuestLinks />
@@ -175,35 +173,39 @@ export default () => {
   );
 
   return (
-    <Header className="header-light">
-      <HeaderContainer>
-        <DesktopNavLinks css={collapseBreakpointCss.desktopNavLinks}>
-          {DefaultLogoLink}
-          {links}
-        </DesktopNavLinks>
-        <MobileNavLinksContainer
-          css={collapseBreakpointCss.mobileNavLinksContainer}
-        >
-          {DefaultLogoLink}
-          <MobileNavLinks
-            initial={{ x: "150%", display: "none" }}
-            animate={animation}
-            css={collapseBreakpointCss.mobileNavLinks}
-          >
+    <>
+      <Header className="header-light">
+        <HeaderContainer>
+          <DesktopNavLinks css={collapseBreakpointCss.desktopNavLinks}>
+            {DefaultLogoLink}
             {links}
-          </MobileNavLinks>
-          <NavToggle
-            onClick={toggleNavbar}
-            className={showNavLinks ? "open" : "closed"}
+          </DesktopNavLinks>
+          <MobileNavLinksContainer
+            css={collapseBreakpointCss.mobileNavLinksContainer}
           >
-            {showNavLinks ? (
-              <CloseIcon tw="w-6 h-6 mt-5" />
-            ) : (
-              <MenuIcon tw="w-6 h-6" />
-            )}
-          </NavToggle>
-        </MobileNavLinksContainer>
-      </HeaderContainer>
-    </Header>
+            {DefaultLogoLink}
+            <MobileNavLinks
+              initial={{ x: "150%", display: "none" }}
+              animate={animation}
+              onClick={toggleNavbar}
+              css={collapseBreakpointCss.mobileNavLinks}
+            >
+              {links}
+            </MobileNavLinks>
+            <NavToggle
+              onClick={toggleNavbar}
+              className={showNavLinks ? "open" : "closed"}
+            >
+              {showNavLinks ? (
+                <CloseIcon tw="w-6 h-6 mt-5" />
+              ) : (
+                <MenuIcon tw="w-6 h-6" />
+              )}
+            </NavToggle>
+          </MobileNavLinksContainer>
+        </HeaderContainer>
+      </Header>
+      <AddTransaction ref={modalRef} title="Add Transaction" />
+    </>
   );
 };
