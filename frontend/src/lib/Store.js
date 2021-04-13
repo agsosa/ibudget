@@ -4,7 +4,7 @@ import selectPlugin from "@rematch/select";
 import persistPlugin from "@rematch/persist";
 import storage from "redux-persist/lib/storage";
 import createTransform from "redux-persist/es/createTransform";
-import * as models from "./Models";
+import * as models from "./models/index";
 
 const persistConfig = {
   key: "root",
