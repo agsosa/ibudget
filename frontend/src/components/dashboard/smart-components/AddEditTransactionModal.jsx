@@ -24,9 +24,10 @@ import TransactionInfoForm from "components/dashboard/TransactionInfoForm";
 
 const CommonBottonStyle = tw.button`py-2 px-8 lg:px-20 font-semibold text-lg focus:outline-none`;
 const PrimaryButton = tw(CommonBottonStyle)`
+flex flex-row
 rounded-xl mt-3
-bg-primary-500 
-hover:bg-primary-700 transform hover:scale-105 text-white 
+bg-primary-500 hover:bg-primary-700 disabled:bg-gray-500
+ transform hover:scale-105 text-white disabled:scale-100
 transition-all duration-200 ease-in-out`;
 const SecondaryButton = tw(
   CommonBottonStyle
@@ -100,28 +101,23 @@ function AddEditTransactionModal({ toggleModal, editMode, transaction }) {
         onInfoChange={onInfoChange}
         loading={loading}
         initialInfo={transaction}
+        editMode={editMode}
       />
       <ButtonsContainer>
         {loading ? (
           <CloudLoadingIndicator upload />
         ) : (
           <>
-            {/* If we are in edit mode, only show the modify transaction button if the user modified the values */}
-            {!editMode ||
-              (editMode && transactionInfoModified && (
-                <PrimaryButton
-                  disabled={loading}
-                  onClick={() => onSubmitButtonClick(true)}
-                >
-                  {editMode ? "Modify Transaction" : "Add Transaction"}
-                </PrimaryButton>
-              ))}
+            <PrimaryButton
+              disabled={loading || (editMode && !transactionInfoModified)}
+              onClick={() => onSubmitButtonClick(true)}
+            >
+              {editMode ? "Modify Transaction" : "Add Transaction"}
+            </PrimaryButton>
 
-            {!editMode && (
-              <SecondaryButton disabled={loading} onClick={onSubmitButtonClick}>
-                Add and Create another
-              </SecondaryButton>
-            )}
+            <SecondaryButton disabled={loading} onClick={onSubmitButtonClick}>
+              {editMode ? "Delete Transaction" : "Add and Create another"}
+            </SecondaryButton>
           </>
         )}
       </ButtonsContainer>
