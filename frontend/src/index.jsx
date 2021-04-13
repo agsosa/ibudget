@@ -1,10 +1,10 @@
 // TODO: Remove feather icon and unused dependencies from treact
 // TODO: Clean up styled components, optimize bundle size and page load speed
 // TODO: Uninstall bulma
+import "react-toastify/dist/ReactToastify.css";
 import "./index.scss";
 import "tailwindcss/dist/base.css";
 import "react-date-range/dist/styles.css";
-import "react-toastify/dist/ReactToastify.css";
 import "react-date-range/dist/theme/default.css";
 import React from "react";
 import ReactDOM from "react-dom";
