@@ -94,6 +94,18 @@ export function getCategoryLabel(categoryEnum) {
   }
 }
 
+// Function to convert a TransactionTypeEnum value to a label
+export function getTransactionTypeLabel(transactionTypeEnum) {
+  switch (transactionTypeEnum) {
+    case TransactionTypeEnum.IN:
+      return "Ingreso";
+    case TransactionTypeEnum.OUT:
+      return "Egreso";
+    default:
+      return "";
+  }
+}
+
 /**
  * Get the associated tailwind background style for a category
  * @param  {String} categoryEnum The category (must be a value of CategoryEnum)

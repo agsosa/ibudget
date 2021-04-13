@@ -23,6 +23,7 @@ import { Calendar } from "react-date-range";
 import { es } from "react-date-range/dist/locale";
 import CategorySelector from "components/dashboard/CategorySelector";
 import { PropTypes } from "prop-types";
+import { getTransactionTypeLabel } from "lib/Helpers";
 
 /* Start styled components */
 
@@ -43,7 +44,7 @@ function TransactionInfoForm({ onInfoChange, initialInfo, loading, editMode }) {
     amount: null, // Number amount of money (required)
     notes: "", // String notes (optional)
     category_id: null, // Value of CategoryEnum (required)
-    type_id: TransactionTypeEnum.OUT, // Value of TransactionTypeEnum (required)
+    type_id: TransactionTypeEnum.IN, // Value of TransactionTypeEnum (required)
     date: null, // date  (required)
     concept: "", // String concept (optional)
   };
@@ -170,14 +171,14 @@ function TransactionInfoForm({ onInfoChange, initialInfo, loading, editMode }) {
         onValueSelect={onTypeButtonClick}
       >
         <SelectButtonGroup.Item
-          value={TransactionTypeEnum.OUT}
-          label="Expense"
-          borderLeft
+          value={TransactionTypeEnum.IN}
+          label={getTransactionTypeLabel(TransactionTypeEnum.IN)}
+          borderRight
         />
         <SelectButtonGroup.Item
-          value={TransactionTypeEnum.IN}
-          label="Income"
-          borderRight
+          value={TransactionTypeEnum.OUT}
+          label={getTransactionTypeLabel(TransactionTypeEnum.OUT)}
+          borderLeft
         />
       </SelectButtonGroup>
     </InputGroup>
