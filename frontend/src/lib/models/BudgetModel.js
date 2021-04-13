@@ -26,12 +26,7 @@ export default {
         : state;
     },
     addTransaction(state, payload) {
-      // TODO: Add payload validation
-      console.log("entered addtransaction");
-      console.log(Object.isObject(payload), payload);
-      return Object.isObject(payload)
-        ? { ...state, transactions: [...state.transactions, payload] }
-        : state;
+      return { ...state, transactions: [...state.transactions, payload] };
     },
   },
   effects: (dispatch) => ({
