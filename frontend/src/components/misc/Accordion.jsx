@@ -42,7 +42,7 @@ const AccordionExport = ({ items, isMulti }) => {
   const [activeIndex, setActiveIndex] = useState([]); // Array of index number
 
   const toggleItem = (index) => {
-    if (activeIndex === index)
+    if (activeIndex.includes(index))
       setActiveIndex(activeIndex.filter((i) => i !== index));
     else setActiveIndex(isMulti ? [...activeIndex, index] : [index]);
   };
