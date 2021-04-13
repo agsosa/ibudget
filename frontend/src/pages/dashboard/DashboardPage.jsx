@@ -7,7 +7,6 @@ import * as React from "react";
 // import Articles from "components/dashboard/Articles";
 import CardList from "components/misc/CardList";
 import tw from "twin.macro";
-import { ContentWithPaddingXl as ContentBase } from "third-party/treact/components/misc/Layouts";
 import { SectionHeading } from "third-party/treact/components/misc/Headings";
 import DateRangeSelector from "components/dashboard/smart-components/DateRangeSelector";
 import { motion } from "framer-motion";
@@ -16,9 +15,13 @@ import Spending from "components/dashboard/smart-components/Spending";
 import MoneyTrend from "components/dashboard/smart-components/MoneyTrend";
 import MoneyFlow from "components/dashboard/smart-components/MoneyFlow";
 import { getMoneyDisplayString } from "lib/Helpers";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import store from "lib/Store";
 import CloudLoadingIndicator from "components/misc/CloudLoadingIndicator";
+import ContentWithPadding from "components/layout/ContentWithPadding";
+import { useHistory } from "react-router-dom";
+import withFetchTransactions from "components/dashboard/smart-components/withFetchTransactions";
+import { PropTypes } from "prop-types";
 
 /* Start styled components */
 
@@ -30,41 +33,24 @@ const DateRangeContainer = tw.div`mt-8 flex-col text-center flex sm:flex-row jus
 const DateRangeLabel = tw.text`text-gray-600 mr-3 mt-2`;
 const Money = tw(motion.div)`  text-gray-700 text-center text-3xl font-bold `;
 const Description = tw.text`w-full text-gray-600 text-center text-sm mt-3`;
-const ContentWithPaddingXl = tw(ContentBase)`
-mx-auto 
-px-0 py-10 sm:px-6 
-md:px-8 lg:px-12 xl:px-24 
-sm:py-10 flex flex-col max-w-full`;
 
 /* End style components */
 
-function DashboardPage() {
-  /* Start store */
+function DashboardPage({ loading }) {
+  const history = useHistory();
 
-  const [loading, setLoading] = React.useState(true);
-  const dispatch = useDispatch();
+  /* Start store */
 
   const selection = store.select((models) => ({
     balance: models.BudgetModel.currentBalance,
   }));
   const { balance } = useSelector(selection);
 
-  React.useEffect(() => {
-    dispatch({
-      type: "BudgetModel/fetchTransactions",
-      payload: {
-        callback: () => {
-          setLoading(false);
-        },
-      },
-    });
-  }, []);
-
   /* End store */
 
   // Last Transactions View More click handler
-  function handleLastTransactionsViewMore() {
-    console.log("handleLastTransactionsViewMore");
+  function handleLastTransactionsViewMoreButton() {
+    history.push("/transactions");
   }
 
   // Header section
@@ -101,13 +87,13 @@ function DashboardPage() {
   }
 
   return (
-    <ContentWithPaddingXl>
+    <ContentWithPadding>
       <Header />
 
       <CardList loading={loading}>
         <CardList.Item
           title="Últimas transacciones"
-          onViewMoreClick={handleLastTransactionsViewMore}
+          onViewMoreClick={handleLastTransactionsViewMoreButton}
         >
           <LatestTransactions limit={5} />
         </CardList.Item>
@@ -126,8 +112,12 @@ function DashboardPage() {
       </CardList>
 
       {/* <Articles /> */}
-    </ContentWithPaddingXl>
+    </ContentWithPadding>
   );
 }
 
-export default DashboardPage;
+DashboardPage.propTypes = {
+  loading: PropTypes.bool.isRequired, // Injected by withFetchTransactions
+};
+
+export default withFetchTransactions(DashboardPage);
