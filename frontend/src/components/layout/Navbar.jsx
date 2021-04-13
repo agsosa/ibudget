@@ -155,13 +155,14 @@ export default () => {
   const collapseBreakpointCss = collapseBreakPointCssMap.lg;
 
   function handleAddTransactionClick() {
+    toggleNavbar();
     modalRef.current.toggle();
   }
 
   const isLogged = true;
 
   const links = (
-    <NavLinks onClick={toggleNavbar}>
+    <NavLinks>
       {isLogged ? (
         <>
           <MemberLinks onAddTransactionClick={handleAddTransactionClick} />
