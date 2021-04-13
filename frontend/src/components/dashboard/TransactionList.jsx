@@ -22,6 +22,7 @@ import {
 } from "lib/Helpers";
 import { TransactionTypeEnum } from "ibudget-shared";
 import format from "date-fns/format";
+import AddEditTransaction from "components/dashboard/smart-components/AddEditTransactionModal";
 import CategoryIcon from "./CategoryIcon";
 
 /* Start styled components */
@@ -78,20 +79,35 @@ function TransactionItem({ data, onClick }) {
 }
 
 function TransactionList({ data }) {
+  const modalRef = React.useRef();
+  const [clickedTransaction, setClickedTransaction] = React.useState(null);
+
+  React.useEffect(() => {
+    if (clickedTransaction) modalRef.current.toggle();
+  }, [clickedTransaction]);
+
   return (
-    <List>
-      {(data &&
-        Array.isArray(data) &&
-        data.map((item) => {
-          return React.createElement(TransactionItem, {
-            data: item,
-            onClick: () => {
-              console.log("test"); // TODO: Implement
-            },
-          });
-        })) ||
-        console.warn("TransactionList: Invalid data prop")}
-    </List>
+    <>
+      <List>
+        {(data &&
+          Array.isArray(data) &&
+          data.map((item) => {
+            return React.createElement(TransactionItem, {
+              data: item,
+              onClick: () => {
+                setClickedTransaction(item);
+              },
+            });
+          })) ||
+          console.warn("TransactionList: Invalid data prop")}
+      </List>
+      <AddEditTransaction
+        ref={modalRef}
+        title="Edit Transaction"
+        editMode
+        transaction={clickedTransaction}
+      />
+    </>
   );
 }
 

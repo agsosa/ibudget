@@ -1,12 +1,14 @@
 /*
   Smart component (Interacting with BudgetModel)
 
-  Component to create a new TransactionModel using TransactionInfoForm
-
-  TODO: Implement edit mode
+  Component to create or edit a TransactionModel using TransactionInfoForm
 
   Usage:
     <AddTransaction />
+
+  Props:
+    editMode: boolean to indicate if we're editing a transaction (default: false, creation mode)
+    transaction: object of TransactionModel to initialize the form (optional for editMode=false, REQUIRED for editMode=true)
 */
 
 import * as React from "react";
@@ -33,10 +35,17 @@ const ButtonsContainer = tw.div`w-full justify-center items-center flex flex-col
 
 /* End styled components */
 
-function AddTransactionModal({ toggleModal }) {
+function AddEditTransactionModal({ toggleModal, editMode, transaction }) {
+  if (editMode && !transaction) {
+    console.error(
+      "AddEditTransactionModal should pass a valid transaction prop if editMode is true"
+    );
+    return "INVALID TRANSACTION INFO";
+  }
+
   const dispatch = useDispatch();
 
-  const [transactionInfo, setTransactionInfo] = React.useState(null); // TODO: Implement here the initial transaction info if it's edit mode
+  const [transactionInfo, setTransactionInfo] = React.useState(transaction);
   const [loading, setLoading] = React.useState(false);
 
   /* Start event handlers */
@@ -45,9 +54,9 @@ function AddTransactionModal({ toggleModal }) {
     setTransactionInfo(info);
   }
 
-  // Function called on Add transaction button click
+  // Function called on submit button click
   // Parameter closeModal: set to true to close the parent modal
-  function onAddTransactionButtonClick(closeModal = false) {
+  function onSubmitButtonClick(closeModal = false) {
     if (
       transactionInfo.amount == null ||
       transactionInfo.category_id == null ||
@@ -78,26 +87,41 @@ function AddTransactionModal({ toggleModal }) {
 
   /* End event handlers */
 
+  const transactionInfoModified =
+    transactionInfo &&
+    transaction &&
+    Object.keys(transactionInfo).some(
+      (k) => transactionInfo[k] !== transaction[k]
+    );
+
   return (
     <>
-      <TransactionInfoForm onInfoChange={onInfoChange} loading={loading} />
+      <TransactionInfoForm
+        onInfoChange={onInfoChange}
+        loading={loading}
+        initialInfo={transaction}
+      />
       <ButtonsContainer>
         {loading ? (
           <CloudLoadingIndicator upload />
         ) : (
           <>
-            <PrimaryButton
-              disabled={loading}
-              onClick={() => onAddTransactionButtonClick(true)}
-            >
-              Add Transaction
-            </PrimaryButton>
-            <SecondaryButton
-              disabled={loading}
-              onClick={onAddTransactionButtonClick}
-            >
-              Add and Create another
-            </SecondaryButton>
+            {/* If we are in edit mode, only show the modify transaction button if the user modified the values */}
+            {!editMode ||
+              (editMode && transactionInfoModified && (
+                <PrimaryButton
+                  disabled={loading}
+                  onClick={() => onSubmitButtonClick(true)}
+                >
+                  {editMode ? "Modify Transaction" : "Add Transaction"}
+                </PrimaryButton>
+              ))}
+
+            {!editMode && (
+              <SecondaryButton disabled={loading} onClick={onSubmitButtonClick}>
+                Add and Create another
+              </SecondaryButton>
+            )}
           </>
         )}
       </ButtonsContainer>
@@ -105,9 +129,16 @@ function AddTransactionModal({ toggleModal }) {
   );
 }
 
-AddTransactionModal.propTypes = {
-  toggleModal: PropTypes.func.isRequired,
+AddEditTransactionModal.defaultProps = {
+  editMode: false,
+  transaction: null,
 };
 
-const withModalHoc = Modal(AddTransactionModal, "Add Transaction");
+AddEditTransactionModal.propTypes = {
+  toggleModal: PropTypes.func.isRequired,
+  editMode: PropTypes.bool,
+  transaction: PropTypes.object,
+};
+
+const withModalHoc = Modal(AddEditTransactionModal);
 export default withModalHoc;
