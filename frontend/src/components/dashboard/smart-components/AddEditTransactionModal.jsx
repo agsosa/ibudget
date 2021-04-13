@@ -111,7 +111,13 @@ function AddEditTransactionModal({ toggleModal, editMode, transaction }) {
   }
 
   function updateTransaction(closeModalOnFinish) {
-    if (!transaction || transaction.id == null) {
+    if (
+      !transaction ||
+      transaction.id == null ||
+      transactionInfo.amount == null ||
+      transactionInfo.category_id == null ||
+      transactionInfo.date == null
+    ) {
       // Handle invalid transaction prop
       dispatch({
         type: "NotificationsQueueModel/pushNotification",
