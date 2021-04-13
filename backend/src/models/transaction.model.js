@@ -16,26 +16,36 @@ const TransactionModel = {
     concept: Joi.string()
       .max(shared.Limits.CONCEPT_MAX_CHARS)
       .optional()
-      .allow(""),
-    notes: Joi.string().max(shared.Limits.NOTES_MAX_CHARS).optional().allow(""),
-  }),
+      .allow("")
+      .allow(null),
+    notes: Joi.string()
+      .max(shared.Limits.NOTES_MAX_CHARS)
+      .optional()
+      .allow("")
+      .allow(null),
+  }).unknown(),
 };
 
 TransactionModel.create = (transaction_info) => {
   return new Promise((resolve, reject) => {
+    console.log("Received transaction_info", transaction_info);
     // Joi validation
     const isValidInfo =
       transaction_info &&
       TransactionModel.infoSchema.validate(transaction_info);
     // Joi: If the info is not valid then isValidInfo.error will exist and details.message will exist
 
-    if (!isValidInfo || isValidInfo.error)
+    if (!isValidInfo || isValidInfo.error) {
       reject(
         `The specified transaction info is not valid. ${
           isValidInfo ? isValidInfo.error : ""
         }`
       );
 
+      return;
+    }
+
+    console.log("continuamos");
     const user_id = 0; // TODO: Add user_id param, validate user_id
 
     const {
@@ -86,16 +96,17 @@ TransactionModel.delete = (id) => {
 TransactionModel.findAll = async (user_id) => {
   return new Promise((resolve, reject) => {
     // TODO: Validate user_id?
-    if (user_id == null || typeof user_id !== "number")
-      reject("Specified user_id is not valid");
+    if (user_id != null && typeof user_id === "number") {
+      const query = `SELECT id, amount, category_id, type_id, date, concept, notes FROM ${TABLE_NAME} WHERE \`user_id\` =  ?`;
+      const params = [user_id];
 
-    const query = `SELECT id, amount, category_id, type_id, date, concept, notes FROM ${TABLE_NAME} WHERE \`user_id\` =  ?`;
-    const params = [user_id];
+      database
+        .execute(query, params)
+        .then(([rows]) => resolve(rows))
+        .catch((err) => reject(err));
+    }
 
-    database
-      .execute(query, params)
-      .then(([rows]) => resolve(rows))
-      .catch((err) => reject(err));
+    reject("Specified user_id is not valid");
   });
 };
 
