@@ -59,8 +59,8 @@ const ChildrenContainer = tw.div`sm:px-5 mt-8 sm:pb-2 pb-4`;
 
 /* End styled components */
 
-function Modal(WrappedComponent, title) {
-  return React.forwardRef((props, ref) => {
+function Modal(WrappedComponent) {
+  return React.forwardRef(({ title, ...props }, ref) => {
     const [modalIsOpen, setModalIsOpen] = React.useState(false);
 
     const toggleModal = () => {
