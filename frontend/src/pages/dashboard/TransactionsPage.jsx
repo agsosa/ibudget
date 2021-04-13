@@ -22,19 +22,19 @@ import TransactionList from "components/dashboard/TransactionList";
 /* Start styled components */
 
 const HeaderContainer = tw.div`w-full flex flex-col items-center`;
-const DateRangeContainer = tw.div`mt-2 mb-8 flex-col text-center flex sm:flex-row justify-center align-middle`;
+const DateRangeContainer = tw.div`-mt-2 mb-8 flex-col text-center flex sm:flex-row justify-center align-middle`;
 const DateRangeLabel = tw.text`text-gray-600 mr-3 mt-2`;
-
 const Container = tw.div`
-self-center gap-3 flex flex-col
+self-center gap-3 flex flex-col w-screen mx-5
 md:grid md:grid-cols-9 md:gap-6 
 md:max-w-screen-xl md:w-full`;
-const LeftColumn = tw.div`col-span-3 flex flex-col shadow-sm rounded-xl p-8 bg-white`;
+const LeftColumn = tw.div`
+col-span-3 flex flex-col 
+shadow-sm rounded-xl 
+p-8 px-12 md:p-4 lg:p-8 
+bg-white`;
 const RightColumn = tw.div`col-span-6 shadow-sm rounded-xl p-10 bg-white`;
-
-const Title = tw.text`text-2xl font-semibold`;
-const Description = tw.text`bg-gray-200 px-3 py-1 my-1 rounded-lg font-medium uppercase text-sm text-gray-700`;
-
+const Title = tw.text`text-xl p-3 sm:p-0 md:text-2xl font-semibold`;
 const CategoryCheckboxContainer = tw.div`flex flex-row align-middle items-center gap-1`;
 const CategoryCheckboxLabel = tw.text`text-base`;
 
@@ -45,33 +45,43 @@ const ALL_CATEGORIES = -1;
 const categoryFilterOptions = [ALL_CATEGORIES, ...Object.values(CategoryEnum)];
 
 function TransactionsPage({ loading }) {
-  // Get transactions with the selected period from store
   const selection = store.select((models) => ({
     transactions: models.BudgetModel.transactionsFromSelectedPeriod,
   }));
-
   const { transactions } = useSelector(selection);
 
   const [localTransactions, setLocalTransactions] = React.useState(true); // Used to filter, sort, etc. locally
-  const [filterCategory, setFilterCategory] = React.useState([ALL_CATEGORIES]); // -1 to show all categories, value of CategoryEnum to filter by category
+  const [categoryFilterArray, setFilterCategoryArray] = React.useState([
+    ALL_CATEGORIES,
+  ]);
 
-  React.useEffect(() => {}, transactions);
+  React.useEffect(() => {
+    // Filter and Sort on transactions state or filter update
+    let filteredAndSorted = transactions;
+
+    if (!categoryFilterArray.includes(ALL_CATEGORIES))
+      filteredAndSorted = filteredAndSorted.filter((q) =>
+        categoryFilterArray.includes(q.category_id)
+      );
+
+    setLocalTransactions(filteredAndSorted);
+  }, [transactions, categoryFilterArray]);
 
   // Triggered on Category checkbox click. Param v: array of categoryFilterOptions
   function handleFilterCategoryChange(valuesArray) {
     if (valuesArray.length > 0) {
       if (
         valuesArray.includes(ALL_CATEGORIES) &&
-        !filterCategory.includes(ALL_CATEGORIES)
+        !categoryFilterArray.includes(ALL_CATEGORIES)
       ) {
         // Uncheck every category except ALL_CATEGORIES if the user checked the all categories option
-        setFilterCategory([ALL_CATEGORIES]);
-      } else if (filterCategory.includes(ALL_CATEGORIES)) {
+        setFilterCategoryArray([ALL_CATEGORIES]);
+      } else if (categoryFilterArray.includes(ALL_CATEGORIES)) {
         // Uncheck ALL_CATEGORIES if it's already checked and the user checked a category
-        setFilterCategory(valuesArray.filter((q) => q !== ALL_CATEGORIES));
+        setFilterCategoryArray(valuesArray.filter((q) => q !== ALL_CATEGORIES));
       } else {
         // Remaining cases with ALL_CATEGORIES unchecked
-        setFilterCategory(valuesArray);
+        setFilterCategoryArray(valuesArray);
       }
     }
   }
@@ -79,7 +89,7 @@ function TransactionsPage({ loading }) {
   const CategoryCheckboxes = (
     <CheckboxGroup
       name="fruits"
-      value={filterCategory}
+      value={categoryFilterArray}
       onChange={handleFilterCategoryChange}
     >
       {(Checkbox) => (
@@ -129,7 +139,7 @@ function TransactionsPage({ loading }) {
             />
           </LeftColumn>
           <RightColumn>
-            <TransactionList limit={10} data={transactions} />
+            <TransactionList limit={10} data={localTransactions} />
           </RightColumn>
         </Container>
       </ContentWithPadding>
