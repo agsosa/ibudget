@@ -54,9 +54,7 @@ SingleValue.propTypes = {
 
 // Exported component
 function CategorySelector({ onCategoryChange, disabled, initialValue }) {
-  const [value, setValue] = React.useState(
-    initialValue ? { value: initialValue } : null
-  );
+  const [value, setValue] = React.useState({ value: initialValue });
 
   function handleChange(item) {
     setValue(item);
