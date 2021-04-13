@@ -72,17 +72,19 @@ const AccordionExport = ({ items, isMulti }) => {
             </AccordionToggleIcon>
             <AccordionTitle>{item.title}</AccordionTitle>
           </AccordionHeader>
-          <AccordionContent
-            variants={{
-              open: { opacity: 1, height: "auto", marginTop: "16px" },
-              collapsed: { opacity: 0, height: 0, marginTop: "0px" },
-            }}
-            initial="collapsed"
-            animate={activeIndex.includes(index) ? "open" : "collapsed"}
-            transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
-          >
-            {item.contentComponent}
-          </AccordionContent>
+          {activeIndex.includes(index) && (
+            <AccordionContent
+              variants={{
+                open: { opacity: 1, height: "auto", marginTop: "16px" },
+                collapsed: { opacity: 0, height: 0, marginTop: "0px" },
+              }}
+              initial="collapsed"
+              animate={activeIndex.includes(index) ? "open" : "collapsed"}
+              transition={{ duration: 0.5, ease: [0.04, 0.62, 0.23, 0.98] }}
+            >
+              {item.contentComponent}
+            </AccordionContent>
+          )}
         </Accordion>
       ))}
     </AccordionContainer>
