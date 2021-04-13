@@ -1,6 +1,8 @@
 // TODO: Add automatic retry?
 /* eslint-disable */
 import axios from "axios";
+import { dispatchNotification } from "lib/Helpers";
+import { NotificationTypeEnum } from "lib/Enums";
 
 const DEV_BASE_URL = "http://localhost:4002/api";
 const PROD_BASE_URL = "https://ibudget.app/api";
@@ -10,78 +12,72 @@ const API_BASE_URL =
     ? DEV_BASE_URL
     : PROD_BASE_URL;
 
-function handleAxiosError(error) {
-  console.log("handleAxiosError ", error);
+// Function called on API request error, can be used to display a message etc
+function handleError(errorData) {
+  console.error("API error:", errorData);
+
+  // TODO: GET ERROR CODE AND CHANGE MESSAGE FOR SOME CODES (FOR EXAMPLE API RATE LIMITED)
+  dispatchNotification(
+    NotificationTypeEnum.ERROR,
+    "Error while synchronizing the data, please try again"
+  );
 }
 
-// TODO: Merge all the requests in one function and create an apiModule object
+const ENDPOINTS = {
+  getTransactions: {
+    currentPromise: null,
+    axiosCall: () => axios.get(API_BASE_URL + "/transactions"),
+  },
+  createTransaction: {
+    currentPromise: null,
+    axiosCall: (payload) => axios.post(API_BASE_URL + "/transactions", payload),
+  },
+};
 
-// GET: transactions
-let getTransactionsPromise = null; // Store the current promise to prevent concurrent requests
-export function getTransactions() {
-  const endpoint = "/transactions";
+export function request(endpoint, payload) {
+  const endpointInfo = ENDPOINTS[endpoint];
 
-  // TODO: TEST
-  if (!getTransactionsPromise) {
-    getTransactionsPromise = new Promise((resolve, reject) => {
-      axios
-        .get(API_BASE_URL + endpoint)
-        .then(({ data }) => {
-          if (data.error) {
-            throw new Error(data.error);
-          } else resolve(data);
-        })
-        .catch((error) => {
-          let errorData;
+  if (!endpointInfo) {
+    console.error(
+      `API request() with invalid endpoint ${endpoint}. Valid values: ${Object.keys(
+        ENDPOINTS
+      )}`
+    );
 
-          if (error && error.response && error.response.data)
-            errorData = error.response.data;
-          else
-            errorData = {
-              error: true,
-              message: error.message || "No error message",
-            };
-
-          handleAxiosError(errorData);
-          reject(errorData);
-        });
-    });
+    return null;
   }
 
-  return getTransactionsPromise;
-}
-
-// POST: transaction
-let createTransactionsPromise = null; // Store the current promise to prevent concurrent requests
-export function createTransaction(payload) {
-  const endpoint = "/transactions";
-
-  // TODO: TEST
-  if (!createTransactionsPromise) {
-    createTransactionsPromise = new Promise((resolve, reject) => {
-      axios
-        .post(API_BASE_URL + endpoint, payload)
-        .then(({ data }) => {
-          if (data.error) {
-            throw new Error(data.error);
-          } else resolve(data);
-        })
-        .catch((error) => {
-          let errorData;
-
-          if (error && error.response && error.response.data)
-            errorData = error.response.data;
-          else
-            errorData = {
-              error: true,
-              message: error.message || "No error message",
-            };
-
-          handleAxiosError(errorData);
-          reject(errorData);
-        });
-    });
+  // If our endpointInfo.currentPromise is valid/running, return it to avoid unnecessary calls.
+  if (endpointInfo.currentPromise) {
+    return endpointInfo.currentPromise;
   }
 
-  return createTransactionsPromise;
+  // Else create a new Promise, assign to endpointInfo.currentPromise and return it
+  endpointInfo.currentPromise = new Promise((resolve, reject) => {
+    endpointInfo.currentPromise = endpointInfo
+      .axiosCall(payload)
+      .then(({ data }) => {
+        if (data.error) {
+          throw new Error(data.error);
+        } else resolve(data); // Resolve on valid data received
+      })
+      .catch((error) => {
+        let errorData;
+
+        // Process the error response
+        if (error && error.response && error.response.data)
+          errorData = error.response.data;
+        else
+          errorData = {
+            error: true,
+            message: error.message || "No error message",
+          };
+
+        handleError(errorData);
+        reject(errorData);
+      })
+      .finally(() => (endpointInfo.currentPromise = null)); // Clear currentPromise after the axios request
+  });
+
+  return endpointInfo.currentPromise;
 }

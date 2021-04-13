@@ -4,6 +4,7 @@
 import "./index.scss";
 import "tailwindcss/dist/base.css";
 import "react-date-range/dist/styles.css";
+import "react-toastify/dist/ReactToastify.css";
 import "react-date-range/dist/theme/default.css";
 import React from "react";
 import ReactDOM from "react-dom";
@@ -12,7 +13,7 @@ import store from "lib/Store";
 import { Provider } from "react-redux";
 import { getPersistor } from "@rematch/persist";
 import { PersistGate } from "redux-persist/lib/integration/react";
-// import Loading from "components/layout/Loading";
+import NotificationQueueController from "components/dashboard/smart-components/NotificationsQueueController";
 import reportWebVitals from "./reportWebVitals"; // TODO: Setup web vitals
 
 const persistor = getPersistor();
@@ -21,6 +22,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate persistor={persistor}>
+        <NotificationQueueController />
         <Routes />
       </PersistGate>
     </Provider>
