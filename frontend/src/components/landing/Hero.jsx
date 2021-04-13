@@ -21,9 +21,11 @@ const Paragraph = tw.p`my-5 lg:my-8 text-sm lg:text-base font-medium text-gray-6
 
 const Actions = tw.div`flex flex-col items-center sm:flex-row justify-center lg:justify-start mt-8`;
 
-const PrimaryButton = tw(
-  Link
-)`font-bold px-8 lg:px-10 py-3 rounded bg-primary-500 text-gray-100 hocus:bg-primary-600 focus:shadow-outline hocus:text-gray-100 focus:outline-none transition duration-300`;
+const PrimaryButton = tw(Link)`font-bold px-8 lg:px-10 py-3 rounded 
+bg-primary-500 text-gray-100 hocus:bg-primary-600 
+focus:shadow-outline hocus:text-gray-100 focus:outline-none
+transform hover:scale-105
+transition duration-300`;
 
 const IllustrationContainer = tw.div`flex justify-center md:justify-end items-center relative max-w-3xl lg:max-w-none`;
 
