@@ -7,7 +7,6 @@ import PropTypes from "prop-types";
 const Responsive = tw.div`w-full -my-10 max-w-md sm:mt-2`;
 
 function PieChart({ data }) {
-  console.log(data);
   const config = {
     appendPadding: 10,
     data,

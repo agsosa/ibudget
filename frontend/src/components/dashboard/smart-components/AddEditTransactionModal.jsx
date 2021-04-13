@@ -19,6 +19,7 @@ import Modal from "components/misc/Modal";
 import { useDispatch } from "react-redux";
 import { PropTypes } from "prop-types";
 import TransactionInfoForm from "components/dashboard/TransactionInfoForm";
+import { confirmAlert } from "react-confirm-alert";
 
 /* Start styled components */
 
@@ -48,6 +49,28 @@ function AddEditTransactionModal({ toggleModal, editMode, transaction }) {
 
   const [transactionInfo, setTransactionInfo] = React.useState(transaction);
   const [loading, setLoading] = React.useState(false);
+
+  /*
+    Confirmation popup
+
+    title: string
+    message: string
+    onConfirm: fn, called on Confirm button click
+  */
+  const confirm = (title, message, onConfirm) =>
+    confirmAlert({
+      title,
+      message,
+      buttons: [
+        {
+          label: "Confirm",
+          onClick: () => onConfirm(),
+        },
+        {
+          label: "Cancel",
+        },
+      ],
+    });
 
   /* Start event handlers */
 
@@ -88,7 +111,36 @@ function AddEditTransactionModal({ toggleModal, editMode, transaction }) {
   }
 
   function updateTransaction(closeModalOnFinish) {
-    console.log(closeModalOnFinish);
+    if (!transaction || transaction.id == null) {
+      // Handle invalid transaction prop
+      dispatch({
+        type: "NotificationsQueueModel/pushNotification",
+        payload: {
+          type: NotificationTypeEnum.WARN,
+          message:
+            "Couldn't edit the transaction due to invalid information. Please try again.",
+        },
+      });
+    } else {
+      confirm(
+        "Edit transaction",
+        "You are about to edit a transaction. Are you sure?",
+        () => {
+          setLoading(true);
+          dispatch({
+            type: "BudgetModel/updateTransaction",
+            payload: {
+              id: transaction.id,
+              transaction_info: transactionInfo,
+              callback: (result) => {
+                setLoading(false);
+                if (!result.error && closeModalOnFinish) toggleModal();
+              },
+            },
+          });
+        }
+      );
+    }
   }
 
   function deleteTransaction(closeModalOnFinish) {
@@ -103,18 +155,23 @@ function AddEditTransactionModal({ toggleModal, editMode, transaction }) {
         },
       });
     } else {
-      setLoading(true);
-
-      dispatch({
-        type: "BudgetModel/deleteTransaction",
-        payload: {
-          id: transaction.id,
-          callback: (result) => {
-            setLoading(false);
-            if (!result.error && closeModalOnFinish) toggleModal();
-          },
-        },
-      });
+      confirm(
+        "Delete transaction",
+        "You are about to delete a transaction. Are you sure?",
+        () => {
+          setLoading(true);
+          dispatch({
+            type: "BudgetModel/deleteTransaction",
+            payload: {
+              id: transaction.id,
+              callback: (result) => {
+                setLoading(false);
+                if (!result.error && closeModalOnFinish) toggleModal();
+              },
+            },
+          });
+        }
+      );
     }
   }
 

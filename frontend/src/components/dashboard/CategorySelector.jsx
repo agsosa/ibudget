@@ -58,8 +58,6 @@ function CategorySelector({ onCategoryChange, disabled, initialValue }) {
     initialValue ? { value: initialValue } : null
   );
 
-  console.log(initialValue, value);
-
   function handleChange(item) {
     setValue(item);
     if (onCategoryChange) onCategoryChange(item ? item.value : null);

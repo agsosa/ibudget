@@ -6,6 +6,7 @@ import "./index.scss";
 import "tailwindcss/dist/base.css";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
+import "react-confirm-alert/src/react-confirm-alert.css";
 import React from "react";
 import ReactDOM from "react-dom";
 import Routes from "Routes";
