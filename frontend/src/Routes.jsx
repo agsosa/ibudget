@@ -22,12 +22,12 @@ import PrivacyPolicyPage from "pages/PrivacyPolicyPage";
 import TermsOfServicePage from "pages/TermsOfServicePage";
 import TransactionsPage from "pages/dashboard/TransactionsPage";
 
-const StyledDiv = tw.div`font-display min-w-full text-secondary-500`;
+const StyledDiv = tw.div`font-display flex flex-col justify-between h-screen min-w-full text-secondary-500`;
 
 function Routes() {
   return (
     <Router>
-      <StyledDiv style={{ backgroundColor: "#FAFAFA" }}>
+      <StyledDiv>
         <ScrollToTop />
         <Navbar />
         <AnimationRevealPage>
