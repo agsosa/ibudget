@@ -38,7 +38,7 @@ function Spending() {
     0
   );
 
-  if (transactions && transactions.length >= 1) {
+  if (transactions && transactions.length >= 1 && spending > 0) {
     /* Build chartData array:
     our chartData array should contain objects with the shape {type: string, value: number}
     each object in chartData will represent the spending for a category. It will only contain 1 record for each category!
