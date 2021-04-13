@@ -18,11 +18,12 @@ import { getCategoryLabel } from "lib/Helpers";
 import CategoryIcon from "components/dashboard/CategoryIcon";
 import Accordion from "components/misc/Accordion";
 import TransactionList from "components/dashboard/TransactionList";
+import Skeleton from "react-loading-skeleton";
 
 /* Start styled components */
 
-const HeaderContainer = tw.div`w-full flex flex-col items-center`;
-const DateRangeContainer = tw.div`-mt-2 mb-8 flex-col text-center flex sm:flex-row justify-center align-middle`;
+const HeaderContainer = tw.div`w-full flex flex-col items-center mb-8 `;
+const DateRangeContainer = tw.div`flex-col text-center flex sm:flex-row justify-center align-middle`;
 const DateRangeLabel = tw.text`text-gray-600 mr-3 mt-2`;
 const Container = tw.div`
 self-center gap-3 flex flex-col w-screen mx-5
@@ -33,10 +34,11 @@ col-span-3 flex flex-col
 shadow-sm rounded-xl 
 p-8 px-12 md:p-4 lg:p-8 
 bg-white`;
-const RightColumn = tw.div`col-span-6 shadow-sm rounded-xl p-10 bg-white`;
+const RightColumn = tw.div`col-span-6 shadow-sm rounded-xl p-10 py-20 bg-white`;
 const Title = tw.text`text-xl p-3 sm:p-0 md:text-2xl font-semibold`;
 const CategoryCheckboxContainer = tw.div`flex flex-row align-middle items-center gap-1`;
 const CategoryCheckboxLabel = tw.text`text-base`;
+const CustomSkeleton = tw(Skeleton)`mt-5 min-w-full`;
 
 /* End style components */
 
@@ -55,8 +57,8 @@ function TransactionsPage({ loading }) {
     ALL_CATEGORIES,
   ]);
 
+  // Filter and Sort on transactions state or filter update
   React.useEffect(() => {
-    // Filter and Sort on transactions state or filter update
     let filteredAndSorted = transactions;
 
     if (!categoryFilterArray.includes(ALL_CATEGORIES))
@@ -67,9 +69,13 @@ function TransactionsPage({ loading }) {
     setLocalTransactions(filteredAndSorted);
   }, [transactions, categoryFilterArray]);
 
-  // Triggered on Category checkbox click. Param v: array of categoryFilterOptions
-  function handleFilterCategoryChange(valuesArray) {
-    if (valuesArray.length > 0) {
+  // Triggered on Category checkbox click
+  function handleFilterCategoryChange(
+    valuesArray /* Array with values of categoryFilterOptions */
+  ) {
+    if (valuesArray.length === 0) {
+      setFilterCategoryArray(valuesArray);
+    } else {
       if (
         valuesArray.includes(ALL_CATEGORIES) &&
         !categoryFilterArray.includes(ALL_CATEGORIES)
@@ -86,7 +92,9 @@ function TransactionsPage({ loading }) {
     }
   }
 
-  const CategoryCheckboxes = (
+  /* Start filter/sort components */
+
+  const CategoryFilterComponent = (
     <CheckboxGroup
       name="fruits"
       value={categoryFilterArray}
@@ -97,7 +105,12 @@ function TransactionsPage({ loading }) {
           {categoryFilterOptions.map((v) => {
             return (
               <CategoryCheckboxContainer>
-                <Checkbox value={v} />
+                <Checkbox
+                  value={v}
+                  style={{
+                    transform: "scale(1.3)",
+                  }}
+                />
                 <CategoryIcon category={v} small />
                 <CategoryCheckboxLabel>
                   {v === ALL_CATEGORIES
@@ -112,41 +125,44 @@ function TransactionsPage({ loading }) {
     </CheckboxGroup>
   );
 
-  if (transactions && transactions.length >= 1) {
-    return (
-      <ContentWithPadding>
-        <HeaderContainer>
-          {loading ? (
-            <CloudLoadingIndicator download />
-          ) : (
-            <>
-              <DateRangeContainer>
-                <DateRangeLabel>Period: </DateRangeLabel>
-                <DateRangeSelector />
-              </DateRangeContainer>
-            </>
-          )}
-        </HeaderContainer>
-        <Container>
-          <LeftColumn>
-            <Title>Transacciones</Title>
-            <Accordion
-              isMulti
-              items={[
-                { title: "Categorías", contentComponent: CategoryCheckboxes },
-                { title: "test 2", contentComponent: null },
-              ]}
-            />
-          </LeftColumn>
-          <RightColumn>
-            <TransactionList limit={10} data={localTransactions} />
-          </RightColumn>
-        </Container>
-      </ContentWithPadding>
-    );
-  }
+  const RightColumnContent = () => {
+    if (loading) return <CustomSkeleton count={10} height={25} width={100} />;
 
-  return <NoDataIndicator />; // If we got an empty transactions array from the store
+    if (localTransactions && localTransactions.length > 0)
+      return <TransactionList loading limit={10} data={localTransactions} />;
+
+    return <NoDataIndicator />;
+  };
+
+  /* End filter/sort components */
+  return (
+    <ContentWithPadding>
+      <HeaderContainer>
+        <DateRangeContainer>
+          <DateRangeLabel>Period: </DateRangeLabel>
+          <DateRangeSelector />
+        </DateRangeContainer>
+      </HeaderContainer>
+      <Container>
+        <LeftColumn>
+          <Title>Transacciones</Title>
+          <Accordion
+            isMulti
+            items={[
+              {
+                title: "Categorías",
+                contentComponent: CategoryFilterComponent,
+              },
+              { title: "test 2", contentComponent: null },
+            ]}
+          />
+        </LeftColumn>
+        <RightColumn>
+          <RightColumnContent />
+        </RightColumn>
+      </Container>
+    </ContentWithPadding>
+  );
 }
 
 export default withFetchTransactions(TransactionsPage);
