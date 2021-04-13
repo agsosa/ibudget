@@ -24,7 +24,7 @@ const Accordion = tw.div`
 select-none 
 mt-2 px-2 md:px-4 py-2 sm:-ml-5
  text-gray-800 `;
-const AccordionHeader = tw.dt`flex cursor-pointer  items-center p-5 hover:text-primary-500 transition duration-300`;
+const AccordionHeader = tw.dt`flex cursor-pointer  items-center p-3 hover:text-primary-500 transition duration-300`;
 const AccordionTitle = tw.span`text-lg lg:text-xl font-semibold`;
 const AccordionToggleIcon = motion.custom(styled.span`
   ${tw`mr-5 transition duration-300`}
@@ -33,7 +33,7 @@ const AccordionToggleIcon = motion.custom(styled.span`
   }
 `);
 const AccordionContent = motion.custom(
-  tw.dd`text-sm sm:text-base leading-relaxed`
+  tw.dd`text-sm sm:text-base leading-relaxed pl-5`
 );
 
 /* End styled components */
@@ -44,7 +44,7 @@ const AccordionExport = ({ items, isMulti }) => {
   const toggleItem = (index) => {
     if (activeIndex.includes(index))
       setActiveIndex(activeIndex.filter((i) => i !== index));
-    else setActiveIndex(isMulti ? [...activeIndex, index] : [index]);
+    else setActiveIndex(isMulti ? [index, ...activeIndex] : [index]);
   };
 
   return (
