@@ -19,6 +19,8 @@ import CategoryIcon from "components/dashboard/CategoryIcon";
 import Accordion from "components/misc/Accordion";
 import TransactionList from "components/dashboard/TransactionList";
 import Skeleton from "react-loading-skeleton";
+import Icon from "@mdi/react";
+import { mdiInformationOutline } from "@mdi/js";
 
 /* Start styled components */
 
@@ -34,17 +36,18 @@ col-span-3 flex flex-col
 shadow-sm rounded-xl 
 p-8 px-12 md:p-4 lg:p-8 
 bg-white`;
-const RightColumn = tw.div`col-span-6 shadow-sm rounded-xl p-10 py-20 bg-white`;
+const RightColumn = tw.div`col-span-6 shadow-sm rounded-xl p-10 bg-white`;
 const Title = tw.text`text-xl p-3 sm:p-0 md:text-2xl font-semibold`;
+const Hint = tw.text` text-sm p-1 flex flex-row gap-1 items-center`;
 const CategoryCheckboxContainer = tw.div`flex flex-row align-middle items-center gap-1`;
 const CategoryCheckboxLabel = tw.text`text-base`;
 const CustomSkeleton = tw(Skeleton)`mt-5 min-w-full`;
 
 /* End style components */
 
-const ALL_CATEGORIES = -1;
+const ALL_FILTER = -1; // Value used to represent the "select all"
 // categoryFilterOptions: Array of all the CategoryEnum values + ALL_CATEGORIES to display the category filter checkbox list
-const categoryFilterOptions = [ALL_CATEGORIES, ...Object.values(CategoryEnum)];
+const categoryFilterOptions = [ALL_FILTER, ...Object.values(CategoryEnum)];
 
 function TransactionsPage({ loading }) {
   const selection = store.select((models) => ({
@@ -54,14 +57,15 @@ function TransactionsPage({ loading }) {
 
   const [localTransactions, setLocalTransactions] = React.useState(true); // Used to filter, sort, etc. locally
   const [categoryFilterArray, setFilterCategoryArray] = React.useState([
-    ALL_CATEGORIES,
+    ALL_FILTER,
   ]);
+  const [typeFilterArray, setFilterCa] = React.useState([ALL_FILTER]);
 
   // Filter and Sort on transactions state or filter update
   React.useEffect(() => {
     let filteredAndSorted = transactions;
 
-    if (!categoryFilterArray.includes(ALL_CATEGORIES))
+    if (!categoryFilterArray.includes(ALL_FILTER))
       filteredAndSorted = filteredAndSorted.filter((q) =>
         categoryFilterArray.includes(q.category_id)
       );
@@ -77,14 +81,14 @@ function TransactionsPage({ loading }) {
       setFilterCategoryArray(valuesArray);
     } else {
       if (
-        valuesArray.includes(ALL_CATEGORIES) &&
-        !categoryFilterArray.includes(ALL_CATEGORIES)
+        valuesArray.includes(ALL_FILTER) &&
+        !categoryFilterArray.includes(ALL_FILTER)
       ) {
         // Uncheck every category except ALL_CATEGORIES if the user checked the all categories option
-        setFilterCategoryArray([ALL_CATEGORIES]);
-      } else if (categoryFilterArray.includes(ALL_CATEGORIES)) {
+        setFilterCategoryArray([ALL_FILTER]);
+      } else if (categoryFilterArray.includes(ALL_FILTER)) {
         // Uncheck ALL_CATEGORIES if it's already checked and the user checked a category
-        setFilterCategoryArray(valuesArray.filter((q) => q !== ALL_CATEGORIES));
+        setFilterCategoryArray(valuesArray.filter((q) => q !== ALL_FILTER));
       } else {
         // Remaining cases with ALL_CATEGORIES unchecked
         setFilterCategoryArray(valuesArray);
@@ -96,7 +100,7 @@ function TransactionsPage({ loading }) {
 
   const CategoryFilterComponent = (
     <CheckboxGroup
-      name="fruits"
+      name="categories"
       value={categoryFilterArray}
       onChange={handleFilterCategoryChange}
     >
@@ -113,7 +117,38 @@ function TransactionsPage({ loading }) {
                 />
                 <CategoryIcon category={v} small />
                 <CategoryCheckboxLabel>
-                  {v === ALL_CATEGORIES
+                  {v === ALL_FILTER
+                    ? "Todas las categorías"
+                    : getCategoryLabel(v)}
+                </CategoryCheckboxLabel>
+              </CategoryCheckboxContainer>
+            );
+          })}
+        </>
+      )}
+    </CheckboxGroup>
+  );
+
+  const TypeFilterComponent = (
+    <CheckboxGroup
+      name="type"
+      value={categoryFilterArray}
+      onChange={handleFilterCategoryChange}
+    >
+      {(Checkbox) => (
+        <>
+          {categoryFilterOptions.map((v) => {
+            return (
+              <CategoryCheckboxContainer>
+                <Checkbox
+                  value={v}
+                  style={{
+                    transform: "scale(1.3)",
+                  }}
+                />
+                <CategoryIcon category={v} small />
+                <CategoryCheckboxLabel>
+                  {v === ALL_FILTER
                     ? "Todas las categorías"
                     : getCategoryLabel(v)}
                 </CategoryCheckboxLabel>
@@ -129,7 +164,11 @@ function TransactionsPage({ loading }) {
     if (loading) return <CustomSkeleton count={10} height={25} width={100} />;
 
     if (localTransactions && localTransactions.length > 0)
-      return <TransactionList loading limit={10} data={localTransactions} />;
+      return (
+        <>
+          <TransactionList loading limit={10} data={localTransactions} />
+        </>
+      );
 
     return <NoDataIndicator />;
   };
@@ -146,14 +185,25 @@ function TransactionsPage({ loading }) {
       <Container>
         <LeftColumn>
           <Title>Transacciones</Title>
+          <Hint>
+            <Icon
+              path={mdiInformationOutline}
+              title="Hint"
+              size={0.75}
+              style={{ opacity: 0.5 }}
+              color="black"
+            />
+            Click a transaction to edit or delete it
+          </Hint>
           <Accordion
             isMulti
             items={[
+              { title: "Orden", contentComponent: null },
+              { title: "Tipo", contentComponent: TypeFilterComponent },
               {
-                title: "Categorías",
+                title: "Categoría",
                 contentComponent: CategoryFilterComponent,
               },
-              { title: "test 2", contentComponent: null },
             ]}
           />
         </LeftColumn>
