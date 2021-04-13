@@ -78,9 +78,9 @@ export function getCategoryLabel(categoryEnum) {
     case CategoryEnum.VEHICLE:
       return "Vehículo";
     case CategoryEnum.LIFE_ENTERTAINMENT:
-      return "Vida y Entretenimiento";
+      return "Entretenimiento";
     case CategoryEnum.COMMUNICATION_PC:
-      return "Comunicación y Tecnología";
+      return "Tecnología";
     case CategoryEnum.FINANCIAL_EXPENSES:
       return "Gastos Financieros";
     case CategoryEnum.INVESTMENTS:
