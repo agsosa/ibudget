@@ -27,25 +27,25 @@ const CategoryLabel = styled.div(({ small }) => [tw`ml-3`, small && tw`ml-0`]);
 /* End styled components */
 
 // Component to render the selector value and option labels
-const CategoryOption = ({ value, small }) => (
+const CategoryLabelComponent = ({ value, small }) => (
   <CategoryContainer small={small}>
     <CategoryIcon category={value} small={small} />
     <CategoryLabel small={small}>{getCategoryLabel(value)}</CategoryLabel>
   </CategoryContainer>
 );
 
-CategoryOption.defaultProps = {
+CategoryLabelComponent.defaultProps = {
   small: false,
 };
 
-CategoryOption.propTypes = {
+CategoryLabelComponent.propTypes = {
   value: PropTypes.any.isRequired, // eslint-disable-line
   small: PropTypes.bool,
 };
 
 // Component to render the selected selector value
 const SingleValue = ({ getValue }) => (
-  <CategoryOption value={getValue()[0].value} small />
+  <CategoryLabelComponent value={getValue()[0].value} small />
 );
 
 SingleValue.propTypes = {
@@ -54,7 +54,9 @@ SingleValue.propTypes = {
 
 // Exported component
 function CategorySelector({ onCategoryChange, disabled, initialValue }) {
-  const [value, setValue] = React.useState({ value: initialValue });
+  const [value, setValue] = React.useState(
+    initialValue !== null ? { value: initialValue } : null
+  );
 
   function handleChange(item) {
     setValue(item);
@@ -72,7 +74,7 @@ function CategorySelector({ onCategoryChange, disabled, initialValue }) {
       isClearable
       onChange={handleChange}
       isSearchable={false}
-      formatOptionLabel={CategoryOption}
+      formatOptionLabel={CategoryLabelComponent}
       options={Object.values(CategoryEnum).map((v) => ({ value: v }))}
       name="category"
     />
