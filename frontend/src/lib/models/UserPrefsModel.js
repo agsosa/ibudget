@@ -24,8 +24,8 @@ export default {
   name: "UserPrefsModel",
   state: {
     selectedPeriod: PeriodEnum.THIRTY_DAYS,
-    fromDate: null,
-    toDate: null,
+    fromDate: subDays(new Date(), 30),
+    toDate: new Date(),
   },
   reducers: {
     setSelectedPeriod(state, payload) {
