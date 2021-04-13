@@ -41,7 +41,7 @@ export default {
     delTransaction(state, payload) {
       return {
         ...state,
-        transactions: state.transactions.filter((q) => q.id !== payload.id),
+        transactions: state.transactions.filter((q) => q.id !== payload),
       };
     },
   },
