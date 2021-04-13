@@ -54,7 +54,10 @@ const SecondaryButton = tw(
 const ButtonsContainer = tw.div`w-full justify-center items-center flex flex-col mt-4`;
 
 const InputGroup = tw.div`flex flex-col items-center mb-3 w-full sm:w-80`;
-const InputLabel = tw.text`text-lg font-semibold mb-2`;
+const InputLabel = styled.text(({ required, missing }) => [
+  tw`text-lg font-medium mb-2`,
+  missing && tw`font-bold text-red-600`,
+]);
 const OptionalLabel = tw.text`text-sm font-light`;
 
 /* End styled components */
@@ -65,8 +68,8 @@ function AddTransactionModal({ toggleModal }) {
   const initialState = {
     amount: null, // Number amount of money (required)
     notes: "", // String notes (optional)
-    category: null, // Value of CategoryEnum (required)
-    type: TransactionTypeEnum.OUT, // Value of TransactionTypeEnum (required)
+    category_id: null, // Value of CategoryEnum (required)
+    type_id: TransactionTypeEnum.OUT, // Value of TransactionTypeEnum (required)
     date: null, // date  (required)
     concept: "", // String concept (optional)
   };
@@ -81,19 +84,30 @@ function AddTransactionModal({ toggleModal }) {
   // Function called on Add transaction button click
   // Parameter closeModal: set to true to close the parent modal
   function onAddTransactionButtonClick(closeModal = false) {
-    // TODO: Reject if the required input is not filled/invalid state
-    setLoading(true);
+    console.log(state);
+    if (
+      state.amount == null ||
+      state.category_id == null ||
+      state.date == null
+    ) {
+      dispatchNotification(
+        NotificationTypeEnum.WARN,
+        "Please fill the required (*) fields."
+      );
+    } else {
+      setLoading(true);
 
-    dispatch({
-      type: "BudgetModel/createTransaction",
-      payload: {
-        transactionInfo: state,
-        callback: (result) => {
-          setLoading(false);
-          if (!result.error && closeModal === true) toggleModal();
+      dispatch({
+        type: "BudgetModel/createTransaction",
+        payload: {
+          transactionInfo: state,
+          callback: (result) => {
+            setLoading(false);
+            if (!result.error && closeModal === true) toggleModal();
+          },
         },
-      },
-    });
+      });
+    }
   }
 
   // Function called on text box input fields
@@ -151,7 +165,7 @@ function AddTransactionModal({ toggleModal }) {
     if (Object.values(TransactionTypeEnum).includes(value)) {
       setState((oldState) => ({
         ...oldState,
-        type: value,
+        type_id: value,
       }));
     } else {
       console.error(
@@ -170,9 +184,10 @@ function AddTransactionModal({ toggleModal }) {
 
   // Function called on category select
   function onCategoryChange(item) {
+    console.log(item);
     setState((oldState) => ({
       ...oldState,
-      category: item,
+      category_id: item,
     }));
   }
 
@@ -182,7 +197,9 @@ function AddTransactionModal({ toggleModal }) {
 
   const CategoryInput = (
     <InputGroup>
-      <InputLabel>Categoría</InputLabel>
+      <InputLabel missing={state.category_id == null}>
+        Categoría{state.category_id == null && "*"}
+      </InputLabel>
       <CategorySelector
         disabled={loading}
         onCategoryChange={onCategoryChange}
@@ -192,10 +209,12 @@ function AddTransactionModal({ toggleModal }) {
 
   const TypeInput = (
     <InputGroup>
-      <InputLabel>Tipo de Transacción</InputLabel>
+      <InputLabel missing={state.type_id == null}>
+        Tipo de Transacción{state.type_id == null && "*"}
+      </InputLabel>
       <SelectButtonGroup
         disabled={loading}
-        selectedValue={state.type}
+        selectedValue={state.type_id}
         onValueSelect={onTypeButtonClick}
       >
         <SelectButtonGroup.Item
@@ -243,7 +262,9 @@ function AddTransactionModal({ toggleModal }) {
 
   const DateInput = (
     <InputGroup>
-      <InputLabel>Fecha</InputLabel>
+      <InputLabel missing={state.date == null}>
+        Fecha{state.date == null && "*"}
+      </InputLabel>
       <Calendar
         isDisabled={loading}
         onChange={onCalendarChange}
@@ -255,7 +276,9 @@ function AddTransactionModal({ toggleModal }) {
 
   const AmountInput = (
     <InputGroup>
-      <InputLabel>Monto</InputLabel>
+      <InputLabel missing={state.amount == null}>
+        Monto{state.amount == null && "*"}
+      </InputLabel>
 
       <Control>
         <Input
@@ -272,7 +295,7 @@ function AddTransactionModal({ toggleModal }) {
           value={state.amount}
         />
         <Icon
-          path={state.type === TransactionTypeEnum.OUT ? mdiMinus : mdiPlus}
+          path={state.type_id === TransactionTypeEnum.OUT ? mdiMinus : mdiPlus}
           title="Money amount"
           size={0.9}
           style={{ position: "absolute", left: 5, top: "25%", opacity: 0.2 }}
