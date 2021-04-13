@@ -17,9 +17,10 @@ import Navbar from "components/layout/Navbar";
 import Footer from "components/layout/Footer";
 import ScrollToTop from "components/misc/ScrollToTop";
 import AnimationRevealPage from "components/misc/AnimationRevealPage";
-import ContactUsPage from "./pages/ContactUsPage";
-import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
-import TermsOfServicePage from "./pages/TermsOfServicePage";
+import ContactUsPage from "pages/ContactUsPage";
+import PrivacyPolicyPage from "pages/PrivacyPolicyPage";
+import TermsOfServicePage from "pages/TermsOfServicePage";
+import TransactionsPage from "pages/dashboard/TransactionsPage";
 
 const StyledDiv = tw.div`font-display min-h-screen min-w-full text-secondary-500`;
 
@@ -52,8 +53,8 @@ function Routes() {
             <Route path="/dashboard">
               <DashboardPage />
             </Route>
-            <Route path="/add-transaction">
-              <DashboardPage />
+            <Route path="/transactions">
+              <TransactionsPage />
             </Route>
             <Route path="/">
               <HomePage />

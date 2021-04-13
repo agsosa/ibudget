@@ -3,11 +3,8 @@
 
   Main dashboard page
 */
-
-/* eslint-disable */
-
 import * as React from "react";
-import Articles from "components/dashboard/Articles";
+// import Articles from "components/dashboard/Articles";
 import CardList from "components/misc/CardList";
 import tw from "twin.macro";
 import { ContentWithPaddingXl as ContentBase } from "third-party/treact/components/misc/Layouts";
@@ -21,10 +18,7 @@ import MoneyFlow from "components/dashboard/smart-components/MoneyFlow";
 import { getMoneyDisplayString } from "lib/Helpers";
 import { useSelector, useDispatch } from "react-redux";
 import store from "lib/Store";
-import logo from "images/logo.png";
-import Icon from "@mdi/react";
-import CloudLoadingIndicator from "./../../components/misc/CloudLoadingIndicator";
-import { subDays } from "date-fns";
+import CloudLoadingIndicator from "components/misc/CloudLoadingIndicator";
 
 /* Start styled components */
 
@@ -45,8 +39,9 @@ sm:py-10 flex flex-col max-w-full`;
 /* End style components */
 
 function DashboardPage() {
-  /* Start Handle store */
-  const [loading, setLoading] = React.useState(true); // TODO: Remove and use rematch plugin
+  /* Start store */
+
+  const [loading, setLoading] = React.useState(true);
   const dispatch = useDispatch();
 
   const selection = store.select((models) => ({
@@ -55,12 +50,17 @@ function DashboardPage() {
   const { balance } = useSelector(selection);
 
   React.useEffect(() => {
-    dispatch({ type: "BudgetModel/fetchTransactions" });
-
-    setTimeout(() => setLoading(false), 1); // TODO: Remove
+    dispatch({
+      type: "BudgetModel/fetchTransactions",
+      payload: {
+        callback: () => {
+          setLoading(false);
+        },
+      },
+    });
   }, []);
 
-  /* End handle store */
+  /* End store */
 
   // Last Transactions View More click handler
   function handleLastTransactionsViewMore() {
@@ -125,7 +125,7 @@ function DashboardPage() {
         </CardList.Item>
       </CardList>
 
-      <Articles />
+      {/* <Articles /> */}
     </ContentWithPaddingXl>
   );
 }

@@ -122,7 +122,6 @@ const MemberLinks = ({ onAddTransactionClick }) => (
   <>
     <NavLink to="/dashboard">Dashboard</NavLink>
     <NavLink to="/transactions">Transactions</NavLink>
-    <NavLink to="/analytics">Analytics</NavLink>
     <AddTransactionBtn css={tw`rounded-full`} onClick={onAddTransactionClick}>
       + Transaction
     </AddTransactionBtn>

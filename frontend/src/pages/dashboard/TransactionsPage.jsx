@@ -2,4 +2,4 @@ function TransactionsPage() {
   return <></>;
 }
 
-export default RegisterPage;
+export default TransactionsPage;
