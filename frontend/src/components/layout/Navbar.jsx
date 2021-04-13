@@ -104,7 +104,7 @@ const collapseBreakPointCssMap = {
 /* End styled components */
 
 // Links component to display for guests
-const GuestLinks = (
+const GuestLinks = () => (
   <>
     <NavLink to="/">Home</NavLink>
     <NavLink to="/how-it-works">How it Works</NavLink>
@@ -163,9 +163,12 @@ export default () => {
   const links = (
     <NavLinks onClick={toggleNavbar}>
       {isLogged ? (
-        <MemberLinks onAddTransactionClick={handleAddTransactionClick} />
+        <>
+          <MemberLinks onAddTransactionClick={handleAddTransactionClick} />
+          <AddTransaction ref={modalRef} />
+        </>
       ) : (
-        { GuestLinks }
+        <GuestLinks />
       )}
     </NavLinks>
   );
@@ -199,8 +202,6 @@ export default () => {
             )}
           </NavToggle>
         </MobileNavLinksContainer>
-
-        <AddTransaction ref={modalRef} />
       </HeaderContainer>
     </Header>
   );
