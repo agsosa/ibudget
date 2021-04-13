@@ -24,9 +24,10 @@ import {
 import Button from "react-bulma-components/lib/components/button";
 import Icon from "@mdi/react";
 import { mdiMinus, mdiPlus } from "@mdi/js";
-import { NotificationTypeEnum, TransactionTypeEnum } from "lib/Enums";
+import { NotificationTypeEnum } from "lib/Enums";
+import { TransactionTypeEnum } from "ibudget-shared";
 import SelectButtonGroup from "components/misc/input/SelectButtonGroup";
-import { TransactionModel } from "lib/Models";
+import { Limits } from "ibudget-shared";
 import { Calendar } from "react-date-range";
 import { enUS, es } from "react-date-range/dist/locale";
 import CategorySelector from "components/dashboard/CategorySelector";
@@ -131,17 +132,16 @@ function AddTransactionModal({ toggleModal }) {
 
           validInput =
             !Number.isNaN(parsedInput) &&
-            parsedInput.countDecimals() <=
-              TransactionModel.AMOUNT_MAX_DECIMALS &&
-            parsedInput >= TransactionModel.AMOUNT_MIN_NUMBER &&
-            parsedInput <= TransactionModel.AMOUNT_MAX_NUMBER;
+            parsedInput.countDecimals() <= Limits.AMOUNT_MAX_DECIMALS &&
+            parsedInput >= Limits.AMOUNT_MIN_NUMBER &&
+            parsedInput <= Limits.AMOUNT_MAX_NUMBER;
 
           break;
         case "notes":
-          validInput = inputValue.length < TransactionModel.NOTES_MAX_CHARS;
+          validInput = inputValue.length < Limits.NOTES_MAX_CHARS;
           break;
         case "concept":
-          validInput = inputValue.length < TransactionModel.CONCEPT_MAX_CHARS;
+          validInput = inputValue.length < Limits.CONCEPT_MAX_CHARS;
           break;
       }
 
@@ -241,7 +241,7 @@ function AddTransactionModal({ toggleModal }) {
         value={state.notes}
         resizable={false}
         onChange={onInputChange}
-        placeholder={`Write something (${TransactionModel.NOTES_MAX_CHARS} characters)`}
+        placeholder={`Write something (${Limits.NOTES_MAX_CHARS} characters)`}
       />
     </InputGroup>
   );
@@ -254,7 +254,7 @@ function AddTransactionModal({ toggleModal }) {
         name="concept"
         disabled={loading}
         type="text"
-        placeholder={`Write something (${TransactionModel.CONCEPT_MAX_CHARS} characters)`}
+        placeholder={`Write something (${Limits.CONCEPT_MAX_CHARS} characters)`}
         value={state.concept}
       />
     </InputGroup>
@@ -291,8 +291,8 @@ function AddTransactionModal({ toggleModal }) {
           style={{
             paddingLeft: 32,
           }}
-          min={TransactionModel.AMOUNT_MIN_NUMBER}
-          max={TransactionModel.AMOUNT_MAX_NUMBER}
+          min={Limits.AMOUNT_MIN_NUMBER}
+          max={Limits.AMOUNT_MAX_NUMBER}
           value={state.amount}
         />
         <Icon

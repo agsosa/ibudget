@@ -20,7 +20,7 @@ import {
   getMoneyDisplayString,
   getTransactionTypeSymbol,
 } from "lib/Helpers";
-import { TransactionTypeEnum } from "lib/Enums";
+import { TransactionTypeEnum } from "ibudget-shared";
 import format from "date-fns/format";
 import CategoryIcon from "./CategoryIcon";
 

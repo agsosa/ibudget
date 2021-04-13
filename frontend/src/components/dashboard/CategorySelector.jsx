@@ -11,7 +11,7 @@
 import * as React from "react";
 import { PropTypes } from "prop-types";
 import ReactSelect from "react-select";
-import { CategoryEnum } from "lib/Enums";
+import { CategoryEnum } from "ibudget-shared";
 import { getCategoryLabel } from "lib/Helpers";
 import tw, { styled } from "twin.macro";
 import CategoryIcon from "components/dashboard/CategoryIcon";

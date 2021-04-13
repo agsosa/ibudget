@@ -17,7 +17,7 @@ exports.TransactionTypeEnum = Object.freeze({
 	IN: 1,
 });
 
-exports.LIMITS = {
+exports.Limits = {
 	CONCEPT_MAX_CHARS: 25, // max TransactionModel's concept field length
 	NOTES_MAX_CHARS: 100, // max TransactionModel's notes field length
 	AMOUNT_MIN_NUMBER: 0.01,

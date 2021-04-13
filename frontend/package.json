@@ -21,6 +21,7 @@
     "dotenv": "^8.2.0",
     "feather-icons": "^4.28.0",
     "framer-motion": "3.10.6",
+    "ibudget-shared": "file:../shared",
     "moment": "^2.29.1",
     "node-sass": "^5.0.0",
     "prop-types": "^15.7.2",

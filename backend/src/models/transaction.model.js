@@ -6,18 +6,18 @@ const TABLE_NAME = "transactions";
 const TransactionModel = {
   infoSchema: Joi.object({
     amount: Joi.number()
-      .min(shared.LIMITS.AMOUNT_MIN_NUMBER)
-      .max(shared.LIMITS.AMOUNT_MAX_NUMBER)
-      .precision(shared.LIMITS.AMOUNT_MAX_DECIMALS)
+      .min(shared.Limits.AMOUNT_MIN_NUMBER)
+      .max(shared.Limits.AMOUNT_MAX_NUMBER)
+      .precision(shared.Limits.AMOUNT_MAX_DECIMALS)
       .required(),
     category_id: Joi.valid(...Object.values(shared.CategoryEnum)).required(),
     type_id: Joi.valid(...Object.values(shared.TransactionTypeEnum)).required(),
     date: Joi.date().required().max(new Date()),
     concept: Joi.string()
-      .max(shared.LIMITS.CONCEPT_MAX_CHARS)
+      .max(shared.Limits.CONCEPT_MAX_CHARS)
       .optional()
       .allow(""),
-    notes: Joi.string().max(shared.LIMITS.NOTES_MAX_CHARS).optional().allow(""),
+    notes: Joi.string().max(shared.Limits.NOTES_MAX_CHARS).optional().allow(""),
   }),
 };
 

@@ -12,7 +12,8 @@ import {
   mdiAccount,
   mdiDotsVertical,
 } from "@mdi/js";
-import { CategoryEnum, PeriodEnum, TransactionTypeEnum } from "./Enums";
+import { TransactionTypeEnum, CategoryEnum } from "ibudget-shared";
+import { PeriodEnum } from "./Enums";
 import store from "./Store";
 
 // Add countDecimals() to Number

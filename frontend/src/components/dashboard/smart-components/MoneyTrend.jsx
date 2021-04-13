@@ -12,7 +12,7 @@ import Chart from "components/dashboard/charts/AreaChart";
 import { useSelector } from "react-redux";
 import store from "lib/Store";
 import { format } from "date-fns";
-import { TransactionTypeEnum } from "lib/Enums";
+import { TransactionTypeEnum } from "ibudget-shared";
 import NoDataIndicator from "components/misc/NoDataIndicator";
 
 function MoneyTrend() {

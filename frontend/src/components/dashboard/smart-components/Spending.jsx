@@ -12,7 +12,7 @@ import tw, { styled } from "twin.macro";
 import PieChart from "components/dashboard/charts/PieChart";
 import store from "lib/Store";
 import { useSelector } from "react-redux";
-import { TransactionTypeEnum } from "lib/Enums";
+import { TransactionTypeEnum } from "ibudget-shared";
 import NoDataIndicator from "components/misc/NoDataIndicator";
 import { getMoneyDisplayString, getCategoryLabel } from "lib/Helpers";
 

@@ -1,5 +1,6 @@
 import * as API from "lib/API";
-import { NotificationTypeEnum, TransactionTypeEnum } from "lib/Enums";
+import { NotificationTypeEnum } from "lib/Enums";
+import { TransactionTypeEnum } from "ibudget-shared";
 
 /*
   BudgetModel
@@ -26,6 +27,8 @@ export default {
     },
     addTransaction(state, payload) {
       // TODO: Add payload validation
+      console.log("entered addtransaction");
+      console.log(Object.isObject(payload), payload);
       return Object.isObject(payload)
         ? { ...state, transactions: [...state.transactions, payload] }
         : state;
@@ -79,11 +82,10 @@ export default {
           const { data, error } = response;
 
           if (!error && data) {
-            data.forEach((q) => {
-              q.date = new Date(q.date); // eslint-disable-line no-param-reassign
-              q.amount = Number(q.amount); // eslint-disable-line no-param-reassign
-            });
+            data.date = new Date(data.date);
+            data.amount = Number(data.amount);
 
+            console.log("adding data ", data);
             this.addTransaction(data);
           }
 

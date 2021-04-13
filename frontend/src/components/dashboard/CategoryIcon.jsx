@@ -10,7 +10,7 @@
 */
 
 import tw, { styled } from "twin.macro";
-import { CategoryEnum } from "lib/Enums";
+import { CategoryEnum } from "ibudget-shared";
 import { PropTypes } from "prop-types";
 import Icon from "@mdi/react";
 import {

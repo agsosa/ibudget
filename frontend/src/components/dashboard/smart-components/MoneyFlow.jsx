@@ -3,7 +3,7 @@ import tw, { styled } from "twin.macro";
 import Gauge from "components/dashboard/charts/Gauge";
 import store from "lib/Store";
 import { useSelector } from "react-redux";
-import { TransactionTypeEnum } from "lib/Enums";
+import { TransactionTypeEnum } from "ibudget-shared";
 import { getMoneyDisplayString } from "lib/Helpers";
 import NoDataIndicator from "components/misc/NoDataIndicator";
 
