@@ -7,9 +7,9 @@ const TransactionModel = {
     amount: Joi.number().required(), // TODO: Use shared limits and enums to validate
     category_id: Joi.number().required(), // TODO: Use shared limits and enums to validate
     type_id: Joi.number().required(), // TODO: Use shared limits and enums to validate
-    date: Joi.date().required(),
-    concept: Joi.string().optional(), // TODO: Use shared limits and enums to validate
-    notes: Joi.string().optional(), // TODO: Use shared limits and enums to validate
+    date: Joi.date().required().max(new Date()),
+    concept: Joi.string().optional().allow(""), // TODO: Use shared limits and enums to validate
+    notes: Joi.string().optional().allow(""), // TODO: Use shared limits and enums to validate
   }),
 };
 

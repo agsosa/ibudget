@@ -266,6 +266,7 @@ function AddTransactionModal({ toggleModal }) {
         Fecha{state.date == null && "*"}
       </InputLabel>
       <Calendar
+        maxDate={new Date()}
         isDisabled={loading}
         onChange={onCalendarChange}
         locale={es} // TODO: Automatically get calendar locale
