@@ -137,6 +137,7 @@ TransactionModel.find = (id) => {
 // fullUpdate() requires a valid and complete transaction_info object (TransactionModel.infoSchema)
 // TODO: Implement partialUpdate
 TransactionModel.fullUpdate = (id, transaction_info) => {
+  console.log("fullUpdate transaction_info", transaction_info);
   return new Promise((resolve, reject) => {
     if (!validateTransactionId(id, reject)) return;
     if (!validateTransactionInfo(transaction_info, reject)) return;
@@ -174,8 +175,8 @@ TransactionModel.fullUpdate = (id, transaction_info) => {
             If we get an error on find() for some reason then return the transaction_info provided by the client 
           */
           TransactionModel.find(id)
-            .then((rows) => resolve(rows))
-            .catch((err) => resolve({ ...transaction_info, id }));
+            .then(([rows]) => resolve(rows))
+            .catch(() => resolve({ ...transaction_info, id }));
         }
       })
       .catch((err) => reject(err));
