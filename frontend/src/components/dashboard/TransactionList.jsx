@@ -62,7 +62,7 @@ function TransactionItem({ data, onClick }) {
           <CategoryIcon category={category_id} />
           <CategoryConceptContainer>
             <Category>{getCategoryLabel(category_id)}</Category>
-            <Concept>{concept || "(sin concepto)"}</Concept>
+            {concept && <Concept>{concept}</Concept>}
           </CategoryConceptContainer>
         </LeftContainer>
         <RightContainer>
