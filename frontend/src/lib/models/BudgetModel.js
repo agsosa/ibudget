@@ -8,11 +8,21 @@ import { TransactionTypeEnum } from "ibudget-shared";
         transactions: Array of TransactionModel
       }
 
+    reducers:
+      setTransactions(payload) - replace the transactions array, payload should be an array of TransactionModel
+      addTransaction(payload) - add a transaction to the array, payload should be a TransactionModel
+      delTransaction(payload) - delete a transaction from the array, payload should be a ID (number)
+
     effects:
-      async fetchTransactions() - Update the transactions array with the data from the server
+      fetchTransactions({callback: fn(result)}) - Fetch the transactions list from server
+      createTransaction({transactionInfo: object ,callback: fn(result)}) - Create a new transaction on server
+      deleteTransaction({id: number, callback: fn(result)}) - Delete a transaction on server
+
+      >>> result is a object representing the server response. Shape { error: bool, message: string, data?: any }
 
     selectors:
       currentBalance() - Calculate the current balance taking in account all the transactions amount and type (in/out)
+      transactionsFromSelectedPeriod() - Return the transactions array filtered by the period saved on UserPrefsModel state (fromDate-toDate)
 */
 export default {
   name: "BudgetModel",
@@ -27,6 +37,12 @@ export default {
     },
     addTransaction(state, payload) {
       return { ...state, transactions: [...state.transactions, payload] };
+    },
+    delTransaction(state, payload) {
+      return {
+        ...state,
+        transactions: state.transactions.filter((q) => q.id !== payload.id),
+      };
     },
   },
   effects: (dispatch) => ({
@@ -112,7 +128,44 @@ export default {
           if (payload && payload.callback) payload.callback(result);
         });
     },
-    // TODO: Implement Delete,  update
+    deleteTransaction(payload) {
+      API.request("deleteTransaction", payload.id)
+        .then((response) => {
+          const { error } = response;
+
+          if (!error) {
+            this.delTransaction(payload.id);
+          }
+
+          return response;
+        })
+        .catch((error) => error)
+        .then((result) => {
+          // Dispatch notification
+          const type = "NotificationsQueueModel/pushNotification";
+          if (result.error) {
+            dispatch({
+              type,
+              payload: {
+                type: NotificationTypeEnum.ERROR,
+                message:
+                  "Error while deleting the transaction. Please try again.",
+              },
+            });
+          } else {
+            dispatch({
+              type,
+              payload: {
+                type: NotificationTypeEnum.SUCCESS,
+                message: "The transaction was successfully deleted.",
+              },
+            });
+          }
+
+          if (payload && payload.callback) payload.callback(result);
+        });
+    },
+    // TODO: Implement   update
   }),
   selectors: (slice, createSelector) => ({
     // Selector to get the current balance (sum of all transactions amount field, depending on transaction type)

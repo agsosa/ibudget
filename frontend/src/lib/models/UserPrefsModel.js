@@ -12,12 +12,14 @@ import { PeriodEnum } from "lib/Enums";
 
     reducers:
       setSelectedPeriod(payload)
-        Payload: { selectedPeriod: value of PeriodEnum, fromDate: should be a valid JS date if period is PeriodEnum.CUSTOM, toDate: same as fromDate}
         Update selectedPeriod, fromDate and toDate fields. fromDate and toDate will be calculated depending on the passed selectedPeriod via payload.
+        Payload: 
+          { selectedPeriod: value of PeriodEnum, 
+            fromDate: should be a valid JS date if the selectedPeriod  is PeriodEnum.CUSTOM, 
+            toDate: same as fromDate}
 
     selectors:
-      formattedSelectedPeriod: Selector to get the current selected period label (string) 
-                                (for selectedPeriod = PeriodEnum.CUSTOM it will return something like "11/04/2021 - 12/04/2021")
+      formattedSelectedPeriod: Selector to get the current selected period label (string)
 
 */
 export default {
@@ -84,6 +86,7 @@ export default {
     },
   },
   selectors: (slice, createSelector) => ({
+    // Returns a label (string) representing the selected period. Returns "dd/MM/yy - dd/MM/yy" if the selectedPeriod is CUSTOM
     formattedSelectedPeriod() {
       return createSelector(slice, (state) => {
         if (

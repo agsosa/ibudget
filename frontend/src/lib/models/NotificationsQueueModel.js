@@ -5,10 +5,9 @@ import { NotificationTypeEnum } from "lib/Enums";
 
   To display a toast notification.
 
-  Notification object:{ type: value of NotificationTypeEnum, message: string to display }
-
   Usage:
     Dispatch "pushNotification" with a Notification object as payload
+    Shape of Notification: { type: value of NotificationTypeEnum, message: string to display }
 */
 export default {
   name: "NotificationsQueueModel",

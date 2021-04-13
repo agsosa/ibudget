@@ -51,18 +51,18 @@ function AddEditTransactionModal({ toggleModal, editMode, transaction }) {
 
   /* Start event handlers */
 
+  // Handle input change by TransactionInfoForm
   function onInfoChange(info) {
     setTransactionInfo(info);
   }
 
-  // Function called on submit button click
-  // Parameter closeModal: set to true to close the parent modal
-  function onSubmitButtonClick(closeModal = false) {
+  function createTransaction(closeModalOnFinish) {
     if (
       transactionInfo.amount == null ||
       transactionInfo.category_id == null ||
       transactionInfo.date == null
     ) {
+      // Handle invalid/missing input
       dispatch({
         type: "NotificationsQueueModel/pushNotification",
         payload: {
@@ -71,6 +71,7 @@ function AddEditTransactionModal({ toggleModal, editMode, transaction }) {
         },
       });
     } else {
+      // Dispatch createTransaction
       setLoading(true);
 
       dispatch({
@@ -79,10 +80,57 @@ function AddEditTransactionModal({ toggleModal, editMode, transaction }) {
           transactionInfo,
           callback: (result) => {
             setLoading(false);
-            if (!result.error && closeModal === true) toggleModal();
+            if (!result.error && closeModalOnFinish) toggleModal();
           },
         },
       });
+    }
+  }
+
+  function updateTransaction(closeModalOnFinish) {
+    console.log(closeModalOnFinish);
+  }
+
+  function deleteTransaction(closeModalOnFinish) {
+    if (!transaction || transaction.id == null) {
+      // Handle invalid transaction prop
+      dispatch({
+        type: "NotificationsQueueModel/pushNotification",
+        payload: {
+          type: NotificationTypeEnum.WARN,
+          message:
+            "Couldn't delete the transaction due to invalid information. Please try again.",
+        },
+      });
+    } else {
+      setLoading(true);
+
+      dispatch({
+        type: "BudgetModel/deleteTransaction",
+        payload: {
+          id: transaction.id,
+          callback: (result) => {
+            setLoading(false);
+            if (!result.error && closeModalOnFinish) toggleModal();
+          },
+        },
+      });
+    }
+  }
+
+  function onPrimaryButtonClick() {
+    if (editMode) {
+      updateTransaction(true);
+    } else {
+      createTransaction(true);
+    }
+  }
+
+  function onSecondaryButtonClick() {
+    if (editMode) {
+      deleteTransaction(true);
+    } else {
+      createTransaction(false);
     }
   }
 
@@ -110,12 +158,15 @@ function AddEditTransactionModal({ toggleModal, editMode, transaction }) {
           <>
             <PrimaryButton
               disabled={loading || (editMode && !transactionInfoModified)}
-              onClick={() => onSubmitButtonClick(true)}
+              onClick={onPrimaryButtonClick}
             >
               {editMode ? "Modify Transaction" : "Add Transaction"}
             </PrimaryButton>
 
-            <SecondaryButton disabled={loading} onClick={onSubmitButtonClick}>
+            <SecondaryButton
+              disabled={loading}
+              onClick={onSecondaryButtonClick}
+            >
               {editMode ? "Delete Transaction" : "Add and Create another"}
             </SecondaryButton>
           </>
