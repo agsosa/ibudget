@@ -58,7 +58,7 @@ function CategorySelector({ onCategoryChange, disabled }) {
 
   function handleChange(item) {
     setValue(item);
-    if (onCategoryChange) onCategoryChange(item);
+    if (onCategoryChange) onCategoryChange(item.value);
   }
 
   return (
