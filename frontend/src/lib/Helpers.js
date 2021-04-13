@@ -14,7 +14,6 @@ import {
 } from "@mdi/js";
 import { TransactionTypeEnum, CategoryEnum } from "ibudget-shared";
 import { PeriodEnum } from "./Enums";
-import store from "./Store";
 
 // Add countDecimals() to Number
 /* eslint-disable no-extend-native */
@@ -172,10 +171,3 @@ export const getCategoryMaterialIcon = (category) => {
 
   return icon;
 };
-
-export function dispatchNotification(notificationTypeEnum, message) {
-  store.dispatch({
-    type: "NotificationsQueueModel/pushNotification",
-    payload: { type: notificationTypeEnum, message },
-  });
-}

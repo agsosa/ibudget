@@ -35,7 +35,6 @@ import CloudLoadingIndicator from "components/misc/CloudLoadingIndicator";
 import LoadingOverlay from "components/layout/LoadingOverlay";
 import Modal from "components/misc/Modal";
 import { useDispatch } from "react-redux";
-import { dispatchNotification } from "lib/Helpers";
 
 /* Start styled components */
 
@@ -91,10 +90,13 @@ function AddTransactionModal({ toggleModal }) {
       state.category_id == null ||
       state.date == null
     ) {
-      dispatchNotification(
-        NotificationTypeEnum.WARN,
-        "Please fill the required (*) fields."
-      );
+      dispatch({
+        type: "NotificationsQueueModel/pushNotification",
+        payload: {
+          type: NotificationTypeEnum.WARN,
+          message: "Please fill the required (*) fields.",
+        },
+      });
     } else {
       setLoading(true);
 
