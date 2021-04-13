@@ -53,12 +53,16 @@ SingleValue.propTypes = {
 };
 
 // Exported component
-function CategorySelector({ onCategoryChange, disabled }) {
-  const [value, setValue] = React.useState(null);
+function CategorySelector({ onCategoryChange, disabled, initialValue }) {
+  const [value, setValue] = React.useState(
+    initialValue ? { value: initialValue } : null
+  );
+
+  console.log(initialValue, value);
 
   function handleChange(item) {
     setValue(item);
-    if (onCategoryChange) onCategoryChange(item.value);
+    if (onCategoryChange) onCategoryChange(item ? item.value : null);
   }
 
   return (
@@ -82,11 +86,13 @@ function CategorySelector({ onCategoryChange, disabled }) {
 CategorySelector.defaultProps = {
   onCategoryChange: null,
   disabled: false,
+  initialValue: null,
 };
 
 CategorySelector.propTypes = {
   onCategoryChange: PropTypes.func,
   disabled: PropTypes.bool,
+  initialValue: PropTypes.any,
 };
 
 export default CategorySelector;

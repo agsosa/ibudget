@@ -142,6 +142,7 @@ function TransactionInfoForm({ onInfoChange, initialInfo, loading }) {
         Categoría{transactionInfo.category_id == null && "*"}
       </InputLabel>
       <CategorySelector
+        initialValue={transactionInfo.category_id}
         disabled={loading}
         onCategoryChange={onCategoryChange}
       />
