@@ -33,7 +33,7 @@ import Skeleton from "react-loading-skeleton";
 const CardsContainer = tw.div`
   mt-10 items-center
   text-gray-900 font-medium 
-  lg:items-stretch lg:justify-between
+  lg:items-stretch
   lg:self-center lg:max-w-screen-xl lg:w-full
   lg:grid lg:gap-4 lg:grid-cols-2 
 `;

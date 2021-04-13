@@ -87,6 +87,7 @@ export default {
           callback will be a function called with a result object ({ error: boolean, message: string, data?: any })
           after the request promise is resolved/rejected
     */
+    // TODO: Implement cache
     fetchTransactions(payload) {
       API.request("getTransactions")
         .then((response) => {

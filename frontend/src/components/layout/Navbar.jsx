@@ -21,7 +21,7 @@ import AddTransaction from "components/dashboard/smart-components/AddEditTransac
 
 /* Start styled components */
 
-const Header = tw.header`sticky top-0 z-40 bg-white py-1 md:py-4 w-full`;
+const Header = tw.header`sticky top-0 z-40 bg-white py-1 md:py-4 w-full shadow-xs`;
 
 const HeaderContainer = tw.div`px-5 max-w-screen-2xl flex items-center justify-between mx-auto`;
 
