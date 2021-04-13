@@ -80,8 +80,9 @@ function TransactionItem({ data, onClick }) {
 
 function TransactionList({ data }) {
   const modalRef = React.useRef();
-  const [clickedTransaction, setClickedTransaction] = React.useState(null);
+  const [clickedTransaction, setClickedTransaction] = React.useState(null); // Used to pass it to the edit modal via prop
 
+  // Watch for clickedTransaction updates and toggle the modal
   React.useEffect(() => {
     if (clickedTransaction) modalRef.current.toggle();
   }, [clickedTransaction]);
@@ -95,7 +96,11 @@ function TransactionList({ data }) {
             return React.createElement(TransactionItem, {
               data: item,
               onClick: () => {
-                setClickedTransaction(item);
+                if (clickedTransaction === item) {
+                  // If our clickedTransaction is the same as the clicked item, toggle the modal
+                  // This is because React will not update clickedTransaction if it's unchanged, so we just need to open the modal
+                  modalRef.current.toggle();
+                } else setClickedTransaction(item); // else set it and wait for the update with useEffect then toggle the modal
               },
             });
           })) ||
