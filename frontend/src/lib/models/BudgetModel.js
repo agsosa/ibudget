@@ -1,6 +1,13 @@
+/* eslint-disable no-param-reassign */
+
 import * as API from "lib/API";
 import { NotificationTypeEnum } from "lib/Enums";
 import { TransactionTypeEnum } from "ibudget-shared";
+
+function parseTransactionFromServer(transaction) {
+  transaction.date = new Date(transaction.date);
+  transaction.amount = Number(transaction.amount);
+}
 
 /*
   BudgetModel
@@ -31,18 +38,46 @@ export default {
   },
   reducers: {
     setTransactions(state, payload) {
-      return Array.isArray(payload)
-        ? { ...state, transactions: payload }
-        : state;
+      if (payload && Array.isArray(payload)) {
+        payload.forEach(parseTransactionFromServer);
+
+        return { ...state, transactions: payload };
+      }
+      return state;
     },
     addTransaction(state, payload) {
-      return { ...state, transactions: [...state.transactions, payload] };
+      if (payload && typeof payload === "object") {
+        parseTransactionFromServer(payload);
+
+        return { ...state, transactions: [...state.transactions, payload] };
+      }
+
+      return state;
     },
     delTransaction(state, payload) {
-      return {
-        ...state,
-        transactions: state.transactions.filter((q) => q.id !== payload),
-      };
+      if (payload && typeof payload === "number") {
+        return {
+          ...state,
+          transactions: state.transactions.filter((q) => q.id !== payload),
+        };
+      }
+
+      return state;
+    },
+    updTransaction(state, payload) {
+      if (payload && typeof payload === "object") {
+        parseTransactionFromServer(payload);
+
+        return {
+          ...state,
+          transactions: state.transactions.map((q) => {
+            if (q.id === payload.id) return payload;
+            return q;
+          }),
+        };
+      }
+
+      return state;
     },
   },
   effects: (dispatch) => ({
@@ -58,12 +93,6 @@ export default {
           const { data, error } = response;
 
           if (!error && data) {
-            // NOTE: The amount field of the transaction models is received as a string (it's a decimal), implement a decimal library to handle it if needed
-            data.forEach((q) => {
-              q.date = new Date(q.date); // eslint-disable-line no-param-reassign
-              q.amount = Number(q.amount); // eslint-disable-line no-param-reassign
-            });
-
             this.setTransactions(data);
           }
 
@@ -93,10 +122,6 @@ export default {
           const { data, error } = response;
 
           if (!error && data) {
-            data.date = new Date(data.date);
-            data.amount = Number(data.amount);
-
-            console.log("adding data ", data);
             this.addTransaction(data);
           }
 
@@ -165,7 +190,46 @@ export default {
           if (payload && payload.callback) payload.callback(result);
         });
     },
-    // TODO: Implement   update
+    updateTransaction(payload) {
+      API.request("updateTransaction", {
+        id: payload.id,
+        transaction_info: payload.transaction_info,
+      })
+        .then((response) => {
+          const { error, data } = response;
+
+          if (!error && data) {
+            this.updTransaction(data);
+          }
+
+          return response;
+        })
+        .catch((error) => error)
+        .then((result) => {
+          // Dispatch notification
+          const type = "NotificationsQueueModel/pushNotification";
+          if (result.error) {
+            dispatch({
+              type,
+              payload: {
+                type: NotificationTypeEnum.ERROR,
+                message:
+                  "Error while modifying the transaction. Please try again.",
+              },
+            });
+          } else {
+            dispatch({
+              type,
+              payload: {
+                type: NotificationTypeEnum.SUCCESS,
+                message: "The transaction was successfully modified.",
+              },
+            });
+          }
+
+          if (payload && payload.callback) payload.callback(result);
+        });
+    },
   }),
   selectors: (slice, createSelector) => ({
     // Selector to get the current balance (sum of all transactions amount field, depending on transaction type)
