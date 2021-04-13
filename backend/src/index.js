@@ -12,9 +12,8 @@ const morgan = require("morgan");
 const cors = require("cors");
 const routes = require("@routes");
 const utils = require("@lib/utils");
+const config = require("@lib/config");
 
-const env = process.env.NODE_ENV || "development";
-port = process.env.PORT || 4002;
 const app = express();
 
 // Add global middlewares
@@ -33,7 +32,7 @@ app.use("/api/transactions", routes.transactions);
 app.get("/", (req, res) => res.send("OK"));
 
 // Show stack trace errors on development environment
-if (env === "development") {
+if (config.env === "development") {
   app.use(function (err, req, res, next) {
     console.error(err.stack);
 
@@ -58,8 +57,8 @@ app.use(function (req, res, next) {
 });
 
 // Start server
-app.listen(port);
-console.log("Running server on port", port);
+app.listen(config.serverPort);
+console.log("Running server on port", config.serverPort);
 
 // Graceful shutdown
 // TODO: TEST!!
