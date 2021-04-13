@@ -53,12 +53,12 @@ SingleValue.propTypes = {
 };
 
 // Exported component
-function CategorySelector({ onCategorySelect, disabled }) {
+function CategorySelector({ onCategoryChange, disabled }) {
   const [value, setValue] = React.useState(null);
 
-  function onCategoryChange(item) {
+  function handleChange(item) {
     setValue(item);
-    if (onCategorySelect) onCategorySelect(item);
+    if (onCategoryChange) onCategoryChange(item);
   }
 
   return (
@@ -70,7 +70,7 @@ function CategorySelector({ onCategorySelect, disabled }) {
       value={value}
       components={{ SingleValue }}
       isClearable
-      onChange={onCategoryChange}
+      onChange={handleChange}
       isSearchable={false}
       formatOptionLabel={CategoryOption}
       options={Object.values(CategoryEnum).map((v) => ({ value: v }))}
@@ -80,12 +80,12 @@ function CategorySelector({ onCategorySelect, disabled }) {
 }
 
 CategorySelector.defaultProps = {
-  onCategorySelect: null,
+  onCategoryChange: null,
   disabled: false,
 };
 
 CategorySelector.propTypes = {
-  onCategorySelect: PropTypes.func,
+  onCategoryChange: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
