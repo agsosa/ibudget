@@ -27,7 +27,7 @@ const StyledDiv = tw.div`font-display min-h-screen min-w-full text-secondary-500
 function Routes() {
   return (
     <Router>
-      <StyledDiv>
+      <StyledDiv style={{ backgroundColor: "#FAFAFA" }}>
         <ScrollToTop />
         <Navbar />
         <AnimationRevealPage>
