@@ -13,6 +13,7 @@ import tw, { styled } from "twin.macro";
 import { CategoryEnum } from "ibudget-shared";
 import { PropTypes } from "prop-types";
 import Icon from "@mdi/react";
+import { mdiNotificationClearAll } from "@mdi/js";
 import {
   getCategoryMaterialIcon,
   getCategoryBackgroundStyle,
@@ -30,7 +31,7 @@ function CategoryIcon({ category, small }) {
   return (
     <CategoryImage category={category} small={small}>
       <Icon
-        path={icon}
+        path={icon || mdiNotificationClearAll}
         title="Category"
         size={1.5}
         style={{ marginTop: 5 }}
