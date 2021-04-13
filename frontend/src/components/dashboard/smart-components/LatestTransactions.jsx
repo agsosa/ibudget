@@ -19,19 +19,13 @@ import NoDataIndicator from "components/misc/NoDataIndicator";
 function LatestTransactions({ limit }) {
   const transactions = useSelector((state) => state.BudgetModel.transactions);
 
-  // On Transaction click
-  function handleTransactionClick(transaction) {
-    // TODO: Implement via props or directly
-    console.log(`Clicked transaction ${transaction}`);
-  }
-
   if (transactions && transactions.length >= 1) {
     return (
       <TransactionList
-        data={transactions
-          .sort((a, b) => new Date(b.date) - new Date(a.date) || b.id - a.id)
-          .slice(0, limit)}
-        onClick={handleTransactionClick}
+        limit={limit}
+        data={transactions.sort(
+          (a, b) => new Date(b.date) - new Date(a.date) || b.id - a.id
+        )}
       />
     );
   }
