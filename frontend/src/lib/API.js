@@ -1,8 +1,7 @@
-// TODO: Add automatic retry?
+// TODO: Add AXIOS RETRY
+
 /* eslint-disable */
 import axios from "axios";
-import { dispatchNotification } from "lib/Helpers";
-import { NotificationTypeEnum } from "lib/Enums";
 
 const DEV_BASE_URL = "http://localhost:4002/api";
 const PROD_BASE_URL = "https://ibudget.app/api";
@@ -12,15 +11,9 @@ const API_BASE_URL =
     ? DEV_BASE_URL
     : PROD_BASE_URL;
 
-// Function called on API request error, can be used to display a message etc
+// Function called on API request error
 function handleError(errorData) {
   console.error("API error:", errorData);
-
-  // TODO: GET ERROR CODE AND CHANGE MESSAGE FOR SOME CODES (FOR EXAMPLE API RATE LIMITED)
-  dispatchNotification(
-    NotificationTypeEnum.ERROR,
-    "Error while synchronizing the data, please try again"
-  );
 }
 
 const ENDPOINTS = {

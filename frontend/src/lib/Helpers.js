@@ -12,7 +12,6 @@ import {
   mdiAccount,
   mdiDotsVertical,
 } from "@mdi/js";
-import store from "lib/Store";
 import { CategoryEnum, PeriodEnum, TransactionTypeEnum } from "./Enums";
 
 // Add countDecimals() to Number
@@ -181,11 +180,4 @@ export function sortByField(a, b, field) {
     return 1;
   }
   return 0;
-}
-
-export function dispatchNotification(notificationTypeEnum, message) {
-  store.dispatch({
-    type: "NotificationsQueueModel/pushNotification",
-    payload: { type: notificationTypeEnum, message },
-  });
 }
