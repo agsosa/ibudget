@@ -7,34 +7,25 @@
     <AddTransaction />
 */
 
-/* eslint-disable */
 import * as React from "react";
 import tw, { styled } from "twin.macro";
 import {
-  Field,
   Control,
-  Label,
   Input,
   Textarea,
-  Checkbox,
-  Radio,
-  Help,
-  InputFile,
 } from "react-bulma-components/lib/components/form";
-import Button from "react-bulma-components/lib/components/button";
 import Icon from "@mdi/react";
 import { mdiMinus, mdiPlus } from "@mdi/js";
 import { NotificationTypeEnum } from "lib/Enums";
-import { TransactionTypeEnum } from "ibudget-shared";
+import { TransactionTypeEnum, Limits } from "ibudget-shared";
 import SelectButtonGroup from "components/misc/input/SelectButtonGroup";
-import { Limits } from "ibudget-shared";
 import { Calendar } from "react-date-range";
-import { enUS, es } from "react-date-range/dist/locale";
+import { es } from "react-date-range/dist/locale";
 import CategorySelector from "components/dashboard/CategorySelector";
 import CloudLoadingIndicator from "components/misc/CloudLoadingIndicator";
-import LoadingOverlay from "components/layout/LoadingOverlay";
 import Modal from "components/misc/Modal";
 import { useDispatch } from "react-redux";
+import { PropTypes } from "prop-types";
 
 /* Start styled components */
 
@@ -54,7 +45,7 @@ const SecondaryButton = tw(
 const ButtonsContainer = tw.div`w-full justify-center items-center flex flex-col mt-4`;
 
 const InputGroup = tw.div`flex flex-col items-center mb-3 w-full sm:w-80`;
-const InputLabel = styled.text(({ required, missing }) => [
+const InputLabel = styled.text(({ missing }) => [
   tw`text-lg font-medium mb-2`,
   missing && tw`font-bold text-red-600`,
 ]);
@@ -115,18 +106,17 @@ function AddTransactionModal({ toggleModal }) {
 
   // Function called on text box input fields
   function onInputChange(evt) {
-    const fieldName = evt.target.name;
-    const inputValue = evt.target.value;
+    const fieldName = evt.target.name; // The input name
+    const inputValue = evt.target.value; // The input value
 
     /* if (evt.target.type === "checkbox") {
       value = evt.target.checked;
     } */
 
+    // Validate input
     if (inputValue) {
-      // Validate input
-
       let parsedInput; // Used to parse fields if needed
-      let validInput = false;
+      let validInput;
 
       switch (fieldName) {
         case "amount":
@@ -144,6 +134,9 @@ function AddTransactionModal({ toggleModal }) {
           break;
         case "concept":
           validInput = inputValue.length < Limits.CONCEPT_MAX_CHARS;
+          break;
+        default:
+          validInput = false;
           break;
       }
 
@@ -349,6 +342,10 @@ function AddTransactionModal({ toggleModal }) {
     </>
   );
 }
+
+AddTransactionModal.propTypes = {
+  toggleModal: PropTypes.func.isRequired,
+};
 
 const withModalHoc = Modal(AddTransactionModal, "Add Transaction");
 export default withModalHoc;

@@ -1,3 +1,9 @@
+/*
+  Simple FAQ with dropdowns
+
+  TODO: Replace faq placeholders
+*/
+
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
@@ -7,16 +13,17 @@ import {
   SectionHeading,
   Subheading as SubheadingBase,
 } from "third-party/treact/components/misc/Headings";
-import { SectionDescription } from "third-party/treact/components/misc/Typography.js";
 import {
   Container,
   ContentWithPaddingXl,
-} from "third-party/treact/components/misc/Layouts.js";
+} from "third-party/treact/components/misc/Layouts";
 import { ReactComponent as ChevronDownIcon } from "feather-icons/dist/icons/chevron-down.svg";
+import { APP_NAME } from "lib/Config";
+
+/* Start styled components */
 
 const Subheading = tw(SubheadingBase)`mb-4 text-center`;
 const Heading = tw(SectionHeading)`w-full`;
-const Description = tw(SectionDescription)`w-full text-center`;
 
 const Column = tw.div`flex flex-col items-center`;
 const HeaderContent = tw.div``;
@@ -35,33 +42,36 @@ const Answer = motion.custom(
   tw.dd`pointer-events-none text-sm sm:text-base leading-relaxed`
 );
 
-export default ({
-  subheading = "FAQS",
-  heading = "You have Questions ?",
-  description = "And we have got answers to all of them. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  faqs = [
+/* End styled components */
+
+const config = {
+  subheading: "FAQ",
+  heading: "Frequently Asked Questions",
+  faqs: [
     {
-      question: "Is lunch provided free of cost ?",
-      answer:
-        "Yes, it is, if you have a membership with us. Otherwise it is charged as per the menu. Some limits do apply as to how much items can be included in your lunch. This limit is enough for any one person and merely exists to discourage abusal of the system.",
-    },
-    {
-      question: "Do you have 2 Bedroom suites ?",
+      question: `Is ${APP_NAME} free to use?`,
       answer:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     },
     {
-      question: "Are Wi-Fi costs included in the price ?",
+      question: "Lorem ipsum dolor sit amet",
       answer:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     },
     {
-      question: "Where can I reach you for support ?",
+      question: "Lorem ipsum dolor sit amet",
+      answer:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    },
+    {
+      question: "Lorem ipsum dolor sit amet",
       answer:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     },
   ],
-}) => {
+};
+
+export default () => {
   const [activeQuestionIndex, setActiveQuestionIndex] = useState(null);
 
   const toggleQuestion = (questionIndex) => {
@@ -74,14 +84,13 @@ export default ({
       <ContentWithPaddingXl>
         <Column>
           <HeaderContent>
-            {subheading && <Subheading>{subheading}</Subheading>}
-            <Heading>{heading}</Heading>
-            {description && <Description>{description}</Description>}
+            {config.subheading && <Subheading>{config.subheading}</Subheading>}
+            <Heading>{config.heading}</Heading>
           </HeaderContent>
           <FAQSContainer>
-            {faqs.map((faq, index) => (
+            {config.faqs.map((faq, index) => (
               <FAQ
-                key={index}
+                key={faq.question}
                 onClick={() => {
                   toggleQuestion(index);
                 }}

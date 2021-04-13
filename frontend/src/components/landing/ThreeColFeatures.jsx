@@ -1,5 +1,6 @@
 /*
-  Component to display features (three columns)
+  Component to display features in three columns
+  
   TODO: Document cards object
 */
 
