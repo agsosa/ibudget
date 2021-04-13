@@ -14,7 +14,6 @@ import * as React from "react";
 import TransactionList from "components/dashboard/TransactionList";
 import { useSelector } from "react-redux";
 import { PropTypes } from "prop-types";
-import { sortByField } from "lib/Helpers";
 import NoDataIndicator from "components/misc/NoDataIndicator";
 
 function LatestTransactions({ limit }) {
@@ -30,7 +29,7 @@ function LatestTransactions({ limit }) {
     return (
       <TransactionList
         data={transactions
-          .sort((a, b) => sortByField(a, b, "id"))
+          .sort((a, b) => new Date(b.date) - new Date(a.date))
           .slice(0, limit)}
         onClick={handleTransactionClick}
       />

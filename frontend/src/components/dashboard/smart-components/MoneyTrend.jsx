@@ -13,7 +13,6 @@ import { useSelector } from "react-redux";
 import store from "lib/Store";
 import { format } from "date-fns";
 import { TransactionTypeEnum } from "lib/Enums";
-import { sortByField } from "lib/Helpers";
 import NoDataIndicator from "components/misc/NoDataIndicator";
 
 function MoneyTrend() {
@@ -54,7 +53,11 @@ function MoneyTrend() {
     };
 
     // Sort by date ascending and map the buildChartData function
-    transactions.sort((b, a) => sortByField(b, a, "date")).map(buildChartData);
+    transactions
+      .sort(function (a, b) {
+        return new Date(a.date) - new Date(b.date);
+      })
+      .map(buildChartData);
 
     return <Chart data={chartData} />;
   }

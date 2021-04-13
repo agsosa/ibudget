@@ -13,6 +13,7 @@ import {
   mdiDotsVertical,
 } from "@mdi/js";
 import { CategoryEnum, PeriodEnum, TransactionTypeEnum } from "./Enums";
+import store from "./Store";
 
 // Add countDecimals() to Number
 /* eslint-disable no-extend-native */
@@ -171,13 +172,9 @@ export const getCategoryMaterialIcon = (category) => {
   return icon;
 };
 
-// Helper function to sort an array of objects by field parameter (swap a,b parameters to switch between asc/desc)
-export function sortByField(a, b, field) {
-  if (a[field] > b[field]) {
-    return -1;
-  }
-  if (a[field] < b[field]) {
-    return 1;
-  }
-  return 0;
+export function dispatchNotification(notificationTypeEnum, message) {
+  store.dispatch({
+    type: "NotificationsQueueModel/pushNotification",
+    payload: { type: notificationTypeEnum, message },
+  });
 }
