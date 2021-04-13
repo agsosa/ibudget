@@ -1,3 +1,12 @@
+/* 
+  Smart component (interacting with UserPrefsModel, BudgetModel)
+
+  Component to analyze the spending by category
+
+  Usage:
+    <Spending />
+*/
+
 import * as React from "react";
 import tw, { styled } from "twin.macro";
 import PieChart from "components/dashboard/charts/PieChart";

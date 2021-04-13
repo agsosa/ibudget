@@ -1,9 +1,15 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable */
+
+// TODO: Add cache to effects
+
+// TODO: Separate each model to files and export from models/index
+
 import * as API from "lib/API";
 import { subDays, subMonths, format } from "date-fns";
 import { getPeriodLabel } from "lib/Helpers";
 import { TransactionTypeEnum, PeriodEnum } from "./Enums";
+import { NotificationTypeEnum } from "lib/Enums";
 
 // TODO: Remove
 export const TransactionModel = {
@@ -67,7 +73,7 @@ export const BudgetModel = {
           after the request promise is resolved/rejected
     */
     fetchTransactions(payload) {
-      API.getTransactions()
+      API.request("getTransactions")
         .then((response) => {
           const { data, error } = response;
 
@@ -89,7 +95,7 @@ export const BudgetModel = {
         });
     },
     createTransaction(payload) {
-      API.createTransaction(payload.transactionInfo)
+      API.request("createTransaction", payload.transactionInfo)
         .then((response) => {
           const { data, error } = response;
 
@@ -147,6 +153,8 @@ export const BudgetModel = {
         Update selectedPeriod, fromDate and toDate fields. fromDate and toDate will be calculated depending on the passed selectedPeriod via payload.
 
     selectors:
+      formattedSelectedPeriod: Selector to get the current selected period label (string) 
+                                (for selectedPeriod = PeriodEnum.CUSTOM it will return something like "11/04/2021 - 12/04/2021")
 
 */
 export const UserPrefsModel = {
@@ -214,7 +222,6 @@ export const UserPrefsModel = {
   },
   effects: (dispatch) => ({}),
   selectors: (slice, createSelector, hasProps) => ({
-    // Selector to get the current selected period label (string) (for selectedPeriod = PeriodEnum.CUSTOM it will return something like "11/04/2021 - 12/04/2021")
     formattedSelectedPeriod() {
       return createSelector(slice, (state) => {
         if (
@@ -231,4 +238,42 @@ export const UserPrefsModel = {
       });
     },
   }),
+};
+
+/*
+  NotificationsQueueModel (Consumed by NotificationQueueController)
+
+  To display a toast notification.
+
+  Notification object:{ type: value of NotificationTypeEnum, message: string to display }
+
+  Usage:
+    Dispatch "pushNotification" with a Notification object as payload
+*/
+export const NotificationsQueueModel = {
+  name: "NotificationsQueueModel",
+  state: {
+    notifications: [], // Array of Notification object
+  },
+  reducers: {
+    // Display a notification. Payload should be a Notification object
+    pushNotification(state, payload) {
+      if (
+        payload &&
+        Object.values(NotificationTypeEnum).includes(payload.type) &&
+        payload.message
+      ) {
+        return { ...state, notifications: [...state.notifications, payload] };
+      }
+
+      return state;
+    },
+    // Used by NotificationQueueController after consuming all the notifications
+    clearNotifications(state) {
+      return {
+        ...state,
+        notifications: [],
+      };
+    },
+  },
 };

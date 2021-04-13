@@ -24,7 +24,7 @@ import {
 import Button from "react-bulma-components/lib/components/button";
 import Icon from "@mdi/react";
 import { mdiMinus, mdiPlus } from "@mdi/js";
-import { TransactionTypeEnum } from "lib/Enums";
+import { NotificationTypeEnum, TransactionTypeEnum } from "lib/Enums";
 import SelectButtonGroup from "components/misc/input/SelectButtonGroup";
 import { TransactionModel } from "lib/Models";
 import { Calendar } from "react-date-range";
@@ -33,6 +33,8 @@ import CategorySelector from "components/dashboard/CategorySelector";
 import CloudLoadingIndicator from "components/misc/CloudLoadingIndicator";
 import LoadingOverlay from "components/layout/LoadingOverlay";
 import Modal from "components/misc/Modal";
+import { useDispatch } from "react-redux";
+import { dispatchNotification } from "lib/Helpers";
 
 /* Start styled components */
 
@@ -57,7 +59,9 @@ const OptionalLabel = tw.text`text-sm font-light`;
 
 /* End styled components */
 
-function AddTransactionModal() {
+function AddTransactionModal({ toggleModal }) {
+  const dispatch = useDispatch();
+
   const initialState = {
     amount: null, // Number amount of money (required)
     notes: "", // String notes (optional)
@@ -68,7 +72,7 @@ function AddTransactionModal() {
   };
 
   const [state, setState] = React.useState(initialState);
-  const [loading, setLoading] = React.useState(true);
+  const [loading, setLoading] = React.useState(false);
 
   const OptionalText = <OptionalLabel>Opcional</OptionalLabel>;
 
@@ -76,7 +80,21 @@ function AddTransactionModal() {
 
   // Function called on Add transaction button click
   // Parameter closeModal: set to true to close the parent modal
-  function onAddTransactionButtonClick(closeModal) {}
+  function onAddTransactionButtonClick(closeModal = false) {
+    // TODO: Reject if the required input is not filled/invalid state
+    setLoading(true);
+
+    dispatch({
+      type: "BudgetModel/createTransaction",
+      payload: {
+        transactionInfo: state,
+        callback: (result) => {
+          setLoading(false);
+          if (!result.error && closeModal === true) toggleModal();
+        },
+      },
+    });
+  }
 
   // Function called on text box input fields
   function onInputChange(evt) {
@@ -287,10 +305,16 @@ function AddTransactionModal() {
           <CloudLoadingIndicator upload />
         ) : (
           <>
-            <PrimaryButton onClick={() => onAddTransactionButtonClick(true)}>
+            <PrimaryButton
+              disabled={loading}
+              onClick={() => onAddTransactionButtonClick(true)}
+            >
               Add Transaction
             </PrimaryButton>
-            <SecondaryButton onClick={onAddTransactionButtonClick}>
+            <SecondaryButton
+              disabled={loading}
+              onClick={onAddTransactionButtonClick}
+            >
               Add and Create another
             </SecondaryButton>
           </>

@@ -9,6 +9,7 @@ import * as models from "./Models";
 const persistConfig = {
   key: "root",
   storage,
+  blacklist: ["NotificationsQueueModel"],
   // Transform dates back into JS Dates on rehydrate
   // (see: https://github.com/rt2zz/redux-persist/issues/82)
   transforms: [
