@@ -1,3 +1,13 @@
+/* 
+  Simple form to edit or create a TransactionModel
+
+  props:
+    onInfoChange: callback that will be called with a TransactionInfo object (function(transactionInfo), optional)
+    loading: boolean to indicate loading status (bool, optional, default false)
+    editMode: boolean to indicate edit mode (used to disable transaction type modification) (bool, optional, default false)
+    initialInfo: object of TransactionInfo (bool, optional, default null)
+*/
+
 import * as React from "react";
 import tw, { styled } from "twin.macro";
 import {
@@ -28,7 +38,7 @@ const OptionalLabel = tw.text`text-sm font-light`;
 
 /* End styled components */
 
-function TransactionInfoForm({ onInfoChange, initialInfo, loading }) {
+function TransactionInfoForm({ onInfoChange, initialInfo, loading, editMode }) {
   const initialTransactionInfo = {
     amount: null, // Number amount of money (required)
     notes: "", // String notes (optional)
@@ -155,7 +165,7 @@ function TransactionInfoForm({ onInfoChange, initialInfo, loading }) {
         Tipo de Transacción{transactionInfo.type_id == null && "*"}
       </InputLabel>
       <SelectButtonGroup
-        disabled={loading}
+        disabled={loading || editMode}
         selectedValue={transactionInfo.type_id}
         onValueSelect={onTypeButtonClick}
       >
@@ -276,11 +286,13 @@ TransactionInfoForm.defaultProps = {
   onInfoChange: null,
   loading: false,
   initialInfo: null,
+  editMode: false,
 };
 
 TransactionInfoForm.propTypes = {
   onInfoChange: PropTypes.func,
   loading: PropTypes.bool,
+  editMode: PropTypes.bool,
   initialInfo: PropTypes.shape({
     amount: PropTypes.number,
     type_id: PropTypes.oneOf(Object.values(TransactionTypeEnum)),
