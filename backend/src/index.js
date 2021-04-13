@@ -1,3 +1,5 @@
+// API DOCUMENTATION: https://documenter.getpostman.com/view/13863838/TzCV45Ku
+
 // TODO: Add node-rate-limiter-flexible
 // TODO: Stress test
 require("dotenv").config();
@@ -20,6 +22,7 @@ app.use(compression());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(helmet());
+
 app.use(cors()); // TODO: Change before deploy!
 // app.use(morgan("combined")); // TODO: CHECK
 

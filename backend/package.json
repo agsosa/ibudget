@@ -25,6 +25,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "helmet": "^4.4.1",
+    "ibudget-shared": "file:../shared",
     "joi": "^17.4.0",
     "module-alias": "^2.2.2",
     "morgan": "^1.10.0",

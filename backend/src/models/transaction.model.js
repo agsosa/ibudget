@@ -1,15 +1,23 @@
 const database = require("@lib/database");
+const shared = require("ibudget-shared");
 const Joi = require("joi");
 
 const TABLE_NAME = "transactions";
 const TransactionModel = {
   infoSchema: Joi.object({
-    amount: Joi.number().required(), // TODO: Use shared limits and enums to validate
-    category_id: Joi.number().required(), // TODO: Use shared limits and enums to validate
-    type_id: Joi.number().required(), // TODO: Use shared limits and enums to validate
+    amount: Joi.number()
+      .min(shared.LIMITS.AMOUNT_MIN_NUMBER)
+      .max(shared.LIMITS.AMOUNT_MAX_NUMBER)
+      .precision(shared.LIMITS.AMOUNT_MAX_DECIMALS)
+      .required(),
+    category_id: Joi.valid(...Object.values(shared.CategoryEnum)).required(),
+    type_id: Joi.valid(...Object.values(shared.TransactionTypeEnum)).required(),
     date: Joi.date().required().max(new Date()),
-    concept: Joi.string().optional().allow(""), // TODO: Use shared limits and enums to validate
-    notes: Joi.string().optional().allow(""), // TODO: Use shared limits and enums to validate
+    concept: Joi.string()
+      .max(shared.LIMITS.CONCEPT_MAX_CHARS)
+      .optional()
+      .allow(""),
+    notes: Joi.string().max(shared.LIMITS.NOTES_MAX_CHARS).optional().allow(""),
   }),
 };
 
