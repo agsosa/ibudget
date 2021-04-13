@@ -50,7 +50,8 @@ const SelectButton = styled.button(
     roundedLeft && tw`rounded-l-lg`,
     roundedRight && tw`rounded-r-lg`,
     rounded && tw`rounded-lg`,
-    disabled && tw`bg-gray-500 hover:scale-100 text-gray-800`,
+    disabled && tw`bg-gray-300 hover:scale-100 text-gray-800`,
+    disabled && isSelected && tw`bg-gray-500`,
   ]
 );
 
