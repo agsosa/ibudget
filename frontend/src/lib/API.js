@@ -25,6 +25,11 @@ const ENDPOINTS = {
     currentPromise: null,
     axiosCall: (payload) => axios.post(API_BASE_URL + "/transactions", payload),
   },
+  deleteTransaction: {
+    currentPromise: null,
+    axiosCall: (payload) =>
+      axios.delete(API_BASE_URL + `/transactions/${payload}`),
+  },
 };
 
 export function request(endpoint, payload) {
