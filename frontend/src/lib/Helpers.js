@@ -40,6 +40,27 @@ export function getMoneyDisplayString(money) {
   return moneyFormatter.format(money);
 }
 
+// Big number formatter (100000 to 100k, 50000 to 50k, etc)
+export function bigNumberFormatter(num, digits) {
+  const si = [
+    { value: 1, symbol: "" },
+    { value: 1e3, symbol: "k" },
+    { value: 1e6, symbol: "M" },
+    { value: 1e9, symbol: "G" },
+    { value: 1e12, symbol: "T" },
+    { value: 1e15, symbol: "P" },
+    { value: 1e18, symbol: "E" },
+  ];
+  const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+  let i;
+  for (i = si.length - 1; i > 0; i -= 1) {
+    if (num >= si[i].value) {
+      break;
+    }
+  }
+  return (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol;
+}
+
 // TODO: Move Enum to Label functions to Locale manager
 // Function to convert a PeriodEnum value to a label
 export function getPeriodLabel(periodEnum) {
