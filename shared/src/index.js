@@ -20,7 +20,9 @@ exports.TransactionTypeEnum = Object.freeze({
 exports.Limits = {
 	CONCEPT_MAX_CHARS: 25, // max TransactionModel's concept field length
 	NOTES_MAX_CHARS: 100, // max TransactionModel's notes field length
-	AMOUNT_MIN_NUMBER: 0.01,
+	AMOUNT_MIN_NUMBER: 0.01, // min TransactionModel's amount field number
 	AMOUNT_MAX_NUMBER: 1000000000, // max TransactionModel's amount field number
-	AMOUNT_MAX_DECIMALS: 2,
+	AMOUNT_MAX_DECIMALS: 2, // max TransactionModel's amount decimals
+	USER_NICK_MAX_CHARS: 30, // max user's "name" field length
+	USER_EMAIL_MAX_CHARS: 50, // max user's email length
 };

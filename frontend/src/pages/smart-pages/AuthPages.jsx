@@ -9,6 +9,9 @@ import { ReactComponent as SignUpIcon } from "feather-icons/dist/icons/user-plus
 import { ReactComponent as LoginIcon } from "feather-icons/dist/icons/log-in.svg";
 import { APP_NAME } from "lib/Config";
 import { Link } from "react-router-dom";
+import { Limits } from "ibudget-shared";
+
+/* Start styled components */
 
 const Container = tw(
   ContainerBase
@@ -17,10 +20,10 @@ const Content = tw.div`w-screen pb-40 pt-0 bg-white text-gray-900 flex justify-c
 const MainContainer = tw.div`lg:w-1/2 xl:w-5/12 p-6 sm:p-4`;
 const MainContent = tw.div`mt-6 flex flex-col items-center`;
 const Heading = tw.h1`text-2xl xl:text-3xl font-extrabold`;
-const FormContainer = tw.div`w-full flex-1 mt-8`;
+const FormContainer = tw.div`w-full flex-1 mt-8 mx-auto max-w-md`;
 
 const SocialButtonsContainer = tw.div`flex flex-col items-center`;
-const SocialButton = styled.a`
+const SocialButton = styled.button`
   ${tw`w-full max-w-md font-semibold rounded-lg py-3 border text-gray-900 bg-gray-100 hocus:bg-gray-200 hocus:border-gray-400 flex items-center justify-center transition-all duration-300 focus:outline-none focus:shadow-outline text-sm mt-5 first:mt-0`}
   .iconContainer {
     ${tw`bg-white p-2 rounded-full`}
@@ -34,8 +37,7 @@ const SocialButton = styled.a`
 `;
 
 const DividerTextContainer = tw.div`my-12 border-b text-center relative`;
-
-const Form = tw.form`mx-auto max-w-md`;
+//const FormContainer = tw.div`mx-auto max-w-md`;
 const Input = tw.input`w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border
  border-gray-200 placeholder-gray-500 text-sm 
  focus:outline-none focus:border-gray-400 focus:bg-white mt-5 first:mt-0`;
@@ -52,31 +54,7 @@ const SubmitButton = styled.button`
   }
 `;
 
-const registerConfig = {
-  headingText: "Sign Up",
-  socialButtons: [
-    {
-      iconImageSrc: googleIconImageSrc,
-      text: "Sign up with Google",
-      url: "https://google.com",
-    },
-  ],
-  submitButtonText: "Sign Up",
-  SubmitButtonIcon: SignUpIcon,
-};
-
-const loginConfig = {
-  headingText: "Sign in to iBudget",
-  socialButtons: [
-    {
-      iconImageSrc: googleIconImageSrc,
-      text: "Sign in with Google",
-      url: "https://google.com",
-    },
-  ],
-  submitButtonText: "Sign In",
-  SubmitButtonIcon: LoginIcon,
-};
+/* End styled components */
 
 function AuthContainer({ children }) {
   return (
@@ -91,18 +69,109 @@ function AuthContainer({ children }) {
 }
 
 export function RegisterPage() {
+  // On register submit button
   function onSubmitButtonClick() {
     console.log("onSubmitButtonClick");
   }
 
+  // On register with google click
   function onGoogleButtonClick() {
     console.log("onGoogleButtonClick");
   }
 
+  const ExtraLinks = (
+    <>
+      <p tw="mt-6 text-xs text-gray-600 text-center">
+        I agree to abide by {APP_NAME}'s{" "}
+        <Link
+          to="/terms-of-service"
+          tw="border-b border-gray-500 border-dotted"
+        >
+          Terms of Service
+        </Link>{" "}
+        and its{" "}
+        <Link to="/privacy-policy" tw="border-b border-gray-500 border-dotted">
+          Privacy Policy
+        </Link>
+      </p>
+
+      <p tw="mt-8 text-sm text-gray-600 text-center">
+        Already have an account?{" "}
+        <Link to="/login" tw="border-b border-gray-500 border-dotted">
+          Sign In
+        </Link>
+      </p>
+    </>
+  );
+
   return (
     <AuthContainer>
       {/* Header */}
-      <Heading>{registerConfig.headingText}</Heading>
+      <Heading>Sign Up</Heading>
+      <FormContainer>
+        <SocialButtonsContainer>
+          {/* Google auth button */}
+          <SocialButton onClick={onGoogleButtonClick}>
+            <span className="iconContainer">
+              <img src={googleIconImageSrc} className="icon" alt="" />
+            </span>
+            <span className="text">Sign up with Google</span>
+          </SocialButton>
+        </SocialButtonsContainer>
+        <DividerTextContainer />
+        {/* Form */}
+        <FormContainer>
+          <Input
+            type="text"
+            maxLength={Limits.USER_NICK_MAX_CHARS}
+            placeholder="Name"
+          />
+          <Input
+            type="email"
+            maxLength={Limits.USER_EMAIL_MAX_CHARS}
+            placeholder="Email"
+          />
+          <Input type="password" placeholder="Password" />
+          <Input type="password" placeholder="Confirm Password" />
+          <SubmitButton type="button" onClick={onSubmitButtonClick}>
+            <SignUpIcon className="icon" />
+            <span className="text">Sign Up</span>
+          </SubmitButton>
+
+          {ExtraLinks}
+        </FormContainer>
+      </FormContainer>
+    </AuthContainer>
+  );
+}
+
+export function LoginPage() {
+  // On login submit button click
+  function onSubmitButtonClick() {
+    console.log("onSubmitButtonClick");
+  }
+
+  // On login with google click
+  function onGoogleButtonClick() {
+    console.log("onGoogleButtonClick");
+  }
+
+  const ExtraLinks = (
+    <>
+      {/* TODO: Implement forgot password button */}
+      <p tw="mt-8 text-sm text-gray-600 text-center">
+        Dont have an account?{" "}
+        <Link to="/register" tw="border-b border-gray-500 border-dotted">
+          Sign Up
+        </Link>
+      </p>
+    </>
+  );
+
+  return (
+    <AuthContainer>
+      {/* Header */}
+      <Heading>Sign in to iBudget</Heading>
       <FormContainer>
         <SocialButtonsContainer>
           {/* Google auth button */}
@@ -115,46 +184,21 @@ export function RegisterPage() {
         </SocialButtonsContainer>
         <DividerTextContainer />
         {/* Form */}
-        <Form>
-          <Input type="text" maxLength={25} placeholder="Name" />
-          <Input type="email" placeholder="Email" />
+        <FormContainer>
+          <Input
+            type="email"
+            maxLength={Limits.USER_EMAIL_MAX_CHARS}
+            placeholder="Email"
+          />
           <Input type="password" placeholder="Password" />
-          <Input type="password" placeholder="Confirm Password" />
-          <SubmitButton type="submit" onClick={onSubmitButtonClick}>
-            <registerConfig.SubmitButtonIcon className="icon" />
-            <span className="text">{registerConfig.submitButtonText}</span>
+          <SubmitButton type="button" onClick={onSubmitButtonClick}>
+            <LoginIcon className="icon" />
+            <span className="text">Sign In</span>
           </SubmitButton>
 
-          {/* Extra text/links */}
-          <p tw="mt-6 text-xs text-gray-600 text-center">
-            I agree to abide by {APP_NAME}'s{" "}
-            <Link
-              to="/terms-of-service"
-              tw="border-b border-gray-500 border-dotted"
-            >
-              Terms of Service
-            </Link>{" "}
-            and its{" "}
-            <Link
-              to="/privacy-policy"
-              tw="border-b border-gray-500 border-dotted"
-            >
-              Privacy Policy
-            </Link>
-          </p>
-
-          <p tw="mt-8 text-sm text-gray-600 text-center">
-            Already have an account?{" "}
-            <Link to="/login" tw="border-b border-gray-500 border-dotted">
-              Sign In
-            </Link>
-          </p>
-        </Form>
+          {ExtraLinks}
+        </FormContainer>
       </FormContainer>
     </AuthContainer>
   );
-}
-
-export function LoginPage() {
-  return null;
 }
