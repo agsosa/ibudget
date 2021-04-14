@@ -9,15 +9,14 @@ import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import { Link } from "react-router-dom";
 import { Icon } from "react-bulma-components";
-
 import useAnimatedNavToggler from "third-party/treact/helpers/useAnimatedNavToggler";
-
 import logo from "images/logo.png";
 import { ReactComponent as MenuIcon } from "feather-icons/dist/icons/menu.svg";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 import { APP_NAME } from "lib/Config";
 import { PropTypes } from "prop-types";
-import AddTransaction from "components/smart-components/AddEditTransactionModal";
+import AddEditTransactionModal from "components/smart-components/AddEditTransactionModal";
+import { useAuth } from "lib/Auth";
 
 /* Start styled components */
 
@@ -151,6 +150,7 @@ const DefaultLogoLink = (
 
 export default () => {
   const modalRef = React.useRef();
+  const auth = useAuth();
   const { showNavLinks, animation, toggleNavbar } = useAnimatedNavToggler();
   const collapseBreakpointCss = collapseBreakPointCssMap.lg;
 
@@ -158,7 +158,7 @@ export default () => {
     modalRef.current.toggle();
   }
 
-  const isLogged = true;
+  const isLogged = auth.user;
 
   const links = (
     <NavLinks>
@@ -205,7 +205,7 @@ export default () => {
           </MobileNavLinksContainer>
         </HeaderContainer>
       </Header>
-      <AddTransaction ref={modalRef} title="Add Transaction" />
+      <AddEditTransactionModal ref={modalRef} title="Add Transaction" />
     </>
   );
 };
