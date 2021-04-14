@@ -5,6 +5,7 @@
 const database = require("@lib/database");
 const shared = require("ibudget-shared");
 const Joi = require("joi");
+const dateFns = require("date-fns");
 
 const TABLE_NAME = "transactions";
 const SELECT_COLUMNS = "id, amount, category_id, type_id, date, concept, notes"; // Columns to be used in select
@@ -19,7 +20,7 @@ const TransactionModel = {
       .required(),
     category_id: Joi.valid(...Object.values(shared.CategoryEnum)).required(),
     type_id: Joi.valid(...Object.values(shared.TransactionTypeEnum)).required(),
-    date: Joi.date().required().max(new Date()),
+    date: Joi.date().required().max(dateFns.addDays(new Date(), 1)),
     concept: Joi.string()
       .max(shared.Limits.CONCEPT_MAX_CHARS)
       .optional()
@@ -137,7 +138,6 @@ TransactionModel.find = (id) => {
 // fullUpdate() requires a valid and complete transaction_info object (TransactionModel.infoSchema)
 // TODO: Implement partialUpdate
 TransactionModel.fullUpdate = (id, transaction_info) => {
-  console.log("fullUpdate transaction_info", transaction_info);
   return new Promise((resolve, reject) => {
     if (!validateTransactionId(id, reject)) return;
     if (!validateTransactionInfo(transaction_info, reject)) return;
