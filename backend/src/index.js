@@ -34,8 +34,7 @@ app.use(passport.session());
 
 // Add routes
 app.use("/api/transactions", routes.transactions);
-//app.use("/api/user", routes.user);
-//app.use("/api/auth", routes.auth);
+app.use("/api/user", routes.user(passport));
 
 // Handle root path
 app.get("/", (req, res) => res.send("OK"));
@@ -67,7 +66,7 @@ app.use(function (req, res, next) {
 
 // Start server
 app.listen(config.serverPort);
-console.log("Running server on port", config.serverPort);
+console.log("\nRunning server on port", config.serverPort);
 
 // Graceful shutdown
 // TODO: TEST
