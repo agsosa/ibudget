@@ -1,15 +1,12 @@
 // TODO: Implement page/limit params to findAll() if needed
 
-// TODO: IMPORTANT CHECK USER_ID PERMISSION AUTH
-
 const database = require("@lib/database");
 const shared = require("ibudget-shared");
 const Joi = require("joi");
 const dateFns = require("date-fns");
 
 const TABLE_NAME = "transactions";
-const SELECT_COLUMNS = "id, amount, category_id, type_id, date, concept, notes"; // Columns to be used in select
-// TODO: Maybe add a parameter to ignore notes column, then add another method to get the notes for a transaction id
+const INFO_COLUMNS = "id, amount, category_id, type_id, date, concept, notes"; // Info columns
 
 const TransactionModel = {
   infoSchema: Joi.object({
@@ -63,12 +60,10 @@ function validateTransactionId(id, reject) {
   return true;
 }
 
-// Create a transaction providing a transaction_info (TransactionModel.infoSchema)
-TransactionModel.create = (transaction_info) => {
+// Create a transaction providing a transaction_info (TransactionModel.infoSchema) and a user_id
+TransactionModel.create = (transaction_info, user_id) => {
   return new Promise((resolve, reject) => {
     if (!validateTransactionInfo(transaction_info, reject)) return;
-
-    const user_id = 0; // TODO: Add user_id param, validate user_id
 
     const {
       amount,
@@ -103,13 +98,7 @@ TransactionModel.create = (transaction_info) => {
 // Find all transactions by user_id
 TransactionModel.findAll = (user_id) => {
   return new Promise((resolve, reject) => {
-    // TODO: Validate user_id against db?
-    if (user_id == null || typeof user_id !== "number") {
-      reject("Specified user_id is not valid");
-      return;
-    }
-
-    const query = `SELECT ${SELECT_COLUMNS} FROM ${TABLE_NAME} WHERE \`user_id\` =  ?`;
+    const query = `SELECT ${INFO_COLUMNS} FROM ${TABLE_NAME} WHERE \`user_id\` =  ?`;
     const params = [user_id];
 
     database
@@ -125,12 +114,12 @@ TransactionModel.find = (id) => {
     if (!validateTransactionId(id, reject)) return;
 
     // TODO: Maybe add a parameter to ignore notes column, then add another method to get the notes for a transaction id
-    const query = `SELECT ${SELECT_COLUMNS} FROM ${TABLE_NAME} WHERE \`id\` =  ?`;
+    const query = `SELECT ${INFO_COLUMNS} FROM ${TABLE_NAME} WHERE \`id\` =  ?`;
     const params = [id];
 
     database
       .execute(query, params)
-      .then(([rows]) => resolve(rows))
+      .then(([[rows]]) => resolve(rows))
       .catch((err) => reject(err));
   });
 };
@@ -138,7 +127,7 @@ TransactionModel.find = (id) => {
 // Update full transaction info by id
 // fullUpdate() requires a valid and complete transaction_info object (TransactionModel.infoSchema)
 // TODO: Implement partialUpdate
-TransactionModel.fullUpdate = (id, transaction_info) => {
+TransactionModel.fullUpdate = (id, transaction_info, user_id) => {
   return new Promise((resolve, reject) => {
     if (!validateTransactionId(id, reject)) return;
     if (!validateTransactionInfo(transaction_info, reject)) return;
@@ -153,7 +142,7 @@ TransactionModel.fullUpdate = (id, transaction_info) => {
       date,
     } = transaction_info;
 
-    const query = `UPDATE ${TABLE_NAME} SET amount = ?, category_id = ?, concept = ?, notes = ?, date = ?  WHERE \`id\` =  ?`;
+    const query = `UPDATE ${TABLE_NAME} SET amount = ?, category_id = ?, concept = ?, notes = ?, date = ?  WHERE \`id\` =  ? AND \`user_id\` = ?`;
     const params = [
       amount,
       category_id,
@@ -161,6 +150,7 @@ TransactionModel.fullUpdate = (id, transaction_info) => {
       notes || null,
       new Date(date),
       id,
+      user_id,
     ];
 
     database
@@ -173,10 +163,10 @@ TransactionModel.fullUpdate = (id, transaction_info) => {
             This is because the client can send a modified type_id (by accident or bypassing the client-side validation) but we ignore it, 
             so if we just return the provided transaction_info it may have a incorrect type_id value and the client desync from the db.
 
-            If we get an error on find() for some reason then return the transaction_info provided by the client 
+            If we get an error on find() for some reason then return the transaction_info provided by the client as a last resort
           */
           TransactionModel.find(id)
-            .then(([rows]) => resolve(rows))
+            .then((res) => resolve(res))
             .catch(() => resolve({ ...transaction_info, id }));
         }
       })
@@ -185,17 +175,17 @@ TransactionModel.fullUpdate = (id, transaction_info) => {
 };
 
 // Delete a transaction by id
-TransactionModel.delete = (id) => {
+TransactionModel.delete = (id, user_id) => {
   return new Promise((resolve, reject) => {
     if (!validateTransactionId(id, reject)) return;
 
-    const query = `DELETE FROM ${TABLE_NAME} WHERE \`id\` =  ?`;
-    const params = [id];
+    const query = `DELETE FROM ${TABLE_NAME} WHERE \`id\` =  ? and \`user_id\` = ?`;
+    const params = [id, user_id];
 
     database
       .execute(query, params)
       .then(([rows]) => {
-        if (rows.affectedRows === 0) reject("id not found");
+        if (rows.affectedRows === 0) reject("Transaction not found");
         else resolve({ id });
       })
       .catch((err) => reject(err));

@@ -3,7 +3,7 @@ const TransactionModel = require("@models/transaction.model");
 const helpers = require("@controllers/helpers");
 
 exports.delete = function (req, res) {
-  TransactionModel.delete(Number(req.params.id))
+  TransactionModel.delete(Number(req.params.id), req.user.id)
     .then((result) =>
       helpers.sendSuccessResponse(
         res,
@@ -15,9 +15,13 @@ exports.delete = function (req, res) {
 };
 
 exports.findAll = function (req, res) {
-  console.log(req);
   TransactionModel.findAll(req.user.id)
     .then((result) => {
+      /* 
+      TODO: Optimize removing the "notes" property 
+      from the transactions and creating another endpoint to get the notes 
+      for a single transaction. Doing this will allow the client to only get the notes if needed
+      */
       helpers.sendSuccessResponse(res, "Found transactions", result);
     })
     .catch((err) => {
@@ -26,7 +30,7 @@ exports.findAll = function (req, res) {
 };
 
 exports.create = function (req, res) {
-  TransactionModel.create(req.body)
+  TransactionModel.create(req.body, req.user.id)
     .then((result) => {
       helpers.sendSuccessResponse(
         res,
@@ -38,7 +42,7 @@ exports.create = function (req, res) {
 };
 
 exports.fullUpdate = function (req, res) {
-  TransactionModel.fullUpdate(Number(req.params.id), req.body)
+  TransactionModel.fullUpdate(Number(req.params.id), req.body, req.user.id)
     .then((result) => {
       helpers.sendSuccessResponse(
         res,
