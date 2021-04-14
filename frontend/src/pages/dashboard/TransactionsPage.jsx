@@ -1,3 +1,7 @@
+/* 
+  Smart component (interacting with BudgetModel)
+  Transactions list page
+*/
 import * as React from "react";
 import tw from "twin.macro";
 import DateRangeSelector from "components/dashboard/smart-components/DateRangeSelector";
@@ -30,16 +34,15 @@ const DateRangeLabel = tw.text`text-gray-700 mr-3 mt-2`;
 const Container = tw.div`
 self-center gap-3 flex flex-col 
 w-screen
+bg-white shadow-raised rounded-xl 
 md:grid md:gap-6 
-sm:max-w-screen-xl sm:w-full
+sm:max-w-screen-2xl sm:w-full
 md:grid-cols-9`;
 const LeftColumn = tw.div`
 sm:col-span-4 md:col-span-3
 flex flex-col 
-shadow-sm rounded-xl 
-p-4 ml-1 lg:p-8 
-bg-white`;
-const RightColumn = tw.div`col-span-6 shadow-sm rounded-xl p-6 bg-white`;
+p-4 ml-1 lg:p-8 `;
+const RightColumn = tw.div`col-span-6 p-6 `;
 const Title = tw.text`self-center md:self-auto text-xl p-2 sm:p-0 md:text-lg lg:text-2xl font-semibold`;
 const Hint = tw.text`self-center md:self-auto text-sm p-1 flex flex-row gap-1 items-center text-gray-800`;
 const CategoryCheckboxContainer = tw.div`flex flex-row align-middle items-center gap-1`;
@@ -275,6 +278,7 @@ function TransactionsPage({ loading }) {
   return (
     <ContentWithPadding>
       <HeaderContainer>
+        {/* Header (period selector) */}
         <DateRangeContainer>
           <DateRangeLabel>Period: </DateRangeLabel>
           <DateRangeSelector />
@@ -291,6 +295,7 @@ function TransactionsPage({ loading }) {
       </HeaderContainer>
       <Container>
         <LeftColumn>
+          {/* Left column */}
           <Title>
             Transacciones
             {transactions &&
@@ -299,6 +304,7 @@ function TransactionsPage({ loading }) {
           </Title>
           <Hint>Click a transaction to edit or delete it</Hint>
           <AccordionContainer>
+            {/* Filters/sort */}
             <Accordion
               isMulti
               items={[
@@ -313,6 +319,7 @@ function TransactionsPage({ loading }) {
           </AccordionContainer>
         </LeftColumn>
         <RightColumn>
+          {/* Right column */}
           <RightColumnContent />
         </RightColumn>
       </Container>

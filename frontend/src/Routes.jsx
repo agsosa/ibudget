@@ -22,12 +22,12 @@ import PrivacyPolicyPage from "pages/PrivacyPolicyPage";
 import TermsOfServicePage from "pages/TermsOfServicePage";
 import TransactionsPage from "pages/dashboard/TransactionsPage";
 
-const StyledDiv = tw.div`font-display flex flex-col justify-between h-screen min-w-full text-secondary-500`;
+const MainDiv = tw.div`font-display flex flex-col justify-between h-screen min-w-full text-secondary-500`;
 
 function Routes() {
   return (
     <Router>
-      <StyledDiv>
+      <MainDiv>
         <ScrollToTop />
         <Navbar />
         <AnimationRevealPage>
@@ -62,7 +62,7 @@ function Routes() {
           </Switch>
         </AnimationRevealPage>
         <Footer />
-      </StyledDiv>
+      </MainDiv>
     </Router>
   );
 }

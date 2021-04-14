@@ -1,7 +1,7 @@
 /*
   Terms of service page
 
-  TODO: remove hard coded terms
+  TODO: remove hard coded text
 */
 
 import {
@@ -10,7 +10,6 @@ import {
 } from "third-party/treact/components/misc/Layouts";
 import tw from "twin.macro";
 import styled from "styled-components";
-import { css } from "styled-components/macro"; // eslint-disable-line
 import { SectionHeading } from "third-party/treact/components/misc/Headings";
 
 const HeadingRow = tw.div`flex`;

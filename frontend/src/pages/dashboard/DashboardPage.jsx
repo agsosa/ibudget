@@ -28,7 +28,7 @@ import { PropTypes } from "prop-types";
 const HeaderContainer = tw.div`w-full flex flex-col items-center`;
 const Heading = tw(
   SectionHeading
-)`w-full text-primary-500 text-5xl transform hover:scale-110 transition-all duration-500`;
+)`text-primary-500 font-black text-4xl transform hover:scale-110 transition-all duration-500`;
 const DateRangeContainer = tw.div`mt-8 flex-col text-center flex sm:flex-row justify-center align-middle`;
 const DateRangeLabel = tw.text`text-gray-600 mr-3 mt-2`;
 const Money = tw(motion.div)`  text-gray-700 text-center text-3xl font-bold `;
@@ -37,8 +37,6 @@ const Description = tw.text`w-full text-gray-600 text-center text-sm mt-3`;
 /* End style components */
 
 function DashboardPage({ loading }) {
-  const history = useHistory();
-
   /* Start store */
 
   const selection = store.select((models) => ({
@@ -47,6 +45,8 @@ function DashboardPage({ loading }) {
   const { balance } = useSelector(selection);
 
   /* End store */
+
+  const history = useHistory();
 
   // Last Transactions View More click handler
   function handleLastTransactionsViewMoreButton() {
