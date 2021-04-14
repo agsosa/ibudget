@@ -22,6 +22,7 @@ import ContentWithPadding from "components/layout/ContentWithPadding";
 import { useHistory } from "react-router-dom";
 import withFetchTransactions from "components/smart-components/withFetchTransactions";
 import { PropTypes } from "prop-types";
+import { useAuth } from "lib/Auth";
 
 /* Start styled components */
 
@@ -46,6 +47,7 @@ function DashboardPage({ loading }) {
 
   /* End store */
 
+  const auth = useAuth();
   const history = useHistory();
 
   // Last Transactions View More click handler
@@ -61,7 +63,11 @@ function DashboardPage({ loading }) {
           <CloudLoadingIndicator download />
         ) : (
           <>
-            <Heading>Hello, Alejandro</Heading>
+            <Heading>
+              {auth.user && auth.user.name
+                ? `Hello, ${auth.user.name}`
+                : "Welcome"}
+            </Heading>
             <Description>Tu saldo hoy</Description>
             <Money
               animate={{
