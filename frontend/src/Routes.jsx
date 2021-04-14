@@ -9,9 +9,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import tw from "twin.macro";
 
 import HomePage from "pages/HomePage";
-import DashboardPage from "pages/dashboard/DashboardPage";
-import LoginPage from "pages/LoginPage";
-import RegisterPage from "pages/RegisterPage";
+import DashboardPage from "pages/smart-pages/DashboardPage";
+import { RegisterPage, LoginPage } from "pages/smart-pages/AuthPages";
 import HowItWorksPage from "pages/HowItWorksPage";
 import Navbar from "components/layout/Navbar";
 import Footer from "components/layout/Footer";
@@ -20,7 +19,7 @@ import AnimationRevealPage from "components/misc/AnimationRevealPage";
 import ContactUsPage from "pages/ContactUsPage";
 import PrivacyPolicyPage from "pages/PrivacyPolicyPage";
 import TermsOfServicePage from "pages/TermsOfServicePage";
-import TransactionsPage from "pages/dashboard/TransactionsPage";
+import TransactionsPage from "pages/smart-pages/TransactionsPage";
 
 const MainDiv = tw.div`font-display flex flex-col justify-between h-screen min-w-full text-secondary-500`;
 
