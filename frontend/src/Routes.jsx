@@ -1,13 +1,11 @@
-/* 
-TODO:
-Route /
-Si no esta logged in redireccionar a /home
-Si esta logged in redireccionar a /dashboard
-*/
-
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+/* eslint-disable react/prop-types */
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import tw from "twin.macro";
-
 import HomePage from "pages/HomePage";
 import DashboardPage from "pages/smart-pages/DashboardPage";
 import { RegisterPage, LoginPage } from "pages/smart-pages/AuthPages";
@@ -20,8 +18,33 @@ import ContactUsPage from "pages/ContactUsPage";
 import PrivacyPolicyPage from "pages/PrivacyPolicyPage";
 import TermsOfServicePage from "pages/TermsOfServicePage";
 import TransactionsPage from "pages/smart-pages/TransactionsPage";
+import { useAuth } from "lib/Auth";
 
 const MainDiv = tw.div`font-display flex flex-col justify-between h-screen min-w-full text-secondary-500`;
+
+// A wrapper for <Route> that redirects to the login
+// screen if you're not yet authenticated. Source: react-router docs
+function PrivateRoute({ children, ...rest }) {
+  const auth = useAuth();
+
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        auth.user ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: { from: location },
+            }}
+          />
+        )
+      }
+    />
+  );
+}
 
 function Routes() {
   return (
@@ -37,6 +60,7 @@ function Routes() {
             <Route path="/register">
               <RegisterPage />
             </Route>
+
             <Route path="/how-it-works">
               <HowItWorksPage />
             </Route>
@@ -49,12 +73,14 @@ function Routes() {
             <Route path="/privacy-policy">
               <PrivacyPolicyPage />
             </Route>
-            <Route path="/dashboard">
+
+            <PrivateRoute path="/dashboard">
               <DashboardPage />
-            </Route>
-            <Route path="/transactions">
+            </PrivateRoute>
+            <PrivateRoute path="/transactions">
               <TransactionsPage />
-            </Route>
+            </PrivateRoute>
+
             <Route path="/">
               <HomePage />
             </Route>
