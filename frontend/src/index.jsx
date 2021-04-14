@@ -15,6 +15,7 @@ import { Provider } from "react-redux";
 import { getPersistor } from "@rematch/persist";
 import { PersistGate } from "redux-persist/lib/integration/react";
 import NotificationQueueController from "components/smart-components/NotificationsQueueController";
+import { AuthProvider } from "lib/Auth";
 
 const persistor = getPersistor();
 
@@ -22,8 +23,10 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <NotificationQueueController />
-        <Routes />
+        <AuthProvider>
+          <NotificationQueueController />
+          <Routes />
+        </AuthProvider>
       </PersistGate>
     </Provider>
   </React.StrictMode>,
