@@ -22,7 +22,7 @@ import {
 } from "lib/Helpers";
 import { TransactionTypeEnum } from "ibudget-shared";
 import format from "date-fns/format";
-import AddEditTransaction from "components/dashboard/smart-components/AddEditTransactionModal";
+import AddEditTransaction from "components/smart-components/AddEditTransactionModal";
 import CategoryIcon from "./CategoryIcon";
 
 /* Start styled components */

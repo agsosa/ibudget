@@ -8,19 +8,19 @@ import * as React from "react";
 import CardList from "components/misc/CardList";
 import tw from "twin.macro";
 import { SectionHeading } from "third-party/treact/components/misc/Headings";
-import DateRangeSelector from "components/dashboard/smart-components/DateRangeSelector";
+import DateRangeSelector from "components/smart-components/DateRangeSelector";
 import { motion } from "framer-motion";
-import LatestTransactions from "components/dashboard/smart-components/LatestTransactions";
-import Spending from "components/dashboard/smart-components/Spending";
-import MoneyTrend from "components/dashboard/smart-components/MoneyTrend";
-import MoneyFlow from "components/dashboard/smart-components/MoneyFlow";
+import LatestTransactions from "components/smart-components/LatestTransactions";
+import Spending from "components/smart-components/Spending";
+import MoneyTrend from "components/smart-components/MoneyTrend";
+import MoneyFlow from "components/smart-components/MoneyFlow";
 import { getMoneyDisplayString } from "lib/Helpers";
 import { useSelector } from "react-redux";
 import store from "lib/Store";
 import CloudLoadingIndicator from "components/misc/CloudLoadingIndicator";
 import ContentWithPadding from "components/layout/ContentWithPadding";
 import { useHistory } from "react-router-dom";
-import withFetchTransactions from "components/dashboard/smart-components/withFetchTransactions";
+import withFetchTransactions from "components/smart-components/withFetchTransactions";
 import { PropTypes } from "prop-types";
 
 /* Start styled components */

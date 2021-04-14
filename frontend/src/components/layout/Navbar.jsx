@@ -17,7 +17,7 @@ import { ReactComponent as MenuIcon } from "feather-icons/dist/icons/menu.svg";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 import { APP_NAME } from "lib/Config";
 import { PropTypes } from "prop-types";
-import AddTransaction from "components/dashboard/smart-components/AddEditTransactionModal";
+import AddTransaction from "components/smart-components/AddEditTransactionModal";
 
 /* Start styled components */
 
