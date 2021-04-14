@@ -2,19 +2,19 @@
 const express = require("express");
 const router = express.Router();
 const controller = require("@controllers/transactions.controller");
+const helpers = require("@controllers/helpers");
 
 // Retrieve all transactions
-router.get("/", controller.findAll);
+router.get("/", helpers.isLoggedIn, controller.findAll);
 
 // Create a new transaction
-router.post("/", controller.create);
+router.post("/", helpers.isLoggedIn, controller.create);
 
 // Update a transaction's info (full replace) by id
-router.put("/:id", controller.fullUpdate);
-
 // TODO: Implement partialUpdate (patch)
+router.put("/:id", helpers.isLoggedIn, controller.fullUpdate);
 
 // Delete a transaction by id
-router.delete("/:id", controller.delete);
+router.delete("/:id", helpers.isLoggedIn, controller.delete);
 
 module.exports = router;
