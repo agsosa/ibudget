@@ -15,6 +15,22 @@ CREATE SCHEMA IF NOT EXISTS `ibudget` DEFAULT CHARACTER SET utf8 ;
 USE `ibudget` ;
 
 -- -----------------------------------------------------
+-- Table `ibudget`.`users`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `ibudget`.`users` ;
+
+CREATE TABLE IF NOT EXISTS `ibudget`.`users` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(50) NOT NULL,
+  `password` CHAR(60) NOT NULL,
+  `name` VARCHAR(30) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  UNIQUE INDEX `username_UNIQUE` (`username` ASC) INVISIBLE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `ibudget`.`transactions`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `ibudget`.`transactions` ;
@@ -32,7 +48,12 @@ CREATE TABLE IF NOT EXISTS `ibudget`.`transactions` (
   `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   INDEX `USERDATE` (`user_id` DESC, `date` DESC) VISIBLE,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  CONSTRAINT `fk_transactions_users`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `ibudget`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
