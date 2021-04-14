@@ -5,7 +5,7 @@
 import React from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { css } from "styled-components/macro"; //eslint-disable-line
 
 import {
@@ -66,7 +66,11 @@ const properties = {
 };
 
 export default () => {
-  // The textOnLeft boolean prop can be used to display either the text on left or right side of the image.
+  const history = useHistory();
+
+  function handleLearnMoreClick() {
+    history.push("/how-it-works");
+  }
 
   return (
     <Container>
@@ -81,7 +85,7 @@ export default () => {
             )}
             <Heading>{properties.heading}</Heading>
             <Description>{properties.description}</Description>
-            <PrimaryButton to={properties.primaryButtonUrl}>
+            <PrimaryButton onClick={handleLearnMoreClick}>
               {properties.primaryButtonText}
             </PrimaryButton>
           </TextContent>
