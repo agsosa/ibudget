@@ -12,12 +12,13 @@ import ContentWithPadding from "components/layout/ContentWithPadding";
 import withFetchTransactions from "components/dashboard/smart-components/withFetchTransactions";
 import NoDataIndicator from "components/misc/NoDataIndicator";
 import RadioGroup from "components/misc/input/RadioGroup";
-import { CategoryEnum } from "ibudget-shared";
+import { CategoryEnum, TransactionTypeEnum } from "ibudget-shared";
 import CheckboxGroup from "react-checkbox-group";
 import {
   getCategoryLabel,
   getTransactionTypeLabel,
   bigNumberFormatter,
+  getSortModeLabel,
 } from "lib/Helpers";
 import CategoryIcon from "components/dashboard/CategoryIcon";
 import Accordion from "components/misc/Accordion";
@@ -25,7 +26,7 @@ import TransactionList from "components/dashboard/TransactionList";
 import Skeleton from "react-loading-skeleton";
 import Icon from "@mdi/react";
 import { mdiInformationOutline } from "@mdi/js";
-import { TransactionTypeEnum } from "ibudget-shared";
+import { SortModeEnum } from "lib/Enums";
 
 /* Start styled components */
 
@@ -43,7 +44,7 @@ p-8 px-12 md:p-4 lg:p-8
 bg-white`;
 const RightColumn = tw.div`col-span-6 shadow-sm rounded-xl p-10 bg-white`;
 const Title = tw.text`text-xl p-3 sm:p-0 md:text-2xl font-semibold`;
-const Hint = tw.text` text-sm p-1 flex flex-row gap-1 items-center`;
+const Hint = tw.text` text-sm p-1 mt-1 flex flex-row gap-1 items-center`;
 const CategoryCheckboxContainer = tw.div`flex flex-row align-middle items-center gap-1`;
 const CategoryCheckboxLabel = tw.text` text-base`;
 const CustomSkeleton = tw(Skeleton)`mt-5 min-w-full`;
@@ -51,25 +52,37 @@ const CustomSkeleton = tw(Skeleton)`mt-5 min-w-full`;
 /* End style components */
 
 const ALL_FILTER = -1; // Value used to represent the "select all"
-// categoryFilterOptions: Array of all the CategoryEnum values + ALL_CATEGORIES to display the category filter checkbox list
 const categoryFilterOptions = [ALL_FILTER, ...Object.values(CategoryEnum)];
 const typeFilterOptions = Object.values(TransactionTypeEnum);
+const sortModeOptions = Object.values(SortModeEnum);
 
 function TransactionsPage({ loading }) {
+  /* Start setup state */
+
+  // Transactions state
   const selection = store.select((models) => ({
     transactions: models.BudgetModel.transactionsFromSelectedPeriod,
   }));
-  const { transactions } = useSelector(selection);
-
+  const { transactions } = useSelector(selection); // Get transactions from selected period
+  const transactionsWithoutPeriodFilter = useSelector(
+    (state) => state.BudgetModel.transactions
+  ); // For UX purposes
   const [localTransactions, setLocalTransactions] = React.useState(true); // Used to filter, sort, etc. locally
+
+  // Filters state
   const [categoryFilterArray, setFilterCategoryArray] = React.useState([
     ALL_FILTER,
   ]);
   const [typeFilterArray, setTypeFilterArray] = React.useState(
     typeFilterOptions
   );
+  const [sortModeArray, setSortModeArray] = React.useState([
+    SortModeEnum.DATE_DESCENDING,
+  ]);
 
-  // Filter and Sort on transactions state or filter update
+  /* End setup state */
+
+  // Filter and Sort
   React.useEffect(() => {
     let filteredAndSorted = transactions;
 
@@ -83,8 +96,30 @@ function TransactionsPage({ loading }) {
       return typeCond && categoryCond ? q : null;
     });
 
+    // Sort
+    switch (sortModeArray[0]) {
+      case SortModeEnum.DATE_DESCENDING:
+        filteredAndSorted.sort((a, b) => b.date - a.date);
+        break;
+      case SortModeEnum.DATE_ASCENDING:
+        filteredAndSorted.sort((a, b) => a.date - b.date);
+        break;
+      case SortModeEnum.AMOUNT_DESCENDING:
+        filteredAndSorted.sort(
+          (a, b) =>
+            getTransactionAmountWithSign(b) - getTransactionAmountWithSign(a)
+        );
+        break;
+      case SortModeEnum.AMOUNT_ASCENDING:
+        filteredAndSorted.sort(
+          (a, b) =>
+            getTransactionAmountWithSign(a) - getTransactionAmountWithSign(b)
+        );
+        break;
+    }
+
     setLocalTransactions(filteredAndSorted);
-  }, [transactions, categoryFilterArray, typeFilterArray]);
+  }, [transactions, categoryFilterArray, typeFilterArray, sortModeArray]);
 
   // Triggered on Category checkbox click
   function handleFilterCategoryChange(
@@ -114,6 +149,15 @@ function TransactionsPage({ loading }) {
     valuesArray /* Array with values of typeFilterOptions */
   ) {
     setTypeFilterArray(valuesArray);
+  }
+
+  // Triggered on Sort checkbox click
+  function handleSortModeChange(
+    valuesArray /* Array with values of sortModeOptions */
+  ) {
+    if (valuesArray.length > 1) {
+      setSortModeArray([valuesArray[1]]);
+    }
   }
 
   /* Start filter/sort components */
@@ -177,13 +221,41 @@ function TransactionsPage({ loading }) {
     </CheckboxGroup>
   );
 
+  const SortModeComponent = (
+    <CheckboxGroup
+      name="type"
+      value={sortModeArray}
+      onChange={handleSortModeChange}
+    >
+      {(Checkbox) => (
+        <>
+          {sortModeOptions.map((v) => {
+            return (
+              <CategoryCheckboxContainer>
+                <Checkbox
+                  value={v}
+                  style={{
+                    transform: "scale(1.3)",
+                  }}
+                />
+                <CategoryCheckboxLabel style={{ marginLeft: 12 }}>
+                  {getSortModeLabel(v)}
+                </CategoryCheckboxLabel>
+              </CategoryCheckboxContainer>
+            );
+          })}
+        </>
+      )}
+    </CheckboxGroup>
+  );
+
   const RightColumnContent = () => {
     if (loading) return <CustomSkeleton count={10} height={25} width={100} />;
 
     if (localTransactions && localTransactions.length > 0)
       return (
         <>
-          <TransactionList loading limit={10} data={localTransactions} />
+          <TransactionList loading limit={20} data={localTransactions} />
         </>
       );
 
@@ -198,12 +270,20 @@ function TransactionsPage({ loading }) {
           <DateRangeLabel>Period: </DateRangeLabel>
           <DateRangeSelector />
         </DateRangeContainer>
+        {transactionsWithoutPeriodFilter.length > transactions.length && (
+          <Hint>
+            Hay {bigNumberFormatter(transactionsWithoutPeriodFilter.length)}{" "}
+            transacciones fuera del periodo seleccionado
+          </Hint>
+        )}
       </HeaderContainer>
       <Container>
         <LeftColumn>
           <Title>
             Transacciones
-            {transactions && ` (${bigNumberFormatter(transactions.length)})`}
+            {transactions &&
+              !loading &&
+              ` (${bigNumberFormatter(transactions.length)})`}
           </Title>
           <Hint>
             <Icon
@@ -218,7 +298,7 @@ function TransactionsPage({ loading }) {
           <Accordion
             isMulti
             items={[
-              { title: "Orden", contentComponent: null },
+              { title: "Orden", contentComponent: SortModeComponent },
               { title: "Tipo", contentComponent: TypeFilterComponent },
               {
                 title: "Categoría",

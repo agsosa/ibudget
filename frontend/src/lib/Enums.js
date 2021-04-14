@@ -12,3 +12,10 @@ export const NotificationTypeEnum = Object.freeze({
   ERROR: 2,
   SUCCESS: 3,
 });
+
+export const SortModeEnum = Object.freeze({
+  DATE_ASCENDING: 0,
+  DATE_DESCENDING: 1,
+  AMOUNT_ASCENDING: 2,
+  AMOUNT_DESCENDING: 3,
+});
