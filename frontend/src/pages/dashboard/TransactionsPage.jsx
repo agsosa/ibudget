@@ -14,13 +14,18 @@ import NoDataIndicator from "components/misc/NoDataIndicator";
 import RadioGroup from "components/misc/input/RadioGroup";
 import { CategoryEnum } from "ibudget-shared";
 import CheckboxGroup from "react-checkbox-group";
-import { getCategoryLabel } from "lib/Helpers";
+import {
+  getCategoryLabel,
+  getTransactionTypeLabel,
+  bigNumberFormatter,
+} from "lib/Helpers";
 import CategoryIcon from "components/dashboard/CategoryIcon";
 import Accordion from "components/misc/Accordion";
 import TransactionList from "components/dashboard/TransactionList";
 import Skeleton from "react-loading-skeleton";
 import Icon from "@mdi/react";
 import { mdiInformationOutline } from "@mdi/js";
+import { TransactionTypeEnum } from "ibudget-shared";
 
 /* Start styled components */
 
@@ -40,7 +45,7 @@ const RightColumn = tw.div`col-span-6 shadow-sm rounded-xl p-10 bg-white`;
 const Title = tw.text`text-xl p-3 sm:p-0 md:text-2xl font-semibold`;
 const Hint = tw.text` text-sm p-1 flex flex-row gap-1 items-center`;
 const CategoryCheckboxContainer = tw.div`flex flex-row align-middle items-center gap-1`;
-const CategoryCheckboxLabel = tw.text`text-base`;
+const CategoryCheckboxLabel = tw.text` text-base`;
 const CustomSkeleton = tw(Skeleton)`mt-5 min-w-full`;
 
 /* End style components */
@@ -48,6 +53,7 @@ const CustomSkeleton = tw(Skeleton)`mt-5 min-w-full`;
 const ALL_FILTER = -1; // Value used to represent the "select all"
 // categoryFilterOptions: Array of all the CategoryEnum values + ALL_CATEGORIES to display the category filter checkbox list
 const categoryFilterOptions = [ALL_FILTER, ...Object.values(CategoryEnum)];
+const typeFilterOptions = Object.values(TransactionTypeEnum);
 
 function TransactionsPage({ loading }) {
   const selection = store.select((models) => ({
@@ -59,19 +65,26 @@ function TransactionsPage({ loading }) {
   const [categoryFilterArray, setFilterCategoryArray] = React.useState([
     ALL_FILTER,
   ]);
-  const [typeFilterArray, setFilterCa] = React.useState([ALL_FILTER]);
+  const [typeFilterArray, setTypeFilterArray] = React.useState(
+    typeFilterOptions
+  );
 
   // Filter and Sort on transactions state or filter update
   React.useEffect(() => {
     let filteredAndSorted = transactions;
 
-    if (!categoryFilterArray.includes(ALL_FILTER))
-      filteredAndSorted = filteredAndSorted.filter((q) =>
-        categoryFilterArray.includes(q.category_id)
-      );
+    // Filter
+    filteredAndSorted = filteredAndSorted.filter((q) => {
+      const typeCond = typeFilterArray.includes(q.type_id);
+      const categoryCond =
+        categoryFilterArray.includes(ALL_FILTER) ||
+        categoryFilterArray.includes(q.category_id);
+
+      return typeCond && categoryCond ? q : null;
+    });
 
     setLocalTransactions(filteredAndSorted);
-  }, [transactions, categoryFilterArray]);
+  }, [transactions, categoryFilterArray, typeFilterArray]);
 
   // Triggered on Category checkbox click
   function handleFilterCategoryChange(
@@ -94,6 +107,13 @@ function TransactionsPage({ loading }) {
         setFilterCategoryArray(valuesArray);
       }
     }
+  }
+
+  // Triggered on Type checkbox click
+  function handleTypeFilterChange(
+    valuesArray /* Array with values of typeFilterOptions */
+  ) {
+    setTypeFilterArray(valuesArray);
   }
 
   /* Start filter/sort components */
@@ -132,12 +152,12 @@ function TransactionsPage({ loading }) {
   const TypeFilterComponent = (
     <CheckboxGroup
       name="type"
-      value={categoryFilterArray}
-      onChange={handleFilterCategoryChange}
+      value={typeFilterArray}
+      onChange={handleTypeFilterChange}
     >
       {(Checkbox) => (
         <>
-          {categoryFilterOptions.map((v) => {
+          {typeFilterOptions.map((v) => {
             return (
               <CategoryCheckboxContainer>
                 <Checkbox
@@ -146,11 +166,8 @@ function TransactionsPage({ loading }) {
                     transform: "scale(1.3)",
                   }}
                 />
-                <CategoryIcon category={v} small />
-                <CategoryCheckboxLabel>
-                  {v === ALL_FILTER
-                    ? "Todas las categorías"
-                    : getCategoryLabel(v)}
+                <CategoryCheckboxLabel style={{ marginLeft: 12 }}>
+                  {getTransactionTypeLabel(v)}
                 </CategoryCheckboxLabel>
               </CategoryCheckboxContainer>
             );
@@ -184,7 +201,10 @@ function TransactionsPage({ loading }) {
       </HeaderContainer>
       <Container>
         <LeftColumn>
-          <Title>Transacciones</Title>
+          <Title>
+            Transacciones
+            {transactions && ` (${bigNumberFormatter(transactions.length)})`}
+          </Title>
           <Hint>
             <Icon
               path={mdiInformationOutline}
