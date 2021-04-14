@@ -223,12 +223,12 @@ export const getCategoryMaterialIcon = (category) => {
   return icon;
 };
 
-/* 
-  getTransactionAmountWithSign:
-    Function to get the amount of a TransactionModel object WITH SIGN (positive or negative)
-
-    This is because we store the amount of every transaction as positive and use the type_id to know if it's spending or income
-*/
+/**
+ * Get the amount field of a TransactionModel object WITH SIGN (positive or negative)
+ * This has been added because we store the amount of every transaction as positive and use the type_id to know if it's spending or income
+ * @param  {Object of TransactionModel} transaction The transaction object
+ * @return {Number}       The amount field with sign (depending on the transaction type)
+ */
 export const getTransactionAmountWithSign = (transaction) =>
   transaction.type_id === TransactionTypeEnum.OUT
     ? -transaction.amount

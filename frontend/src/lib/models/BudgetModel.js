@@ -2,7 +2,7 @@
 
 import * as API from "lib/API";
 import { NotificationTypeEnum } from "lib/Enums";
-import { TransactionTypeEnum } from "ibudget-shared";
+import { getTransactionAmountWithSign } from "lib/Helpers";
 
 function parseTransactionFromServer(transaction) {
   transaction.date = new Date(transaction.date);
@@ -235,8 +235,7 @@ export default {
   selectors: (slice, createSelector) => ({
     // Selector to get the current balance (sum of all transactions amount field, depending on transaction type)
     currentBalance() {
-      const sumTransaction = (a, b) =>
-        b.type_id === TransactionTypeEnum.OUT ? a - b.amount : a + b.amount;
+      const sumTransaction = (a, b) => a + getTransactionAmountWithSign(b);
 
       return slice((state) => state.transactions.reduce(sumTransaction, 0));
     },
