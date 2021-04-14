@@ -11,9 +11,22 @@ const API_BASE_URL =
     ? DEV_BASE_URL
     : PROD_BASE_URL;
 
+let errorSubscriptions = [];
+
 // Function called on API request error
 function handleError(errorData) {
   console.error("API error:", errorData);
+  errorSubscriptions.map((cb) => cb(errorData));
+}
+
+// TODO: Don't forget to unsuscribe!
+export function addErrorListener(callback) {
+  if (callback) errorSubscriptions.push(callback);
+}
+
+export function removeErrorListener(callback) {
+  if (callback)
+    errorSubscriptions = errorSubscriptions.filter((q) => q !== callback);
 }
 
 /*

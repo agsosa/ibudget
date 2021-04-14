@@ -33,6 +33,20 @@ export const useAuth = () => {
 function useProvideAuth() {
   const [user, setUser] = useState(null);
 
+  function handleAPIErrors(e) {
+    if (e && e.message) {
+      console.log(e.message);
+
+      if (e.message === "Not authenticated") setUser(null);
+    }
+  }
+
+  React.useEffect(() => {
+    API.addErrorListener(handleAPIErrors);
+
+    () => API.removeErrorListener(handleAPIErrors);
+  }, []);
+
   const signIn = (username, password) => {
     return API.request("login", { username, password })
       .then((response) => {
@@ -45,7 +59,6 @@ function useProvideAuth() {
         return response;
       })
       .catch((err) => {
-        console.log("login error: ", err);
         return err;
       });
   };
@@ -53,12 +66,10 @@ function useProvideAuth() {
   const signUp = (username, password, name) => {
     return API.request("register", { username, password })
       .then((result) => {
-        console.log("register result: ", result);
         setUser(result.data);
         return result;
       })
       .catch((err) => {
-        console.log("register error: ", err);
         return err;
       });
   };
@@ -66,12 +77,10 @@ function useProvideAuth() {
   const signOut = () => {
     return API.request("logout", { username, password })
       .then((result) => {
-        console.log("logout result: ", result);
         setUser(false);
         return result;
       })
       .catch((err) => {
-        console.log("logout error: ", err);
         return err;
       });
   };
