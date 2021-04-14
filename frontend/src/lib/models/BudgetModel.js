@@ -19,11 +19,13 @@ function parseTransactionFromServer(transaction) {
       setTransactions(payload) - replace the transactions array, payload should be an array of TransactionModel
       addTransaction(payload) - add a transaction to the array, payload should be a TransactionModel
       delTransaction(payload) - delete a transaction from the array, payload should be a ID (number)
+      editTransaction(payload) - update a transaction on the array, payload should be a valid TransactionModel
 
     effects:
       fetchTransactions({callback: fn(result)}) - Fetch the transactions list from server
       createTransaction({transactionInfo: object ,callback: fn(result)}) - Create a new transaction on server
       deleteTransaction({id: number, callback: fn(result)}) - Delete a transaction on server
+      updateTransaction({transactionInfo: object, id: number}) - Update a transaction on server
 
       >>> result is a object representing the server response. Shape { error: bool, message: string, data?: any }
 
@@ -64,7 +66,7 @@ export default {
 
       return state;
     },
-    updTransaction(state, payload) {
+    editTransaction(state, payload) {
       if (payload && typeof payload === "object") {
         parseTransactionFromServer(payload);
 
@@ -81,12 +83,6 @@ export default {
     },
   },
   effects: (dispatch) => ({
-    /* 
-      Get transactions from backend. 
-      - Optional payload parameter { callback: function(result) } 
-          callback will be a function called with a result object ({ error: boolean, message: string, data?: any })
-          after the request promise is resolved/rejected
-    */
     // TODO: Implement cache
     fetchTransactions(payload) {
       API.request("getTransactions")
@@ -194,13 +190,13 @@ export default {
     updateTransaction(payload) {
       API.request("updateTransaction", {
         id: payload.id,
-        transaction_info: payload.transaction_info,
+        transactionInfo: payload.transactionInfo,
       })
         .then((response) => {
           const { error, data } = response;
 
           if (!error && data) {
-            this.updTransaction(data);
+            this.editTransaction(data);
           }
 
           return response;

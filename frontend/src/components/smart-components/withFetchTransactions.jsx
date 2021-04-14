@@ -1,7 +1,8 @@
 /*
   Smart component (Interacting with BudgetModel)
 
-  Higher order component to automatically dispatch BudgetModel/fetchTransactions on mount
+  Higher order component to automatically fetch transactions on mount
+  It works using the BudgetModel/fetchTransactions effect on mount
 
   Injected props to children:
     loading: (bool) true if the fetch is in progress, false otherwise
@@ -10,6 +11,7 @@
     Wrap a component like any other HoC:
       export default withFetchTransactions(DashboardPage)
 */
+
 import * as React from "react";
 import { useDispatch } from "react-redux";
 

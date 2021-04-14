@@ -1,3 +1,12 @@
+/* 
+  Smart component (interacting with UserPrefsModel, BudgetModel)
+
+  Component to show the money flow during a period
+
+  Usage:
+    <MoneyFlow />
+*/
+
 import * as React from "react";
 import tw, { styled } from "twin.macro";
 import Gauge from "components/dashboard/charts/Gauge";

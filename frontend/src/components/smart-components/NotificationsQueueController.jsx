@@ -5,6 +5,8 @@
 
   Usage:
     Add <NotificationsQueueController /> in main view, after the store initialization
+
+    To show a notification see NotificationsQueueModel's "pushNotification" effect
 */
 
 /* eslint-disable */
