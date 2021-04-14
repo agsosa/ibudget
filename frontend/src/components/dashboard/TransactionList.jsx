@@ -6,8 +6,11 @@
 
     props:
       data: Array of TransactionModel objects to display
+      limit: maximum transactions to display (number)(optional, default 5)
+      isPaginated: bool to indicate if the list should be paginated (the maximum amount of items per page will be the limit prop) (optional)
 */
 
+/* eslint-disable */
 /* eslint-disable camelcase */
 import * as React from "react";
 import tw, { styled } from "twin.macro";
@@ -48,6 +51,9 @@ const CategoryConceptContainer = tw(FlexCol)`ml-3 justify-center`;
 const RightContainer = tw(FlexCol)`justify-self-end w-full`;
 const LeftContainer = tw.div`flex flex-row ml-6 sm:ml-0`;
 
+const PaginatedBtn = tw.button`bg-white border-b-2  hover:border-primary-400 py-1 hocus:outline-none hover:text-primary-500 hover:font-medium outline-none`;
+const PaginatedBtnContainer = tw.div`flex flex-row gap-6 items-center self-center justify-center`;
+
 /* End styled components */
 
 function TransactionItem({ data, onClick }) {
@@ -75,34 +81,81 @@ function TransactionItem({ data, onClick }) {
   );
 }
 
-function TransactionList({ data, limit }) {
+function TransactionList({ data, limit, isPaginated }) {
   const modalRef = React.useRef();
   const [clickedTransaction, setClickedTransaction] = React.useState(null); // Used to pass it to the edit modal via prop
+  const [currentPage, setCurrentPage] = React.useState(0);
+  const maxPages =
+    isPaginated && data && data.length && limit
+      ? Math.ceil(data.length / limit)
+      : 0;
 
   // Watch for clickedTransaction updates and toggle the modal
   React.useEffect(() => {
     if (clickedTransaction) modalRef.current.toggle();
   }, [clickedTransaction]);
 
+  // Reset page on data/limit change
+  React.useEffect(() => {
+    setCurrentPage(0);
+  }, [data, limit]);
+
+  // Previous page click
+  function onPrevPageClick() {
+    if (isPaginated && currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+      window.scrollTo(0, 0);
+    }
+  }
+
+  // Next page click
+  function onNextPageClick() {
+    if (isPaginated) {
+      setCurrentPage(currentPage + 1);
+      window.scrollTo(0, 0);
+    }
+  }
+
+  // isPaginated component
+  function PaginatedNavigation() {
+    if (isPaginated) {
+      return (
+        <PaginatedBtnContainer>
+          {currentPage > 0 && (
+            <PaginatedBtn onClick={onPrevPageClick}>Prev Page</PaginatedBtn>
+          )}
+          {currentPage < maxPages - 1 && (
+            <PaginatedBtn onClick={onNextPageClick}>Next Page</PaginatedBtn>
+          )}
+        </PaginatedBtnContainer>
+      );
+    }
+
+    return null;
+  }
+
   return (
     <>
       <List>
         {(data &&
           Array.isArray(data) &&
-          data.slice(0, limit).map((item) => {
-            return React.createElement(TransactionItem, {
-              data: item,
-              onClick: () => {
-                if (clickedTransaction === item) {
-                  // If our clickedTransaction is the same as the clicked item, toggle the modal
-                  // This is because React will not update clickedTransaction if it's unchanged, so we just need to open the modal
-                  modalRef.current.toggle();
-                } else setClickedTransaction(item); // else set it and wait for the update with useEffect then toggle the modal
-              },
-            });
-          })) ||
+          data
+            .slice(currentPage * limit, currentPage * limit + limit)
+            .map((item) => {
+              return React.createElement(TransactionItem, {
+                data: item,
+                onClick: () => {
+                  if (clickedTransaction === item) {
+                    // If our clickedTransaction is the same as the clicked item, toggle the modal
+                    // This is because React will not update clickedTransaction if it's unchanged, so we just need to open the modal
+                    modalRef.current.toggle();
+                  } else setClickedTransaction(item); // else set it and wait for the update with useEffect then toggle the modal
+                },
+              });
+            })) ||
           console.warn("TransactionList: Invalid data prop")}
       </List>
+      <PaginatedNavigation />
       <AddEditTransaction
         ref={modalRef}
         title="Edit Transaction"
@@ -125,11 +178,13 @@ TransactionItem.propTypes = {
 TransactionList.defaultProps = {
   data: null,
   limit: 5,
+  isPaginated: false,
 };
 
 TransactionList.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object),
   limit: PropTypes.number,
+  isPaginated: PropTypes.bool,
 };
 
 export default TransactionList;

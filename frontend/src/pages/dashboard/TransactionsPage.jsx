@@ -261,6 +261,7 @@ function TransactionsPage({ loading }) {
         <>
           <TransactionList
             loading
+            isPaginated
             limit={LIMIT_PER_PAGE}
             data={localTransactions}
           />
