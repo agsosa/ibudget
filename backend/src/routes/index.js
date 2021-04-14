@@ -1,4 +1,5 @@
 module.exports = {
   transactions: require("./transactions.routes"),
-  users: require("./users.routes"),
+  user: require("./user.routes"),
+  auth: require("./auth.routes"),
 };

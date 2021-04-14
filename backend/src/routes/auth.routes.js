@@ -1,7 +1,7 @@
 // Docs: https://documenter.getpostman.com/view/13863838/TzCV45Ku
 const express = require("express");
 const router = express.Router();
-const controller = require("@controllers/users.controller");
+const controller = require("@controllers/auth.controller");
 
 // Retrieve all transactions
 //router.get("/", controller.findAll);
@@ -16,5 +16,9 @@ const controller = require("@controllers/users.controller");
 
 // Delete a transaction by id
 //router.delete("/:id", controller.delete);
+
+//router.post("/", controller.create);
+
+//router.delete("/", controller.create);
 
 module.exports = router;
