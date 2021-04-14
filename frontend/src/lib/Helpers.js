@@ -1,3 +1,5 @@
+// TODO: Move enum helpers to Enums.js
+
 import tw from "twin.macro";
 import {
   mdiSilverware,
@@ -13,7 +15,7 @@ import {
   mdiDotsVertical,
 } from "@mdi/js";
 import { TransactionTypeEnum, CategoryEnum } from "ibudget-shared";
-import { PeriodEnum } from "./Enums";
+import { PeriodEnum, SortModeEnum } from "lib/Enums";
 
 // Add countDecimals() to Number
 /* eslint-disable no-extend-native */
@@ -127,6 +129,22 @@ export function getTransactionTypeLabel(transactionTypeEnum) {
   }
 }
 
+// Function to convert a SortModeEnum value to a label
+export function getSortModeLabel(sortModeEnum) {
+  switch (sortModeEnum) {
+    case SortModeEnum.AMOUNT_ASCENDING:
+      return "Monto (de menor a mayor)";
+    case SortModeEnum.AMOUNT_DESCENDING:
+      return "Monto (de mayor a menor)";
+    case SortModeEnum.DATE_ASCENDING:
+      return "Fecha (mas antiguo primero)";
+    case SortModeEnum.DATE_DESCENDING:
+      return "Fecha (mas reciente primero)";
+    default:
+      return "";
+  }
+}
+
 /**
  * Get the associated tailwind background style for a category
  * @param  {String} categoryEnum The category (must be a value of CategoryEnum)
@@ -204,3 +222,14 @@ export const getCategoryMaterialIcon = (category) => {
 
   return icon;
 };
+
+/* 
+  getTransactionAmountWithSign:
+    Function to get the amount of a TransactionModel object WITH SIGN (positive or negative)
+
+    This is because we store the amount of every transaction as positive and use the type_id to know if it's spending or income
+*/
+export const getTransactionAmountWithSign = (transaction) =>
+  transaction.type_id === TransactionTypeEnum.OUT
+    ? -transaction.amount
+    : transaction.amount;
