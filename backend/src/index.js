@@ -4,7 +4,6 @@
 // TODO: Stress test
 require("dotenv").config();
 require("module-alias/register");
-const database = require("@lib/database");
 const express = require("express");
 const compression = require("compression");
 const helmet = require("helmet");
@@ -13,20 +12,30 @@ const cors = require("cors");
 const routes = require("@routes");
 const utils = require("@lib/utils");
 const config = require("@lib/config");
+const passport = require("passport");
+const session = require("express-session")(config.sessionConfig);
+
+const database = require("@lib/database");
+require("@lib/passport.config").config(passport); // Configure passport
 
 const app = express();
 
-// Add global middlewares
+// Add middlewares
+
 app.use(compression());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(helmet());
 app.use(cors()); // TODO: Change before deploy!
+app.use(session);
+app.use(passport.initialize());
+app.use(passport.session());
 // app.use(morgan("combined")); // TODO: CHECK
 
-// Add routes middlewares
+// Add routes
 app.use("/api/transactions", routes.transactions);
-app.use("/api/users", routes.users);
+//app.use("/api/user", routes.user);
+//app.use("/api/auth", routes.auth);
 
 // Handle root path
 app.get("/", (req, res) => res.send("OK"));
@@ -63,11 +72,11 @@ console.log("Running server on port", config.serverPort);
 // Graceful shutdown
 // TODO: TEST
 process.on("SIGTERM", () => {
-  debug("SIGTERM signal received: shutdown app");
+  console.log("SIGTERM signal received: shutdown app");
   database.end(() => {
-    debug("database closed");
+    console.log("database closed");
     server.close(() => {
-      debug("HTTP server closed");
+      console.log("HTTP server closed");
     });
   });
 });
