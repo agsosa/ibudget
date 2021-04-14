@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt-nodejs");
 const UserModel = require("@models/user.model");
-const utils = require("@lib/utils");
+const helpers = require("@controllers/helpers");
 
 // Passport-local persistent session serialize function
 exports.serializeUser = function (user, done) {
@@ -47,17 +47,9 @@ exports.onLoginSuccess = (req, res) => {
     req.session.cookie.expires = false;
   } */
 
-  utils.sendSuccessResponse(res, "Authenticated", { name: req.user.name });
+  helpers.sendSuccessResponse(res, "Authenticated", { name: req.user.name });
 };
 
 exports.register = function (req, username, password, done) {
   console.log("local-register callback");
 };
-
-/* 
-  function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated()) return next();
-
-    res.redirect("/");
-  }
-*/

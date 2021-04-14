@@ -10,7 +10,7 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const cors = require("cors");
 const routes = require("@routes");
-const utils = require("@lib/utils");
+const helpers = require("@controllers/helpers");
 const config = require("@lib/config");
 const passport = require("passport");
 const session = require("express-session");
@@ -62,12 +62,12 @@ if (config.env === "development") {
 
 // Hide stack trace errors on production environment
 app.use(function (err, req, res, next) {
-  utils.sendFailedResponse(res, err.message, err.status || 500);
+  helpers.sendFailedResponse(res, err.message, err.status || 500);
 });
 
 // Handle 404
 app.use(function (req, res, next) {
-  utils.sendFailedResponse(res, "endpoint not found", 404);
+  helpers.sendFailedResponse(res, "endpoint not found", 404);
 });
 
 // Start server
