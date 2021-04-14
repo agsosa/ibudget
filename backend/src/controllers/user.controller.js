@@ -2,12 +2,12 @@ const bcrypt = require("bcrypt-nodejs");
 const UserModel = require("@models/user.model");
 const helpers = require("@controllers/helpers");
 
-// Passport-local persistent session serialize function
+// passport serialize function
 exports.serializeUser = function (user, done) {
   done(null, user.id);
 };
 
-// Passport-local persistent session deserialize function
+// passport deserialize function
 exports.deserializeUser = function (id, done) {
   UserModel.findById(id)
     .then((result) => {
