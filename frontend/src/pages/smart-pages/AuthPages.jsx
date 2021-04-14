@@ -8,7 +8,7 @@ import googleIconImageSrc from "third-party/treact/images/google-icon.png";
 import { ReactComponent as SignUpIcon } from "feather-icons/dist/icons/user-plus.svg";
 import { ReactComponent as LoginIcon } from "feather-icons/dist/icons/log-in.svg";
 import { APP_NAME } from "lib/Config";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Limits } from "ibudget-shared";
 import { useAuth } from "lib/Auth";
 
@@ -147,6 +147,7 @@ export function RegisterPage() {
 }
 
 export function LoginPage() {
+  const history = useHistory();
   const auth = useAuth();
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -155,7 +156,7 @@ export function LoginPage() {
   function onSubmitButtonClick() {
     console.log("onSubmitButtonClick", username, password);
     auth.signIn(username, password).then((result) => {
-      console.log(result);
+      if (!result.error) history.push("/dashboard");
     });
   }
 
