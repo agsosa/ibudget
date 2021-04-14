@@ -1,5 +1,5 @@
 // TODO: Move enum helpers to Enums.js
-
+/* eslint-disable no-extend-native */
 import tw from "twin.macro";
 import {
   mdiSilverware,
@@ -17,8 +17,7 @@ import {
 import { TransactionTypeEnum, CategoryEnum } from "ibudget-shared";
 import { PeriodEnum, SortModeEnum } from "lib/Enums";
 
-// Add countDecimals() to Number
-/* eslint-disable no-extend-native */
+// Add countDecimals() to Number type
 Number.prototype.countDecimals = function () {
   if (Math.floor(this.valueOf()) === this.valueOf()) return 0;
   return this.toString().split(".")[1].length || 0;
@@ -43,6 +42,12 @@ export function getMoneyDisplayString(money) {
 }
 
 // Big number formatter (100000 to 100k, 50000 to 50k, etc)
+/**
+ * Format a big number as
+ * @param  {Number} num The number
+ * @param {Number} digits Amount of digits to display
+ * @return {String}               The formatted number
+ */
 export function bigNumberFormatter(num, digits) {
   const si = [
     { value: 1, symbol: "" },
@@ -63,8 +68,11 @@ export function bigNumberFormatter(num, digits) {
   return (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol;
 }
 
-// TODO: Move Enum to Label functions to Locale manager
-// Function to convert a PeriodEnum value to a label
+/**
+ * Convert a PeriodEnum value to a label
+ * @param  {PeriodEnum} periodEnum The period
+ * @return {String}               The label
+ */
 export function getPeriodLabel(periodEnum) {
   switch (periodEnum) {
     case PeriodEnum.SEVEN_DAYS:
@@ -82,12 +90,20 @@ export function getPeriodLabel(periodEnum) {
   }
 }
 
-// Function to get the symbol (+ or -) string for a TransactionTypeEnum value (example: getTransactionTypeSymbol(TransactionTypeEnum.OUT) = "-")
+/**
+ * Get the sign string for a TransactionTypeEnum value
+ * @param  {TransactionTypeEnum} transactionTypeEnum The transaction type
+ * @return {String}               The sign "-" or "+"
+ */
 export function getTransactionTypeSymbol(transactionTypeEnum) {
   return transactionTypeEnum === TransactionTypeEnum.OUT ? "-" : "+";
 }
 
-// Function to convert a CategoryEnum value to a label
+/**
+ * Convert a CategoryEnum value to a label
+ * @param  {CategoryEnum} categoryEnum The category
+ * @return {String}               The label
+ */
 export function getCategoryLabel(categoryEnum) {
   switch (categoryEnum) {
     case CategoryEnum.FOOD_DRINKS:
@@ -117,7 +133,11 @@ export function getCategoryLabel(categoryEnum) {
   }
 }
 
-// Function to convert a TransactionTypeEnum value to a label
+/**
+ * Convert a TransactionTypeEnum value to a label
+ * @param  {TransactionTypeEnum} transactionTypeEnum The transaction type
+ * @return {String}               The label
+ */
 export function getTransactionTypeLabel(transactionTypeEnum) {
   switch (transactionTypeEnum) {
     case TransactionTypeEnum.IN:
@@ -129,7 +149,11 @@ export function getTransactionTypeLabel(transactionTypeEnum) {
   }
 }
 
-// Function to convert a SortModeEnum value to a label
+/**
+ * Convert a SortModeEnum value to a label
+ * @param  {SortModeEnum} sortModeEnum The sort mode
+ * @return {String}               The label
+ */
 export function getSortModeLabel(sortModeEnum) {
   switch (sortModeEnum) {
     case SortModeEnum.AMOUNT_ASCENDING:
@@ -146,9 +170,9 @@ export function getSortModeLabel(sortModeEnum) {
 }
 
 /**
- * Get the associated tailwind background style for a category
- * @param  {String} categoryEnum The category (must be a value of CategoryEnum)
- * @return {TwFn}                Tailwind background style
+ * Get the associated twin.macro background style for a category
+ * @param  {CategoryEnum} categoryEnum The category
+ * @return {TwFn}                tw background style
  */
 export const getCategoryBackgroundStyle = (categoryEnum) => {
   switch (categoryEnum) {
@@ -179,9 +203,14 @@ export const getCategoryBackgroundStyle = (categoryEnum) => {
   }
 };
 
-// Get the associated material design icon for the category
+/**
+ * Get the associated Material Design Icon (mdi/js) object for the category
+ * @param  {CategoryEnum} category The category
+ * @return {Object}       The material design icon object to be used with <Icon path={} /> @mdi/react
+ */
 export const getCategoryMaterialIcon = (category) => {
   let icon;
+
   switch (category) {
     case CategoryEnum.SHOPPING:
       icon = mdiCartOutline;
