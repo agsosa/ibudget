@@ -28,7 +28,7 @@ UserModel.findById = (id) => {
 
     database
       .execute(query, params)
-      .then(([rows]) => resolve(rows))
+      .then(([[rows]]) => resolve(rows))
       .catch((err) => reject(err));
   });
 };
