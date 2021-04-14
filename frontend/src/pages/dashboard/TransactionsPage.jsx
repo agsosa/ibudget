@@ -18,6 +18,7 @@ import {
   getCategoryLabel,
   getTransactionTypeLabel,
   bigNumberFormatter,
+  getTransactionAmountWithSign,
   getSortModeLabel,
 } from "lib/Helpers";
 import CategoryIcon from "components/dashboard/CategoryIcon";
@@ -272,8 +273,11 @@ function TransactionsPage({ loading }) {
         </DateRangeContainer>
         {transactionsWithoutPeriodFilter.length > transactions.length && (
           <Hint>
-            Hay {bigNumberFormatter(transactionsWithoutPeriodFilter.length)}{" "}
-            transacciones fuera del periodo seleccionado
+            Hay{" "}
+            {bigNumberFormatter(
+              transactionsWithoutPeriodFilter.length - transactions.length
+            )}{" "}
+            transaccion(es) fuera del periodo seleccionado
           </Hint>
         )}
       </HeaderContainer>
