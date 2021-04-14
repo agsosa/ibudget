@@ -35,10 +35,14 @@ function useProvideAuth() {
 
   const signIn = (username, password) => {
     return API.request("login", { username, password })
-      .then((result) => {
-        console.log("login result: ", result);
-        setUser(result.data);
-        return result;
+      .then((response) => {
+        const { data, error } = response;
+
+        if (!error && data) {
+          setUser(data);
+        }
+
+        return response;
       })
       .catch((err) => {
         console.log("login error: ", err);
