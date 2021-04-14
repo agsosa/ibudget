@@ -17,7 +17,7 @@ function handleError(errorData) {
 }
 
 const ENDPOINTS = {
-  authLogin: {
+  login: {
     currentPromise: null,
     axiosCall: (payload) => axios.post(API_BASE_URL + "/user/login", payload),
   },
@@ -39,7 +39,7 @@ const ENDPOINTS = {
     axiosCall: (payload) =>
       axios.put(
         API_BASE_URL + `/transactions/${payload.id}`,
-        payload.transaction_info
+        payload.transactionInfo
       ),
   },
 };

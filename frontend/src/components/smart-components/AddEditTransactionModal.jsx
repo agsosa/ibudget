@@ -137,7 +137,7 @@ function AddEditTransactionModal({ toggleModal, editMode, transaction }) {
             type: "BudgetModel/updateTransaction",
             payload: {
               id: transaction.id,
-              transaction_info: transactionInfo,
+              transactionInfo,
               callback: (result) => {
                 setLoading(false);
                 if (!result.error && closeModalOnFinish) toggleModal();
