@@ -15,7 +15,6 @@ import { Provider } from "react-redux";
 import { getPersistor } from "@rematch/persist";
 import { PersistGate } from "redux-persist/lib/integration/react";
 import NotificationQueueController from "components/dashboard/smart-components/NotificationsQueueController";
-import reportWebVitals from "./reportWebVitals"; // TODO: Setup web vitals
 
 const persistor = getPersistor();
 
@@ -30,8 +29,3 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById("root")
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
