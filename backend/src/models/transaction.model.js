@@ -80,6 +80,7 @@ TransactionModel.create = (transaction_info) => {
     } = transaction_info;
 
     const query = `INSERT INTO ${TABLE_NAME} (amount, category_id, type_id, concept, notes, user_id, date) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+
     const params = [
       amount,
       category_id,

@@ -21,12 +21,12 @@ app.use(compression());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(helmet());
-
 app.use(cors()); // TODO: Change before deploy!
 // app.use(morgan("combined")); // TODO: CHECK
 
 // Add routes middlewares
 app.use("/api/transactions", routes.transactions);
+app.use("/api/users", routes.users);
 
 // Handle root path
 app.get("/", (req, res) => res.send("OK"));
@@ -61,7 +61,7 @@ app.listen(config.serverPort);
 console.log("Running server on port", config.serverPort);
 
 // Graceful shutdown
-// TODO: TEST!!
+// TODO: TEST
 process.on("SIGTERM", () => {
   debug("SIGTERM signal received: shutdown app");
   database.end(() => {
