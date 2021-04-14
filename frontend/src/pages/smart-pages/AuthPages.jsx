@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React from "react";
+import * as React from "react";
 import { Container as ContainerBase } from "third-party/treact/components/misc/Layouts";
 import tw from "twin.macro";
 import styled from "styled-components";
@@ -10,6 +10,7 @@ import { ReactComponent as LoginIcon } from "feather-icons/dist/icons/log-in.svg
 import { APP_NAME } from "lib/Config";
 import { Link } from "react-router-dom";
 import { Limits } from "ibudget-shared";
+import { useAuth } from "lib/Auth";
 
 /* Start styled components */
 
@@ -146,9 +147,16 @@ export function RegisterPage() {
 }
 
 export function LoginPage() {
+  const auth = useAuth();
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+
   // On login submit button click
   function onSubmitButtonClick() {
-    console.log("onSubmitButtonClick");
+    console.log("onSubmitButtonClick", username, password);
+    auth.signIn(username, password).then((result) => {
+      console.log(result);
+    });
   }
 
   // On login with google click
@@ -187,10 +195,17 @@ export function LoginPage() {
         <FormContainer>
           <Input
             type="email"
+            value={username}
             maxLength={Limits.USER_EMAIL_MAX_CHARS}
             placeholder="Email"
+            onChange={(e) => setUsername(e.target.value)}
           />
-          <Input type="password" placeholder="Password" />
+          <Input
+            value={password}
+            onInput={(e) => setPassword(e.target.value)}
+            type="password"
+            placeholder="Password"
+          />
           <SubmitButton type="button" onClick={onSubmitButtonClick}>
             <LoginIcon className="icon" />
             <span className="text">Sign In</span>
