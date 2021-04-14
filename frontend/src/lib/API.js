@@ -16,30 +16,53 @@ function handleError(errorData) {
   console.error("API error:", errorData);
 }
 
+/*
+  List of available API endpoints
+
+  shape:
+    { 
+      requiresAuth: bool to indicate axios to append withCredentials option (optional)
+      axiosCall: fn(payload) the actual axios function to be called
+      currentPromise: field to store the current running promise for this endpoint to avoid concurrent calls
+    }
+*/
+// To know the payload shape, available endpoints, etc. visit the documentation: https://documenter.getpostman.com/view/13863838/TzCV45Ku
+const authOptions = { withCredentials: true }; // axios config for auth/protected endpoints
 const ENDPOINTS = {
+  // User endpoints:
   login: {
     currentPromise: null,
-    axiosCall: (payload) => axios.post(API_BASE_URL + "/user/login", payload),
+    axiosCall: (
+      payload // Payload: see api docs
+    ) => axios.post(API_BASE_URL + "/user/login", payload, authOptions),
   },
+
+  // Transactions (protected) endpoints:
   getTransactions: {
     currentPromise: null,
-    axiosCall: () => axios.get(API_BASE_URL + "/transactions"),
+    axiosCall: () => axios.get(API_BASE_URL + "/transactions", authOptions),
   },
   createTransaction: {
     currentPromise: null,
-    axiosCall: (payload) => axios.post(API_BASE_URL + "/transactions", payload),
+    axiosCall: (
+      payload // Payload: see api docs
+    ) => axios.post(API_BASE_URL + "/transactions", payload, authOptions),
   },
   deleteTransaction: {
     currentPromise: null,
-    axiosCall: (payload) =>
-      axios.delete(API_BASE_URL + `/transactions/${payload}`),
+    axiosCall: (
+      payload // Payload: see api docs
+    ) => axios.delete(API_BASE_URL + `/transactions/${payload}`, authOptions),
   },
   updateTransaction: {
     currentPromise: null,
-    axiosCall: (payload) =>
+    axiosCall: (
+      payload // Payload: see api docs
+    ) =>
       axios.put(
         API_BASE_URL + `/transactions/${payload.id}`,
-        payload.transactionInfo
+        payload.transactionInfo,
+        authOptions
       ),
   },
 };
