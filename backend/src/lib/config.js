@@ -14,7 +14,14 @@ exports.dbPoolConfig = {
 };
 
 exports.sessionConfig = {
-  secret: process.env.SECRET,
+  name: process.env.SESSION_NAME,
+  secret: process.env.SESSION_SECRET,
   resave: false,
+  cookie: {
+    // domain: "asd", // TODO: set domain
+    httpOnly: true,
+    secure: (env = "development" ? true : true),
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+  },
   saveUninitialized: false,
 };
