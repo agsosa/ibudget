@@ -17,6 +17,10 @@ function handleError(errorData) {
 }
 
 const ENDPOINTS = {
+  authLogin: {
+    currentPromise: null,
+    axiosCall: (payload) => axios.post(API_BASE_URL + "/user/login", payload),
+  },
   getTransactions: {
     currentPromise: null,
     axiosCall: () => axios.get(API_BASE_URL + "/transactions"),
@@ -60,12 +64,12 @@ export function request(endpoint, payload) {
 
   // Else create a new Promise, assign to endpointInfo.currentPromise and return it
   endpointInfo.currentPromise = new Promise((resolve, reject) => {
-    endpointInfo.currentPromise = endpointInfo
+    endpointInfo
       .axiosCall(payload)
-      .then(({ data }) => {
-        if (data.error) {
-          throw new Error(data.error);
-        } else resolve(data); // Resolve on valid data received
+      .then((axiosResponse) => {
+        if (axiosResponse.data.error) {
+          throw reject(new Error(axiosResponse.data));
+        } else resolve(axiosResponse.data); // Resolve on valid data received
       })
       .catch((error) => {
         let errorData;
