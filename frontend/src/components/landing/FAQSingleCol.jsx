@@ -10,19 +10,17 @@ import {
   SectionHeading,
   Subheading as SubheadingBase,
 } from "third-party/treact/components/misc/Headings";
-import {
-  Container,
-  ContentWithPaddingXl,
-} from "third-party/treact/components/misc/Layouts";
+import { ContentWithPaddingXl } from "third-party/treact/components/misc/Layouts";
 import { APP_NAME } from "lib/Config";
 import Accordion from "components/misc/Accordion";
 
 /* Start styled components */
 
+const Container = tw.div`flex flex-col`;
 const Subheading = tw(SubheadingBase)`mb-4 text-center`;
 const Heading = tw(SectionHeading)`w-full`;
 
-const Column = tw.div`flex flex-col items-center`;
+const Column = tw.div`flex flex-col`;
 const HeaderContent = tw.div`mb-10`;
 
 /* End styled components */
