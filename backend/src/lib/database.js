@@ -2,27 +2,22 @@ const mysql = require("mysql2");
 const config = require("./config");
 
 class Database {
-  connection;
+  pool;
+  promisePool;
 
   constructor() {
-    this.connection = mysql.createConnection(config.dbConfig);
+    this.pool = mysql.createPool(config.dbPoolConfig);
+    this.promisePool = this.pool.promise();
 
-    this.connection.connect(function (err) {
-      if (err) {
-        console.error("[Database] error connecting: " + err.stack);
-        return;
-      }
-
-      console.log("[Database] connected successfully");
-    });
+    console.log("[Database] Initialized");
   }
 
   close(cb) {
-    this.connection.end(cb);
+    this.pool.end(cb);
   }
 
   execute(query, params) {
-    return this.connection.promise().execute(query, params);
+    return this.promisePool.execute(query, params);
   }
 }
 
