@@ -19,3 +19,10 @@ exports.sendSuccessResponse = (res, message, data) => {
     data,
   });
 };
+
+// Middleware to only allow authenticated users
+exports.isLoggedIn = (req, res, next) => {
+  if (req.isAuthenticated()) return next();
+
+  exports.sendFailedResponse(res, "Not authenticated", 401);
+};
