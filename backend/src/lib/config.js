@@ -14,14 +14,16 @@ exports.dbPoolConfig = {
 };
 
 exports.sessionConfig = {
+  // TODO: Add store
   name: process.env.SESSION_NAME,
   secret: process.env.SESSION_SECRET,
   resave: false,
-  cookie: {
+  // TODO FIXME: For some reason the cookies will not be sent by passport if we configure the cookie object here
+  /* cookie: {
     // domain: "asd", // TODO: set domain
     httpOnly: true,
     secure: (env = "development" ? true : true),
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
-  },
+  }, */
   saveUninitialized: false,
 };

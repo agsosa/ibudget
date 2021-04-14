@@ -13,12 +13,18 @@ const routes = require("@routes");
 const utils = require("@lib/utils");
 const config = require("@lib/config");
 const passport = require("passport");
-const session = require("express-session")(config.sessionConfig);
+const session = require("express-session");
 
 const database = require("@lib/database");
 require("@lib/passport.config").config(passport); // Configure passport
 
 const app = express();
+
+// TODO: Change before deploy or add dev/prod env origin
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true,
+};
 
 // Add middlewares
 
@@ -26,8 +32,8 @@ app.use(compression());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(helmet());
-app.use(cors()); // TODO: Change before deploy!
-app.use(session);
+app.use(cors(corsOptions));
+app.use(session(config.sessionConfig));
 app.use(passport.initialize());
 app.use(passport.session());
 // app.use(morgan("combined")); // TODO: CHECK
