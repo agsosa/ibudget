@@ -26,7 +26,7 @@ description blabla
 #### Tests/Documentation:
 - API documentation (Postman): https://documenter.getpostman.com/view/13863838/TzCV45Ku
 
-## How to deploy
+## Deployment preparation
 - Set dotenv vars prepare mysql database bla bla
 
 ## Misc. information
@@ -35,5 +35,7 @@ description blabla
 
 #### How to add a new transaction category
 - Bla bla
+
+### Pending features
 
 Alkemy
