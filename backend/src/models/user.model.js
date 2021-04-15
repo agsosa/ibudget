@@ -1,5 +1,5 @@
 const database = require("@lib/database");
-const shared = require("ibudget-shared");
+const shared = require("@shared");
 const Joi = require("joi");
 const dateFns = require("date-fns");
 const bcrypt = require("bcrypt-nodejs");

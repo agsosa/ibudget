@@ -16,7 +16,8 @@
     "@lib": "src/lib",
     "@routes": "src/routes",
     "@models": "src/models",
-    "@controllers": "src/controllers"
+    "@controllers": "src/controllers",
+    "@shared": "../shared/src"
   },
   "author": "agsosa",
   "license": "ISC",
@@ -31,7 +32,6 @@
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "helmet": "^4.4.1",
-    "ibudget-shared": "https://gitpkg.now.sh/agsosa/ibudget/shared?master",
     "joi": "^17.4.0",
     "module-alias": "^2.2.2",
     "morgan": "^1.10.0",
