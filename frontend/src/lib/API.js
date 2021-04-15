@@ -3,8 +3,8 @@
 /* eslint-disable */
 import axios from "axios";
 
-const DEV_BASE_URL = "http://localhost:4002/api";
-const PROD_BASE_URL = "https://ibudget.app/api";
+const DEV_BASE_URL = "http://localhost:4002/api"; // Development base url
+const PROD_BASE_URL = "https://ibudget.app/api"; // Production base url
 
 const API_BASE_URL =
   !process.env.NODE_ENV || process.env.NODE_ENV === "development"
@@ -13,17 +13,19 @@ const API_BASE_URL =
 
 let errorSubscriptions = [];
 
-// Function called on API request error
+// Function called when we get an error from the server or axios
 function handleError(errorData) {
   console.error("API error:", errorData);
-  errorSubscriptions.map((cb) => cb(errorData));
+  errorSubscriptions.map((cb) => cb(errorData)); // Call all the callbacks subscribed to this event
 }
 
-// TODO: Don't forget to unsuscribe!
+// Add a function to be called on handleError with the response from the server
+// NOTE: Don't forget to unsuscribe!
 export function addErrorListener(callback) {
   if (callback) errorSubscriptions.push(callback);
 }
 
+// Remove a function previously added as an error listener
 export function removeErrorListener(callback) {
   if (callback)
     errorSubscriptions = errorSubscriptions.filter((q) => q !== callback);
@@ -80,12 +82,23 @@ const ENDPOINTS = {
   },
 };
 
+/* 
+  Function to request an API endpoint
+
+  Parameters:
+    endpoint: required string, a key of ENDPOINTS object to request. Make sure it's valid!
+    payload: optional object to be passed to the server (check the axiosCall method or the API docs for the desired endpoint)
+  
+  returns a promise that will ALWAYS resolve with the response from the server
+  response shape: { error: bool, message: string, }
+*/
 export function request(endpoint, payload) {
   const endpointInfo = ENDPOINTS[endpoint];
 
+  // Validate endpoint parameter
   if (!endpointInfo) {
     console.error(
-      `API request() with invalid endpoint ${endpoint}. Valid values: ${Object.keys(
+      `API request() called with invalid endpoint ${endpoint}. Valid values: ${Object.keys(
         ENDPOINTS
       )}`
     );
@@ -99,18 +112,19 @@ export function request(endpoint, payload) {
   }
 
   // Else create a new Promise, assign to endpointInfo.currentPromise and return it
-  endpointInfo.currentPromise = new Promise((resolve, reject) => {
+  endpointInfo.currentPromise = new Promise((resolve) => {
     endpointInfo
       .axiosCall(payload)
       .then((axiosResponse) => {
-        if (axiosResponse.data.error) {
-          throw reject(new Error(axiosResponse.data));
-        } else resolve(axiosResponse.data); // Resolve on valid data received
+        return { ...axiosResponse.data, statusCode: axiosResponse.status };
       })
       .catch((error) => {
         let errorData;
 
-        // Process the error response
+        /* 
+          Since we don't know which shape will have the error returned by axios,
+          ensure it to match the expected shape ({error: bool, message: string, data?: any})
+        */
         if (error && error.response && error.response.data)
           errorData = error.response.data;
         else
@@ -119,10 +133,18 @@ export function request(endpoint, payload) {
             message: error.message || "No error message",
           };
 
+        errorData = {
+          ...errorData,
+          statusCode: error.response ? error.response.status : 0,
+        };
+
         handleError(errorData);
-        reject(errorData);
+        return errorData;
       })
-      .finally(() => (endpointInfo.currentPromise = null)); // Clear currentPromise after the axios request
+      .then((response) => {
+        endpointInfo.currentPromise = null; // Clear currentPromise after the axios request
+        resolve(response); // Always resolve and use the "error" field of the response to know if the request succeed or not
+      });
   });
 
   return endpointInfo.currentPromise;
