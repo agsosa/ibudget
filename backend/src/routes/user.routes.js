@@ -4,11 +4,17 @@ const router = express.Router();
 const UserController = require("@controllers/user.controller");
 
 module.exports = function (passport) {
+  // Create user session (login)
   router.post(
-    "/login",
+    "/session",
     passport.authenticate("local-login"),
     UserController.onLoginSuccess
   );
+
+  // Delete user session (logout)
+  router.delete("/session", UserController.logout);
+
+  // Create user (register)
 
   return router;
 };

@@ -24,18 +24,18 @@ exports.login = function (req, username, password, done) {
     .then((result) => {
       if (!result) {
         // No rows from database for this username
-        done(new Error("Username not found"), null);
+        done(null, null);
       } else {
         if (password !== result.password)
           // Wrong password
-          done(new Error("Wrong password provided"), null);
+          done(null, null);
         else {
           // Auth success
           done(null, result);
         }
       }
     })
-    .catch((err) => done(err));
+    .catch((err) => done(err, null));
 };
 
 // onLoginSuccess: Called if the authentication was sucessful
@@ -47,9 +47,20 @@ exports.onLoginSuccess = (req, res) => {
     req.session.cookie.expires = false;
   } */
 
-  helpers.sendSuccessResponse(res, "Authenticated", { name: req.user.name });
+  helpers.sendSuccessResponse(res, "USER_AUTHENTICATED", {
+    name: req.user.name,
+  });
 };
 
 exports.register = function (req, username, password, done) {
   console.log("local-register callback");
+};
+
+exports.logout = function (req, res) {
+  try {
+    req.logout();
+    helpers.sendSuccessResponse(res, "LOGOUT_SUCCESS");
+  } catch (err) {
+    helpers.sendFailedMessage(res, "LOGOUT_INTERNAL_ERROR", 500);
+  }
 };
