@@ -54,7 +54,7 @@ function useProvideAuth() {
   function handleAPIErrors(e) {
     if (e && e.message) {
       // Remove our user info if we're not authenticated
-      if (e.message === "Not authenticated")
+      if (e.message === "NOT_AUTHENTICATED")
         dispatch({ type: setUserAction, payload: null });
     }
   }
