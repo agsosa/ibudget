@@ -79,6 +79,12 @@ function useProvideAuth() {
     });
   };
 
+  // Sign out
+  const signOut = () => {
+    dispatch({ type: setUserAction, payload: null });
+    API.request("logout");
+  };
+
   // Sign up with username and password + possibility to provide extra information
 
   /*  const signUp = (username, password, info) => {
@@ -131,6 +137,7 @@ function useProvideAuth() {
     user,
     getIsLoggedIn,
     signIn,
+    signOut,
     /* signUp,
     signOut, */
     // sendPasswordResetEmail,

@@ -8,7 +8,6 @@ import {
 import tw from "twin.macro";
 import HomePage from "pages/HomePage";
 import DashboardPage from "pages/smart-pages/DashboardPage";
-import { RegisterPage, LoginPage } from "pages/smart-pages/AuthPages";
 import HowItWorksPage from "pages/HowItWorksPage";
 import Navbar from "components/layout/Navbar";
 import Footer from "components/layout/Footer";
@@ -19,6 +18,7 @@ import PrivacyPolicyPage from "pages/PrivacyPolicyPage";
 import TermsOfServicePage from "pages/TermsOfServicePage";
 import TransactionsPage from "pages/smart-pages/TransactionsPage";
 import { useAuth } from "lib/Auth";
+import AuthPage from "pages/smart-pages/AuthPage";
 
 const MainDiv = tw.div`font-display flex flex-col justify-between h-screen min-w-full text-secondary-500`;
 
@@ -78,10 +78,10 @@ function Routes() {
         <AnimationRevealPage>
           <Switch>
             <DashboardRouter path="/login">
-              <LoginPage />
+              <AuthPage />
             </DashboardRouter>
             <DashboardRouter path="/register">
-              <RegisterPage />
+              <AuthPage isRegister />
             </DashboardRouter>
 
             <Route path="/how-it-works">

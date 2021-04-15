@@ -49,7 +49,18 @@ const ENDPOINTS = {
     currentPromise: null,
     axiosCall: (
       payload // Payload: see api docs
-    ) => axios.post(API_BASE_URL + "/user/login", payload, authOptions),
+    ) => axios.post(API_BASE_URL + "/user/session", payload, authOptions),
+  },
+  logout: {
+    currentPromise: null,
+    axiosCall: () =>
+      axios.delete(API_BASE_URL + "/user/session", null, authOptions),
+  },
+  register: {
+    currentPromise: null,
+    axiosCall: (
+      payload // Payload: see api docs
+    ) => axios.post(API_BASE_URL + "/user", payload, authOptions),
   },
 
   // Transactions (protected) endpoints:
@@ -119,27 +130,20 @@ export function request(endpoint, payload) {
         return { ...axiosResponse.data, statusCode: axiosResponse.status };
       })
       .catch((error) => {
-        let errorData;
+        let errorObj;
 
         /* 
           Since we don't know which shape will have the error returned by axios,
           ensure it to match the expected shape ({error: bool, message: string, data?: any})
         */
-        if (error && error.response && error.response.data)
-          errorData = error.response.data;
-        else
-          errorData = {
-            error: true,
-            message: error.message || "No error message",
-          };
-
-        errorData = {
-          ...errorData,
+        errorObj = {
+          error: true,
+          message: error.message || "No error message",
           statusCode: error.response ? error.response.status : 0,
         };
 
-        handleError(errorData);
-        return errorData;
+        handleError(errorObj);
+        return errorObj;
       })
       .then((response) => {
         endpointInfo.currentPromise = null; // Clear currentPromise after the axios request
