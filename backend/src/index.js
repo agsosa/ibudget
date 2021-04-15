@@ -22,20 +22,12 @@ const app = express();
 
 app.set("trust proxy", 1);
 
-const corsOptions = {
-  origin:
-    config.env === "development"
-      ? "http://localhost:3000"
-      : "https://ibudgetapp.netlify.app",
-  credentials: true,
-};
-
 // Add middlewares
 app.use(compression());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(helmet());
-app.use(cors(corsOptions));
+app.use(cors(config.corsConfig));
 app.use(session(config.sessionConfig));
 app.use(passport.initialize());
 app.use(passport.session());

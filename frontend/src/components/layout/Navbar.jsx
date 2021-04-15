@@ -42,7 +42,7 @@ const PrimaryLink = tw(NavLink)`
 `;
 
 const SecondaryLink = tw(NavLink)`
-  border-primary-500
+  border-primary-400 border-b-2
 `;
 
 const LogoLink = styled(NavLink)`

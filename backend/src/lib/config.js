@@ -20,10 +20,17 @@ exports.sessionConfig = {
   resave: false,
   // TODO FIXME: For some reason the cookies will not be sent by passport if we configure the cookie object here
   cookie: {
-    httpOnly: true,
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-    secure: process.env.NODE_ENV === "production",
+    sameSite: exports.env === "production" ? "none" : "lax",
+    secure: exports.env === "production",
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
   },
   saveUninitialized: false,
+};
+
+exports.corsConfig = {
+  origin:
+    exports.env === "development"
+      ? "http://localhost:3000"
+      : "https://ibudgetapp.netlify.app",
+  credentials: true,
 };
