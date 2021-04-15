@@ -18,13 +18,13 @@ exports.sessionConfig = {
   name: process.env.SESSION_NAME,
   secret: process.env.SESSION_SECRET,
   resave: false,
-  // TODO FIXME: For some reason the cookies will not be sent by passport if we configure the cookie object here
+  saveUninitialized: false,
+  proxy: exports.env === "production", // IMPORTANT: Only set true when behind a reverse proxy!
   cookie: {
     sameSite: exports.env === "production" ? "none" : "lax",
     secure: exports.env === "production",
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
   },
-  saveUninitialized: false,
 };
 
 exports.corsConfig = {
