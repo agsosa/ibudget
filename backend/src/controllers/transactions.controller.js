@@ -5,11 +5,7 @@ const helpers = require("@controllers/helpers");
 exports.delete = function (req, res) {
   TransactionModel.delete(Number(req.params.id), req.user.id)
     .then((result) =>
-      helpers.sendSuccessResponse(
-        res,
-        "Transaction successfully deleted",
-        result
-      )
+      helpers.sendSuccessResponse(res, "TRANSACTION_DELETED", result)
     )
     .catch((err) => helpers.sendFailedResponse(res, err, 500));
 };
@@ -22,7 +18,7 @@ exports.findAll = function (req, res) {
       from the transactions and creating another endpoint to get the notes 
       for a single transaction. Doing this will allow the client to only get the notes if needed
       */
-      helpers.sendSuccessResponse(res, "Found transactions", result);
+      helpers.sendSuccessResponse(res, "TRANSACTIONS_FOUND", result);
     })
     .catch((err) => {
       helpers.sendFailedResponse(res, err, 400);
@@ -32,11 +28,7 @@ exports.findAll = function (req, res) {
 exports.create = function (req, res) {
   TransactionModel.create(req.body, req.user.id)
     .then((result) => {
-      helpers.sendSuccessResponse(
-        res,
-        "Transaction successfully created",
-        result
-      );
+      helpers.sendSuccessResponse(res, "TRANSACTION_CREATED", result);
     })
     .catch((err) => helpers.sendFailedResponse(res, err, 500));
 };
@@ -44,11 +36,7 @@ exports.create = function (req, res) {
 exports.fullUpdate = function (req, res) {
   TransactionModel.fullUpdate(Number(req.params.id), req.body, req.user.id)
     .then((result) => {
-      helpers.sendSuccessResponse(
-        res,
-        "Transaction successfully updated",
-        result
-      );
+      helpers.sendSuccessResponse(res, "TRANSACTION_UPDATED", result);
     })
     .catch((err) => helpers.sendFailedResponse(res, err, 500));
 };

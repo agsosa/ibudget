@@ -24,5 +24,5 @@ exports.sendSuccessResponse = (res, message, data) => {
 exports.checkAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) return next();
 
-  exports.sendFailedResponse(res, "Not authenticated", 401);
+  exports.sendFailedResponse(res, "NOT_AUTHENTICATED", 401);
 };
