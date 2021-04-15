@@ -29,4 +29,5 @@ exports.Limits = {
 	USER_NICK_MIN_CHARS: 3, // min user's "name" field length
 	USER_EMAIL_MAX_CHARS: 50, // max user's email length
 	PASSWORD_MIN_CHARS: 4, // min user password length
+	PASSWORD_MAX_CHARS: 64, // max user password length
 };

@@ -127,6 +127,7 @@ function AuthPage({ isRegister }) {
       <Input
         disabled={loading}
         onChange={(e) => setPassword(e.target.value)}
+        maxLength={Limits.PASSWORD_MAX_CHARS}
         value={password}
         type="password"
         placeholder={`Password (min ${Limits.PASSWORD_MIN_CHARS} characters)`}
