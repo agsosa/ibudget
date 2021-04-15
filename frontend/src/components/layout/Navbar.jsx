@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import useAnimatedNavToggler from "third-party/treact/helpers/useAnimatedNavToggler";
 import logo from "images/logo.png";
 import { ReactComponent as MenuIcon } from "feather-icons/dist/icons/menu.svg";
@@ -117,7 +117,7 @@ const GuestLinks = () => (
     <NavLink to="/">Home</NavLink>
     <NavLink to="/how-it-works">How it Works</NavLink>
     <NavLink to="/contact-us">Contact Us</NavLink>
-    <SecondaryLink to="/dashboard">Log In</SecondaryLink>
+    <SecondaryLink to="/login">Log In</SecondaryLink>
 
     <PrimaryLink css={tw`rounded-full`} to="/register">
       Get Started
@@ -215,14 +215,20 @@ const DefaultLogoLink = (
 );
 
 export default () => {
-  const modalRef = React.useRef();
+  const location = useLocation();
+  const addTransactionModalRef = React.useRef();
   const auth = useAuth();
   const { showNavLinks, animation, toggleNavbar } = useAnimatedNavToggler();
   const collapseBreakpointCss = collapseBreakPointCssMap.lg;
 
   function handleAddTransactionClick() {
-    modalRef.current.toggle();
+    addTransactionModalRef.current.toggle();
   }
+
+  // Auto close mobile navbar on route change
+  React.useEffect(() => {
+    toggleNavbar();
+  }, [location]);
 
   const links = (
     <NavLinks>
@@ -271,7 +277,10 @@ export default () => {
           </MobileNavLinksContainer>
         </HeaderContainer>
       </Header>
-      <AddEditTransactionModal ref={modalRef} title="Add Transaction" />
+      <AddEditTransactionModal
+        ref={addTransactionModalRef}
+        title="Add Transaction"
+      />
     </>
   );
 };
