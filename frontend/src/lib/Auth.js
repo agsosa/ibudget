@@ -79,6 +79,20 @@ function useProvideAuth() {
     });
   };
 
+  // Sign up with username, password and extra info
+  const signUp = (username, password, info) => {
+    return new Promise((resolve) => {
+      API.request("register", { username, password, ...info }).then(
+        (response) => {
+          if (!response.error) {
+            dispatch({ type: setUserAction, payload: response.data || {} });
+          }
+          resolve(response);
+        }
+      );
+    });
+  };
+
   // Sign out
   const signOut = () => {
     dispatch({ type: setUserAction, payload: null });
@@ -138,8 +152,7 @@ function useProvideAuth() {
     getIsLoggedIn,
     signIn,
     signOut,
-    /* signUp,
-    signOut, */
+    signUp,
     // sendPasswordResetEmail,
     // confirmPasswordReset,
   };

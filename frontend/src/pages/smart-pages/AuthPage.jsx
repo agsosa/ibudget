@@ -243,8 +243,27 @@ function AuthPage({ isRegister }) {
     }
 
     // Request create user
-
-    console.log("register");
+    setLoading(true);
+    auth
+      .signUp(username, password, { name })
+      .then((result) => {
+        if (!result.error) history.push("/dashboard");
+        else if (result.message && result.message === "USERNAME_TAKEN")
+          setErrorText("This email is already registered.");
+        else if (result.message && result.message.includes("ValidationError")) {
+          setErrorText(
+            "One or more fields have an error. Please check and try again."
+          );
+        } else
+          dispatch({
+            type: "NotificationsQueueModel/pushNotification",
+            payload: {
+              type: NotificationTypeEnum.ERROR,
+              message: "An error occurred while registering",
+            },
+          });
+      })
+      .finally(() => setLoading(false));
   }
 
   // On submit button click for !props.isRegister
@@ -257,7 +276,7 @@ function AuthPage({ isRegister }) {
       password.length >= Limits.PASSWORD_MIN_CHARS;
 
     if (!isValidForm) {
-      setErrorText("Please type a valid username and password");
+      setErrorText("Please type a valid email and password");
       return;
     }
 
@@ -266,9 +285,8 @@ function AuthPage({ isRegister }) {
     auth
       .signIn(username, password)
       .then((result) => {
-        console.log(result);
         if (!result.error) history.push("/dashboard");
-        else if (result.message && result.statusCode === 401)
+        else if (result.message && result.message === "WRONG_CREDENTIALS")
           setErrorText("Invalid email or password");
         else
           dispatch({
