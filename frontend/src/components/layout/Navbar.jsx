@@ -227,7 +227,9 @@ export default () => {
 
   // Auto close mobile navbar on route change
   React.useEffect(() => {
-    toggleNavbar();
+    if (showNavLinks) {
+      toggleNavbar();
+    }
   }, [location]);
 
   const links = (
