@@ -136,7 +136,6 @@ function TransactionInfoForm({ onInfoChange, initialInfo, loading, editMode }) {
 
   // Function called on category select
   function onCategoryChange(item) {
-    console.log(item);
     setTransactionInfo((oldState) => ({
       ...oldState,
       category_id: item,

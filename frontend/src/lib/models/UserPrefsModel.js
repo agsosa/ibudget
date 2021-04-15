@@ -36,7 +36,6 @@ export default {
   },
   reducers: {
     setUser(state, payload) {
-      console.log(payload);
       return { ...state, user: payload };
     },
     setSelectedPeriod(state, payload) {

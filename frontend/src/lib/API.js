@@ -132,15 +132,16 @@ export function request(endpoint, payload) {
       .catch((error) => {
         let errorObj;
 
-        /* 
-          Since we don't know which shape will have the error returned by axios,
-          ensure it to match the expected shape ({error: bool, message: string, data?: any})
-        */
-        errorObj = {
-          error: true,
-          message: error.message || "No error message",
-          statusCode: error.response ? error.response.status : 0,
-        };
+        if (error.response && error.response.data) {
+          errorObj = error.response.data;
+        } else {
+          errorObj = {
+            error: true,
+            message: error.message || "No error message",
+          };
+        }
+
+        errorObj.statusCode = error.response ? error.response.status : 0;
 
         handleError(errorObj);
         return errorObj;
