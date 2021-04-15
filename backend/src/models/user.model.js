@@ -2,10 +2,20 @@ const database = require("@lib/database");
 const shared = require("ibudget-shared");
 const Joi = require("joi");
 const dateFns = require("date-fns");
-const shared = require("ibudget-shared");
-var bcrypt = require("bcrypt-nodejs");
+const bcrypt = require("bcrypt-nodejs");
 
-const saltRounds = 10;
+function hashPassword(password) {
+  return new Promise((resolve, reject) => {
+    bcrypt.genSalt(10, (error, salt) => {
+      if (error) return reject(error);
+
+      bcrypt.hash(password, salt, null, (err, hash) =>
+        err ? reject(err) : resolve(hash)
+      );
+    });
+  });
+}
+
 const TABLE_NAME = "users";
 // const SELECT_COLUMNS = "id, amount, category_id, type_id, date, concept, notes";
 
@@ -30,11 +40,7 @@ function validateUserInfo(userInfo, reject) {
   // Joi: If the info is not valid then isValidInfo.error will exist and details.message will exist
   if (!isValidInfo || isValidInfo.error) {
     if (reject) {
-      reject(
-        `The specified user information is not valid. ${
-          isValidInfo ? isValidInfo.error : ""
-        }`
-      );
+      reject(new Error(isValidInfo.error));
     }
 
     return false;
@@ -45,7 +51,7 @@ function validateUserInfo(userInfo, reject) {
 
 function validateUserId(id, reject) {
   if (id == null || Number.isNaN(id) || typeof id !== "number") {
-    if (reject) reject("The specified user id is not valid");
+    if (reject) reject(new Error("The specified user id is not valid"));
     return false;
   }
   return true;
@@ -66,11 +72,9 @@ UserModel.findById = (id) => {
   });
 };
 
-// Find a user by id
+// Find a user by username
 UserModel.findByUsername = (username) => {
   return new Promise((resolve, reject) => {
-    // if (!validateUserId(id, reject)) return; TODO: Validate username param
-
     const query = `SELECT * FROM ${TABLE_NAME} WHERE \`username\` =  ?`;
     const params = [username];
 
@@ -78,6 +82,28 @@ UserModel.findByUsername = (username) => {
       .execute(query, params)
       .then(([[rows]]) => {
         resolve(rows);
+      })
+      .catch((err) => reject(err));
+  });
+};
+
+// Find a user by username and compare the passwords
+UserModel.findByUsernamePassword = (username, password) => {
+  return new Promise((resolve, reject) => {
+    UserModel.findByUsername(username) // Get user info by username
+      .then((userInfo) => {
+        if (userInfo) {
+          // Compare the passwords
+          bcrypt.compare(
+            password,
+            userInfo.password,
+            function (err, compareResult) {
+              if (compareResult) {
+                resolve(userInfo);
+              } else reject(new Error("WRONG_CREDENTIALS")); // Password compare failed
+            }
+          );
+        } else reject(new Error("WRONG_CREDENTIALS")); // No user found
       })
       .catch((err) => reject(err));
   });
@@ -93,19 +119,19 @@ UserModel.create = (userInfo) => {
     if (!validateUserInfo(userInfo, reject)) return;
     const { name, username, password } = userInfo;
 
-    bcrypt.hash(password, saltRounds, function (err, hash) {
-      if (!err) {
+    hashPassword(password)
+      .then((hash) => {
         const query = `INSERT INTO ${TABLE_NAME} (name, username, password) VALUES (?, ?, ?)`;
         const params = [name, username, hash];
 
         database
           .execute(query, params)
-          .then(([[rows]]) => {
-            resolve({ ...userInfo, id: rows.id });
+          .then(([rows]) => {
+            resolve({ ...userInfo, id: rows.insertId });
           })
           .catch((err) => reject(err));
-      } else reject(err);
-    });
+      })
+      .catch((err) => reject(err));
   });
 };
 
