@@ -1,5 +1,3 @@
-// TODO: Add API error codes
-
 exports.CategoryEnum = Object.freeze({
 	FOOD_DRINKS: 0,
 	SHOPPING: 1,

@@ -74,7 +74,7 @@ exports.onRegisterSuccess = (req, res) => {
 exports.logout = function (req, res) {
   try {
     req.logout();
-    helpers.sendSuccessResponse(res, "LOGOUT_SUCCESS");
+    helpers.sendSuccessResponse(res, "LOGOUT_OK");
   } catch (err) {
     helpers.sendFailedMessage(res, "LOGOUT_INTERNAL_ERROR", 500);
   }

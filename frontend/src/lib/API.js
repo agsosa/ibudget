@@ -2,14 +2,12 @@
 
 /* eslint-disable */
 import axios from "axios";
-
-const DEV_BASE_URL = "http://localhost:4002/api"; // Development base url
-const PROD_BASE_URL = "https://ibudget.app/api"; // Production base url
+import * as config from "lib/Config";
 
 const API_BASE_URL =
   !process.env.NODE_ENV || process.env.NODE_ENV === "development"
-    ? DEV_BASE_URL
-    : PROD_BASE_URL;
+    ? config.DEV_BASE_URL
+    : configROD_BASE_URL;
 
 let errorSubscriptions = [];
 

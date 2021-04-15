@@ -15,7 +15,7 @@ import { Container as ContainerBase } from "third-party/treact/components/misc/L
 import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
-import googleIconImageSrc from "third-party/treact/images/google-icon.png";
+// import googleIconImageSrc from "third-party/treact/images/google-icon.png";
 import { ReactComponent as SignUpIcon } from "feather-icons/dist/icons/user-plus.svg";
 import { ReactComponent as LoginIcon } from "feather-icons/dist/icons/log-in.svg";
 import { APP_NAME } from "lib/Config";
@@ -33,12 +33,31 @@ import { isValidEmail } from "lib/Helpers";
 const Container = tw(
   ContainerBase
 )` text-white font-medium flex justify-center`;
-const Content = tw.div`w-screen pb-40 pt-0 bg-white text-gray-900 flex justify-center`;
-const MainContainer = tw.div`w-10/12 max-w-lg p-6 sm:p-4`;
+const Content = tw.div`w-screen pb-40 pt-5 bg-white text-gray-900 flex justify-center`;
+const MainContainer = tw.div`w-10/12 max-w-lg p-5`;
 const MainContent = tw.div`mt-6 flex flex-col items-center`;
 const Heading = tw.h1`text-2xl xl:text-3xl font-extrabold`;
-const FormContainer = tw.div`w-full mt-8 mx-auto flex flex-col items-center`;
+const FormContainer = tw.div`w-full mt-10 mx-auto flex flex-col items-center`;
 
+const Input = tw.input`w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border
+ border-gray-200 placeholder-gray-500 text-sm 
+ focus:outline-none focus:border-gray-400 focus:bg-white mt-5 first:mt-0`;
+
+const SubmitButton = styled.button`
+  ${tw`mt-5 tracking-wide font-semibold bg-primary-500 text-gray-100 
+  w-full py-4 rounded-lg hover:bg-primary-700 transition-all 
+  duration-300 ease-in-out flex items-center justify-center 
+  focus:shadow-outline focus:outline-none`}
+  .icon {
+    ${tw`w-6 h-6 -ml-2`}
+  }
+  .text {
+    ${tw`ml-3`}
+  }
+`;
+
+const ErrorText = tw.text`text-sm md:text-base text-red-500 font-bold text-center`;
+/*
 const SocialButtonsContainer = tw.div`flex flex-col items-center w-full`;
 const SocialButton = styled.button`
   ${tw`w-full font-semibold rounded-lg py-3 border text-gray-900 bg-gray-100 hocus:bg-gray-200 hocus:border-gray-400 flex items-center justify-center transition-all duration-300 focus:outline-none focus:shadow-outline text-sm mt-5 first:mt-0`}
@@ -54,23 +73,7 @@ const SocialButton = styled.button`
 `;
 
 const DividerTextContainer = tw.div`my-12 border-b border-gray-300 w-full text-center`;
-const Input = tw.input`w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border
- border-gray-200 placeholder-gray-500 text-sm 
- focus:outline-none focus:border-gray-400 focus:bg-white mt-5 first:mt-0`;
-const SubmitButton = styled.button`
-  ${tw`mt-5 tracking-wide font-semibold bg-primary-500 text-gray-100 
-  w-full py-4 rounded-lg hover:bg-primary-700 transition-all 
-  duration-300 ease-in-out flex items-center justify-center 
-  focus:shadow-outline focus:outline-none`}
-  .icon {
-    ${tw`w-6 h-6 -ml-2`}
-  }
-  .text {
-    ${tw`ml-3`}
-  }
-`;
-
-const ErrorText = tw.text`text-sm md:text-base text-red-500 font-bold text-center`;
+*/
 
 /* End styled components */
 
@@ -307,9 +310,9 @@ function AuthPage({ isRegister }) {
   }
 
   // On auth with google click
-  function onGoogleButtonClick() {
+  /* function onGoogleButtonClick() {
     console.log("onGoogleButtonClick");
-  }
+  } */
 
   return (
     <AuthContainer>
@@ -317,8 +320,8 @@ function AuthPage({ isRegister }) {
       <Heading>{config.heading}</Heading>
 
       <FormContainer>
+        {/* Google auth button
         <SocialButtonsContainer>
-          {/* Google auth button */}
           <SocialButton onClick={onGoogleButtonClick}>
             <span className="iconContainer">
               <img src={googleIconImageSrc} className="icon" alt="" />
@@ -326,11 +329,11 @@ function AuthPage({ isRegister }) {
             <span className="text">{config.actionLabel} with Google</span>
           </SocialButton>
         </SocialButtonsContainer>
-        <DividerTextContainer />
+        <DividerTextContainer /> */}
         {errorText ? (
           <ErrorText>{errorText}</ErrorText>
         ) : (
-          `Or ${config.actionLabel} with email`
+          `${config.actionLabel} with Email`
         )}
         {/* Form */}
         <FormContainer>

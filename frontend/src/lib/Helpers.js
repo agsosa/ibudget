@@ -41,9 +41,9 @@ export function getMoneyDisplayString(money) {
   return moneyFormatter.format(money);
 }
 
-// Big number formatter (100000 to 100k, 50000 to 50k, etc)
 /**
- * Format a big number as
+ * Format a big number (100000 to 100k, 50000 to 50k, etc)
+ * @example bigNumberFormatter(50000, 0) === "50.00k"
  * @param  {Number} num The number
  * @param {Number} digits Amount of digits to display
  * @return {String}               The formatted number

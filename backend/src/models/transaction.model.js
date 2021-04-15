@@ -6,7 +6,7 @@ const Joi = require("joi");
 const dateFns = require("date-fns");
 
 const TABLE_NAME = "transactions";
-const INFO_COLUMNS = "id, amount, category_id, type_id, date, concept, notes"; // Info columns
+const INFO_COLUMNS = "id, amount, category_id, type_id, date, concept, notes"; // Columns returned to the client
 
 const TransactionModel = {
   infoSchema: Joi.object({

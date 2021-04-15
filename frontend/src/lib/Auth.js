@@ -99,31 +99,6 @@ function useProvideAuth() {
     API.request("logout");
   };
 
-  // Sign up with username and password + possibility to provide extra information
-
-  /*  const signUp = (username, password, info) => {
-    return API.request("register", { username, password })
-      .then((result) => {
-        dispatch({ type: setUserAction, payload: result.data || {} });
-        return result;
-      })
-      .catch((err) => {
-        return err;
-      });
-  };
-
-  // Sign out
-  const signOut = () => {
-    return API.request("logout", { username, password })
-      .then((result) => {
-        dispatch({ type: setUserAction, payload: null });
-        return result;
-      })
-      .catch((err) => {
-        return err;
-      });
-  };*/
-
   // TODO: Implement password reset
 
   /* 
