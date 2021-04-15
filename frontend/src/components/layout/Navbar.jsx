@@ -8,15 +8,18 @@ import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import { Link } from "react-router-dom";
-import { Icon } from "react-bulma-components";
 import useAnimatedNavToggler from "third-party/treact/helpers/useAnimatedNavToggler";
 import logo from "images/logo.png";
 import { ReactComponent as MenuIcon } from "feather-icons/dist/icons/menu.svg";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
+import DefaultAvatar from "images/default_avatar.svg";
 import { APP_NAME } from "lib/Config";
 import { PropTypes } from "prop-types";
 import AddEditTransactionModal from "components/smart-components/AddEditTransactionModal";
 import { useAuth } from "lib/Auth";
+import { mdiDotsVertical } from "@mdi/js";
+import Icon from "@mdi/react";
+import { confirmAlert } from "react-confirm-alert";
 
 /* Start styled components */
 
@@ -24,19 +27,18 @@ const Header = tw.header`sticky top-0 z-40 bg-white py-1 md:py-4 w-full shadow-x
 
 const HeaderContainer = tw.div`px-5 max-w-screen-2xl flex items-center justify-between mx-auto`;
 
-const NavLinks = tw.div`inline-block`;
+const NavLinks = tw.div`flex flex-row items-baseline`;
 
 const NavLink = tw(Link)`
   text-lg my-2 lg:text-sm lg:mx-6 lg:my-0 text-black
   font-semibold tracking-wide transition duration-300
-  pb-1 border-b-2 border-transparent hover:text-primary-500
+  pb-1 hover:text-primary-500
 `;
 
 const PrimaryLink = tw(NavLink)`
   lg:mx-0
   px-8 py-3 rounded bg-primary-500 text-gray-100
   hover:bg-primary-700 hover:text-gray-200
-  border-b-0
 `;
 
 const SecondaryLink = tw(NavLink)`
@@ -44,7 +46,7 @@ const SecondaryLink = tw(NavLink)`
 `;
 
 const LogoLink = styled(NavLink)`
-  ${tw`flex items-center font-black border-b-0 text-2xl! ml-0!`};
+  ${tw`flex items-center font-black text-2xl! ml-0!`};
 
   img {
     ${tw`w-10 mr-3`}
@@ -63,14 +65,18 @@ const MobileNavLinks = motion.custom(styled.div`
 `);
 
 const DesktopNavLinks = tw.nav`
-  hidden lg:flex flex-1 items-center justify-between
+hidden lg:flex flex-1 items-center justify-between
 `;
 
 const AddTransactionBtn = tw(PrimaryLink)`p-3 ml-2`;
-const UserContainer = tw(NavLink)`flex inline`;
-const UserImage = tw.img`w-8 h-8 rounded-full inline`;
-const UserName = tw(NavLink)`ml-3 mr-1`;
 
+const UserContainer = tw.div`
+cursor-pointer
+text-lg my-2 lg:text-sm lg:mx-6 lg:my-0 pb-1 
+ text-black font-semibold
+inline-flex self-center items-center align-middle mt-5 lg:mt-0 relative`; // inline
+const UserImage = tw.img`w-8 h-8 rounded-full`;
+const UserName = tw.text`ml-3 mr-1`;
 /* The below code is for generating dynamic break points for navbar.
  * Using this you can specify if you want to switch
  * to the toggleable mobile navbar at "sm", "md" or "lg" or "xl" above using the collapseBreakpointClass prop
@@ -100,6 +106,9 @@ const collapseBreakPointCssMap = {
   },
 };
 
+const AccountDropdown = tw.div`cursor-pointer absolute lg:right-0 w-56 justify-center flex mt-24 bg-white rounded-md overflow-hidden shadow-xl z-20`;
+const AccountDropdownItem = tw.text`block px-4 py-2 text-base text-gray-800 border-b hover:text-primary-500`;
+
 /* End styled components */
 
 // Links component to display for guests
@@ -117,27 +126,84 @@ const GuestLinks = () => (
 );
 
 // Links component to  display for logged users
-const MemberLinks = ({ onAddTransactionClick }) => (
-  <>
-    <NavLink to="/dashboard">Dashboard</NavLink>
-    <NavLink to="/transactions">Transactions</NavLink>
-    <AddTransactionBtn css={tw`rounded-full`} onClick={onAddTransactionClick}>
-      + Transaction
-    </AddTransactionBtn>
-    <UserContainer to="/account">
-      <UserImage src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3.25&w=512&h=512&q=80" />
-      <UserName to="/account">Enzo Vazquez</UserName>
-      <Icon icon="angle-down" />
-    </UserContainer>
-  </>
-);
+const MemberLinks = ({ onAddTransactionClick, auth }) => {
+  const [dropdownOpen, setDropdown] = React.useState(false);
+  const dropdownRef = React.useRef(null);
+
+  function toggleDropdown() {
+    setDropdown(!dropdownOpen);
+  }
+
+  // Called on logout button click
+  function handleLogoutClick() {
+    confirmAlert({
+      title: "Cerrar sesión",
+      message: "¿Estás seguro de cerrar sesión?",
+      buttons: [
+        {
+          label: "Confirmar",
+          onClick: () => {
+            auth.signOut();
+          },
+        },
+        {
+          label: "Cancel",
+        },
+      ],
+    });
+  }
+
+  // Close dropdown on click outside
+  function handleClickOutside(event) {
+    if (
+      dropdownOpen &&
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target)
+    ) {
+      toggleDropdown();
+    }
+  }
+
+  // Register click event to close the dropdown on click outside
+  React.useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [dropdownOpen]); // Add isDropdownOpen as dependency to re-register listener on state update
+
+  return (
+    <>
+      <NavLink to="/dashboard">Dashboard</NavLink>
+      <NavLink to="/transactions">Transactions</NavLink>
+      <AddTransactionBtn css={tw`rounded-full`} onClick={onAddTransactionClick}>
+        + Transaction
+      </AddTransactionBtn>
+      <UserContainer onClick={toggleDropdown}>
+        <UserImage src={DefaultAvatar} />
+        <UserName>{auth.user.name || "Mi cuenta"}</UserName>
+        <Icon path={mdiDotsVertical} size={0.85} />
+        {dropdownOpen && (
+          <AccountDropdown ref={dropdownRef}>
+            <AccountDropdownItem onClick={handleLogoutClick}>
+              Cerrar Sesión
+            </AccountDropdownItem>
+          </AccountDropdown>
+        )}
+      </UserContainer>
+    </>
+  );
+};
 
 MemberLinks.defaultProps = {
   onAddTransactionClick: null,
+  auth: null,
 };
 
 MemberLinks.propTypes = {
   onAddTransactionClick: PropTypes.func,
+  auth: PropTypes.object,
 };
 
 // Logo component to display
@@ -162,7 +228,10 @@ export default () => {
     <NavLinks>
       {auth.getIsLoggedIn() ? (
         <>
-          <MemberLinks onAddTransactionClick={handleAddTransactionClick} />
+          <MemberLinks
+            onAddTransactionClick={handleAddTransactionClick}
+            auth={auth}
+          />
         </>
       ) : (
         <GuestLinks />
@@ -185,7 +254,6 @@ export default () => {
             <MobileNavLinks
               initial={{ x: "150%", display: "none" }}
               animate={animation}
-              onClick={toggleNavbar}
               css={collapseBreakpointCss.mobileNavLinks}
             >
               {links}
