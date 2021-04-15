@@ -21,7 +21,7 @@ exports.sessionConfig = {
   saveUninitialized: false,
   proxy: exports.env === "production", // IMPORTANT: Only set true when behind a reverse proxy!
   cookie: {
-    sameSite: exports.env === "production" ? "none" : "lax",
+    httpOnly: true,
     secure: exports.env === "production",
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
   },
@@ -31,6 +31,6 @@ exports.corsConfig = {
   origin:
     exports.env === "development"
       ? "http://localhost:3000"
-      : "https://ibudgetapp.netlify.app",
+      : "https://ibudgetapp.herokuapp.com",
   credentials: true,
 };

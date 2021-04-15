@@ -20,7 +20,7 @@ require("@lib/passport.config").config(passport); // Configure passport
 
 const app = express();
 
-app.set("trust proxy", 1);
+app.set("trust proxy", 1); // Heroku
 
 // Add middlewares
 app.use(compression());
