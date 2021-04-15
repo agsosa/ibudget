@@ -7,7 +7,7 @@ module.exports = function (passport) {
   // Create user session (login)
   router.post(
     "/session",
-    passport.authenticate("local-login"),
+    passport.authenticate("local-login", { failWithError: true }), // IMPORTANT: failWithError is needed to return a json response on error
     UserController.onLoginSuccess
   );
 
@@ -15,6 +15,11 @@ module.exports = function (passport) {
   router.delete("/session", UserController.logout);
 
   // Create user (register)
+  router.post(
+    "/",
+    passport.authenticate("local-register", { failWithError: true }), // IMPORTANT: failWithError is needed to return a json response on error
+    UserController.onRegisterSuccess
+  );
 
   return router;
 };
