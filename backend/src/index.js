@@ -20,7 +20,8 @@ require("@lib/passport.config").config(passport); // Configure passport
 
 const app = express();
 
-// TODO: Change before deploy or add dev/prod env origin
+app.set("trust proxy", 1);
+
 const corsOptions = {
   origin:
     config.env === "development"
@@ -30,7 +31,6 @@ const corsOptions = {
 };
 
 // Add middlewares
-
 app.use(compression());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

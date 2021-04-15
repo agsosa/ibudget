@@ -13,8 +13,6 @@
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^12.8.3",
-    "@trendmicro/react-anchor": "^0.5.6",
-    "@trendmicro/react-datepicker": "^1.0.0-alpha.7",
     "axios": "^0.21.1",
     "date-fns": "^2.21.1",
     "feather-icons": "^4.28.0",
@@ -30,7 +28,6 @@
     "react-dom": "^17.0.2",
     "react-loading-skeleton": "^2.2.0",
     "react-modal": "^3.12.1",
-    "react-modern-calendar-datepicker": "^3.1.6",
     "react-redux": "^7.2.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
@@ -42,9 +39,7 @@
     "source-map-explorer": "^2.5.2",
     "styled-components": "^5.2.3",
     "tailwindcss": "^1.9.6",
-    "twin.macro": "^1.12.1",
-    "use-in-view": "^1.0.15",
-    "web-vitals": "^1.1.1"
+    "twin.macro": "^1.12.1"
   },
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",

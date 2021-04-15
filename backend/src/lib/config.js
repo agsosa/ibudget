@@ -19,11 +19,11 @@ exports.sessionConfig = {
   secret: process.env.SESSION_SECRET,
   resave: false,
   // TODO FIXME: For some reason the cookies will not be sent by passport if we configure the cookie object here
-  /* cookie: {
-    // domain: "asd", // TODO: set domain
+  cookie: {
     httpOnly: true,
-    secure: (env = "development" ? true : true),
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    secure: process.env.NODE_ENV === "production",
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
-  }, */
+  },
   saveUninitialized: false,
 };

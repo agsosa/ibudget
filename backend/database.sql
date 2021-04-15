@@ -11,15 +11,15 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema ibudget
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `ibudget` DEFAULT CHARACTER SET utf8 ;
-USE `ibudget` ;
+CREATE SCHEMA IF NOT EXISTS `heroku_be55209540bdb40` DEFAULT CHARACTER SET utf8 ;
+USE `heroku_be55209540bdb40` ;
 
 -- -----------------------------------------------------
 -- Table `ibudget`.`users`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `ibudget`.`users` ;
+DROP TABLE IF EXISTS `heroku_be55209540bdb40`.`users` ;
 
-CREATE TABLE IF NOT EXISTS `ibudget`.`users` (
+CREATE TABLE IF NOT EXISTS `heroku_be55209540bdb40`.`users` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(50) NOT NULL,
   `password` CHAR(60) NOT NULL,
@@ -35,9 +35,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `ibudget`.`transactions`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `ibudget`.`transactions` ;
+DROP TABLE IF EXISTS `heroku_be55209540bdb40`.`transactions` ;
 
-CREATE TABLE IF NOT EXISTS `ibudget`.`transactions` (
+CREATE TABLE IF NOT EXISTS `heroku_be55209540bdb40`.`transactions` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `date` TIMESTAMP NOT NULL,
   `category_id` TINYINT(1) NOT NULL,

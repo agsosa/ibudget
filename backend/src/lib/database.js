@@ -10,6 +10,8 @@ class Database {
     this.promisePool = this.pool.promise();
 
     console.log("[Database] Initialized");
+
+    // TODO: Listen for errors
   }
 
   close(cb) {
