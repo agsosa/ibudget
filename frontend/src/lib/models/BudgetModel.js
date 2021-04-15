@@ -85,50 +85,38 @@ export default {
   effects: (dispatch) => ({
     // TODO: Implement cache
     fetchTransactions(payload) {
-      API.request("getTransactions")
-        .then((response) => {
-          const { data, error } = response;
+      API.request("getTransactions").then((response) => {
+        // Save response data
+        if (!response.error && response.data) {
+          this.setTransactions(response.data);
+        }
 
-          if (!error && data) {
-            this.setTransactions(data);
-          }
+        // Dispatch error notification
+        if (response.error) {
+          dispatch({
+            type: "NotificationsQueueModel/pushNotification",
+            payload: {
+              type: NotificationTypeEnum.ERROR,
+              message: "Error while synchronizing the data. Please try again.",
+            },
+          });
+        }
 
-          return response;
-        })
-        .catch((error) => error)
-        .then((result) => {
-          // Dispatch notification
-          if (result.error) {
-            dispatch({
-              type: "NotificationsQueueModel/pushNotification",
-              payload: {
-                type: NotificationTypeEnum.ERROR,
-                message:
-                  "Error while synchronizing the data. Please try again.",
-              },
-            });
-          }
-
-          // Callback
-          if (payload && payload.callback) payload.callback(result);
-        });
+        // Callback
+        if (payload && payload.callback) payload.callback(response);
+      });
     },
     createTransaction(payload) {
-      API.request("createTransaction", payload.transactionInfo)
-        .then((response) => {
-          const { data, error } = response;
-
-          if (!error && data) {
-            this.addTransaction(data);
+      API.request("createTransaction", payload.transactionInfo).then(
+        (response) => {
+          // Add the created transactions to the local state
+          if (!response.error && response.data) {
+            this.addTransaction(response.data);
           }
 
-          return response;
-        })
-        .catch((error) => error)
-        .then((result) => {
-          // Dispatch notification
+          // Dispatch notifications
           const type = "NotificationsQueueModel/pushNotification";
-          if (result.error) {
+          if (response.error) {
             dispatch({
               type,
               payload: {
@@ -147,85 +135,75 @@ export default {
             });
           }
 
-          if (payload && payload.callback) payload.callback(result);
-        });
+          if (payload && payload.callback) payload.callback(response);
+        }
+      );
     },
     deleteTransaction(payload) {
-      API.request("deleteTransaction", payload.id)
-        .then((response) => {
-          const { error } = response;
+      API.request("deleteTransaction", payload.id).then((response) => {
+        // Update local list
+        if (!response.error) {
+          this.delTransaction(payload.id);
+        }
 
-          if (!error) {
-            this.delTransaction(payload.id);
-          }
+        // Dispatch notifications
+        const type = "NotificationsQueueModel/pushNotification";
+        if (response.error) {
+          dispatch({
+            type,
+            payload: {
+              type: NotificationTypeEnum.ERROR,
+              message:
+                "Error while deleting the transaction. Please try again.",
+            },
+          });
+        } else {
+          dispatch({
+            type,
+            payload: {
+              type: NotificationTypeEnum.SUCCESS,
+              message: "The transaction was successfully deleted.",
+            },
+          });
+        }
 
-          return response;
-        })
-        .catch((error) => error)
-        .then((result) => {
-          // Dispatch notification
-          const type = "NotificationsQueueModel/pushNotification";
-          if (result.error) {
-            dispatch({
-              type,
-              payload: {
-                type: NotificationTypeEnum.ERROR,
-                message:
-                  "Error while deleting the transaction. Please try again.",
-              },
-            });
-          } else {
-            dispatch({
-              type,
-              payload: {
-                type: NotificationTypeEnum.SUCCESS,
-                message: "The transaction was successfully deleted.",
-              },
-            });
-          }
-
-          if (payload && payload.callback) payload.callback(result);
-        });
+        // Callback
+        if (payload && payload.callback) payload.callback(response);
+      });
     },
     updateTransaction(payload) {
       API.request("updateTransaction", {
         id: payload.id,
         transactionInfo: payload.transactionInfo,
-      })
-        .then((response) => {
-          const { error, data } = response;
+      }).then((response) => {
+        // Update local list
+        if (!response.error && response.data) {
+          this.editTransaction(response.data);
+        }
 
-          if (!error && data) {
-            this.editTransaction(data);
-          }
+        // Dispatch notification
+        const type = "NotificationsQueueModel/pushNotification";
+        if (response.error) {
+          dispatch({
+            type,
+            payload: {
+              type: NotificationTypeEnum.ERROR,
+              message:
+                "Error while modifying the transaction. Please try again.",
+            },
+          });
+        } else {
+          dispatch({
+            type,
+            payload: {
+              type: NotificationTypeEnum.SUCCESS,
+              message: "The transaction was successfully modified.",
+            },
+          });
+        }
 
-          return response;
-        })
-        .catch((error) => error)
-        .then((result) => {
-          // Dispatch notification
-          const type = "NotificationsQueueModel/pushNotification";
-          if (result.error) {
-            dispatch({
-              type,
-              payload: {
-                type: NotificationTypeEnum.ERROR,
-                message:
-                  "Error while modifying the transaction. Please try again.",
-              },
-            });
-          } else {
-            dispatch({
-              type,
-              payload: {
-                type: NotificationTypeEnum.SUCCESS,
-                message: "The transaction was successfully modified.",
-              },
-            });
-          }
-
-          if (payload && payload.callback) payload.callback(result);
-        });
+        if (payload && payload.callback) payload.callback(response);
+      });
     },
   }),
   selectors: (slice, createSelector) => ({
