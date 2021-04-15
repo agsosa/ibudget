@@ -17,7 +17,7 @@
     "@routes": "src/routes",
     "@models": "src/models",
     "@controllers": "src/controllers",
-    "@shared": "../shared/src"
+    "@shared": "src/shared/src"
   },
   "author": "agsosa",
   "license": "ISC",
