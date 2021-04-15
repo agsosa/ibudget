@@ -9,7 +9,6 @@
     To show a notification see NotificationsQueueModel's "pushNotification" effect
 */
 
-/* eslint-disable */
 import { NotificationTypeEnum } from "lib/Enums";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -49,7 +48,7 @@ function NotificationsQueueController() {
 
   React.useEffect(() => {
     if (notifications && notifications.length > 0) {
-      for (let i = 0; i < notifications.length; i++) {
+      for (let i = 0; i < notifications.length; i += 1) {
         const { type, message } = notifications[i];
 
         notify(type, message);

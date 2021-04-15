@@ -1,4 +1,6 @@
-import { subDays, subMonths, format } from "date-fns";
+import subDays from "date-fns/subDays";
+import subMonths from "date-fns/subMonths";
+import lightFormat from "date-fns/lightFormat";
 import { getPeriodLabel } from "lib/Helpers";
 import { PeriodEnum } from "lib/Enums";
 
@@ -102,8 +104,8 @@ export default {
           state.fromDate &&
           state.toDate
         ) {
-          const fromDateFormatted = format(state.fromDate, "dd/MM/yy");
-          const toDateFormatted = format(state.toDate, "dd/MM/yy");
+          const fromDateFormatted = lightFormat(state.fromDate, "dd/MM/yy");
+          const toDateFormatted = lightFormat(state.toDate, "dd/MM/yy");
           return `${fromDateFormatted} - ${toDateFormatted}`;
         }
 

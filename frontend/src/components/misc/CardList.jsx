@@ -20,11 +20,9 @@
         - loading: Display a loading skeleton (bool, optional)
 */
 
-/* eslint-disable */
 import React from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
-import { css } from "styled-components/macro"; //eslint-disable-line
 import { PropTypes } from "prop-types";
 import Skeleton from "react-loading-skeleton";
 
@@ -34,7 +32,7 @@ const CardsContainer = tw.div`
   mt-10 items-center
   text-gray-900 font-medium 
   lg:items-stretch
-  lg:self-center lg:max-w-screen-xl lg:w-full
+  lg:self-center lg:max-w-screen-2xl lg:w-full
   lg:grid lg:gap-4 lg:grid-cols-2 
 `;
 
@@ -100,7 +98,7 @@ function CardList({ children, loading }) {
   // Pass the loading props to all CardList.Item children
   const childrenWithProps = React.Children.map(children, (child) => {
     if (React.isValidElement(child) && child.type === CardItem) {
-      return React.cloneElement(child, { loading: loading });
+      return React.cloneElement(child, { loading });
     }
     return child;
   });

@@ -13,8 +13,8 @@
 import * as React from "react";
 import { Container as ContainerBase } from "third-party/treact/components/misc/Layouts";
 import tw from "twin.macro";
-import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
+import styled from "styled-components";
 // import googleIconImageSrc from "third-party/treact/images/google-icon.png";
 import { ReactComponent as SignUpIcon } from "feather-icons/dist/icons/user-plus.svg";
 import { ReactComponent as LoginIcon } from "feather-icons/dist/icons/log-in.svg";

@@ -9,7 +9,7 @@
 
 import * as React from "react";
 import { DateRange } from "react-date-range";
-import { format, subDays } from "date-fns"; // eslint-disable-line
+import subDays from "date-fns/subDays"; // eslint-disable-line
 import tw, { styled } from "twin.macro";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 import ReactSelect from "react-select";

@@ -32,6 +32,7 @@ const HeaderContainer = tw.div`w-full flex flex-col items-center mb-8 `;
 const DateRangeContainer = tw.div`flex-col text-center flex sm:flex-row justify-center align-middle`;
 const DateRangeLabel = tw.text`text-gray-700 mr-3 mt-2`;
 const Container = tw.div`
+min-h-screen
 self-center gap-3 flex flex-col 
 w-screen
 bg-white shadow-raised rounded-xl 

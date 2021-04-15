@@ -11,7 +11,7 @@ import * as React from "react";
 import Chart from "components/dashboard/charts/AreaChart";
 import { useSelector } from "react-redux";
 import store from "lib/Store";
-import { format } from "date-fns";
+import lightFormat from "date-fns/lightFormat";
 import { TransactionTypeEnum } from "ibudget-shared";
 import NoDataIndicator from "components/misc/NoDataIndicator";
 
@@ -32,7 +32,7 @@ function MoneyTrend() {
     let balance = 0; // Used to accumulate the balance while looping through all transactions, it will be assigned to each object in chartData
 
     const buildChartData = (transaction) => {
-      const fTransactionDate = format(transaction.date, "dd/MM/yy"); // Need this format to be compatible with ant-design charts!
+      const fTransactionDate = lightFormat(transaction.date, "dd/MM/yy"); // Need this format to be compatible with ant-design charts!
 
       // Accumulate our transaction.amount using the balance variable
       balance =

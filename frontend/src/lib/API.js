@@ -1,6 +1,4 @@
 // TODO: Add AXIOS RETRY
-
-/* eslint-disable */
 import axios from "axios";
 import * as config from "lib/Config";
 
@@ -47,36 +45,36 @@ const ENDPOINTS = {
     currentPromise: null,
     axiosCall: (
       payload // Payload: see api docs
-    ) => axios.post(API_BASE_URL + "/user/session", payload, authOptions),
+    ) => axios.post(`${API_BASE_URL}/user/session`, payload, authOptions),
   },
   logout: {
     currentPromise: null,
     axiosCall: () =>
-      axios.delete(API_BASE_URL + "/user/session", null, authOptions),
+      axios.delete(`${API_BASE_URL}/user/session`, null, authOptions),
   },
   register: {
     currentPromise: null,
     axiosCall: (
       payload // Payload: see api docs
-    ) => axios.post(API_BASE_URL + "/user", payload, authOptions),
+    ) => axios.post(`${API_BASE_URL}/user`, payload, authOptions),
   },
 
   // Transactions (protected) endpoints:
   getTransactions: {
     currentPromise: null,
-    axiosCall: () => axios.get(API_BASE_URL + "/transactions", authOptions),
+    axiosCall: () => axios.get(`${API_BASE_URL}/transactions`, authOptions),
   },
   createTransaction: {
     currentPromise: null,
     axiosCall: (
       payload // Payload: see api docs
-    ) => axios.post(API_BASE_URL + "/transactions", payload, authOptions),
+    ) => axios.post(`${API_BASE_URL}/transactions`, payload, authOptions),
   },
   deleteTransaction: {
     currentPromise: null,
     axiosCall: (
       payload // Payload: see api docs
-    ) => axios.delete(API_BASE_URL + `/transactions/${payload}`, authOptions),
+    ) => axios.delete(`${API_BASE_URL}/transactions/${payload}`, authOptions),
   },
   updateTransaction: {
     currentPromise: null,
@@ -84,7 +82,7 @@ const ENDPOINTS = {
       payload // Payload: see api docs
     ) =>
       axios.put(
-        API_BASE_URL + `/transactions/${payload.id}`,
+        `${API_BASE_URL}/transactions/${payload.id}`,
         payload.transactionInfo,
         authOptions
       ),

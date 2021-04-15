@@ -10,7 +10,6 @@
       isPaginated: bool to indicate if the list should be paginated (the maximum amount of items per page will be the limit prop) (optional)
 */
 
-/* eslint-disable */
 /* eslint-disable camelcase */
 import * as React from "react";
 import tw, { styled } from "twin.macro";
@@ -21,7 +20,7 @@ import {
   getTransactionTypeSymbol,
 } from "lib/Helpers";
 import { TransactionTypeEnum } from "ibudget-shared";
-import format from "date-fns/format";
+import lightFormat from "date-fns/lightFormat";
 import AddEditTransaction from "components/smart-components/AddEditTransactionModal";
 import CategoryIcon from "./CategoryIcon";
 
@@ -74,7 +73,7 @@ function TransactionItem({ data, onClick }) {
             {getTransactionTypeSymbol(type_id)}
             {getMoneyDisplayString(amount)}
           </Amount>
-          <Date>{format(date, "dd-MM-yy")}</Date>
+          <Date>{lightFormat(date, "dd-MM-yy")}</Date>
         </RightContainer>
       </ItemContentContainer>
     </Item>
@@ -137,7 +136,7 @@ function TransactionList({ data, limit, isPaginated }) {
   return (
     <>
       <List>
-        {(data &&
+        {data &&
           Array.isArray(data) &&
           data
             .slice(currentPage * limit, currentPage * limit + limit)
@@ -152,8 +151,7 @@ function TransactionList({ data, limit, isPaginated }) {
                   } else setClickedTransaction(item); // else set it and wait for the update with useEffect then toggle the modal
                 },
               });
-            })) ||
-          console.warn("TransactionList: Invalid data prop")}
+            })}
       </List>
       <PaginatedNavigation />
       <AddEditTransaction

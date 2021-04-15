@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import React, { Suspense, lazy } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -8,19 +9,20 @@ import {
 import tw from "twin.macro";
 import HomePage from "pages/HomePage";
 import DashboardPage from "pages/smart-pages/DashboardPage";
-import HowItWorksPage from "pages/HowItWorksPage";
 import Navbar from "components/layout/Navbar";
 import Footer from "components/layout/Footer";
 import ScrollToTop from "components/misc/ScrollToTop";
 import AnimationRevealPage from "components/misc/AnimationRevealPage";
-import ContactUsPage from "pages/ContactUsPage";
-import PrivacyPolicyPage from "pages/PrivacyPolicyPage";
-import TermsOfServicePage from "pages/TermsOfServicePage";
 import TransactionsPage from "pages/smart-pages/TransactionsPage";
 import { useAuth } from "lib/Auth";
 import AuthPage from "pages/smart-pages/AuthPage";
 
 const MainDiv = tw.div`font-display flex flex-col justify-between h-screen min-w-full text-secondary-500`;
+
+const HowItWorksPageLazy = lazy(() => import("pages/HowItWorksPage"));
+const ContactPageLazy = lazy(() => import("pages/ContactUsPage"));
+const PrivacyPageLazy = lazy(() => import("pages/PrivacyPolicyPage"));
+const TermsPageLazy = lazy(() => import("pages/TermsOfServicePage"));
 
 // A wrapper for <Route> that redirects to the login screen if the user is not logged in
 // Original ource: react-router docs
@@ -73,43 +75,45 @@ function Routes() {
   return (
     <Router>
       <MainDiv>
-        <ScrollToTop />
-        <Navbar />
-        <AnimationRevealPage>
-          <Switch>
-            <DashboardRouter path="/login">
-              <AuthPage />
-            </DashboardRouter>
-            <DashboardRouter path="/register">
-              <AuthPage isRegister />
-            </DashboardRouter>
+        <Suspense fallback={<div>Loading...</div>}>
+          <ScrollToTop />
+          <Navbar />
+          <AnimationRevealPage>
+            <Switch>
+              <DashboardRouter path="/login">
+                <AuthPage />
+              </DashboardRouter>
+              <DashboardRouter path="/register">
+                <AuthPage isRegister />
+              </DashboardRouter>
 
-            <Route path="/how-it-works">
-              <HowItWorksPage />
-            </Route>
-            <Route path="/contact-us">
-              <ContactUsPage />
-            </Route>
-            <Route path="/terms-of-service">
-              <TermsOfServicePage />
-            </Route>
-            <Route path="/privacy-policy">
-              <PrivacyPolicyPage />
-            </Route>
+              <Route path="/how-it-works">
+                <HowItWorksPageLazy />
+              </Route>
+              <Route path="/contact-us">
+                <ContactPageLazy />
+              </Route>
+              <Route path="/terms-of-service">
+                <TermsPageLazy />
+              </Route>
+              <Route path="/privacy-policy">
+                <PrivacyPageLazy />
+              </Route>
 
-            <PrivateRoute path="/dashboard">
-              <DashboardPage />
-            </PrivateRoute>
-            <PrivateRoute path="/transactions">
-              <TransactionsPage />
-            </PrivateRoute>
+              <PrivateRoute path="/dashboard">
+                <DashboardPage />
+              </PrivateRoute>
+              <PrivateRoute path="/transactions">
+                <TransactionsPage />
+              </PrivateRoute>
 
-            <DashboardRouter path="/">
-              <HomePage />
-            </DashboardRouter>
-          </Switch>
-        </AnimationRevealPage>
-        <Footer />
+              <DashboardRouter path="/">
+                <HomePage />
+              </DashboardRouter>
+            </Switch>
+          </AnimationRevealPage>
+          <Footer />
+        </Suspense>
       </MainDiv>
     </Router>
   );
