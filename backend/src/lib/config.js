@@ -22,6 +22,7 @@ exports.sessionConfig = {
   proxy: exports.env === "production", // IMPORTANT: Only set true when behind a reverse proxy!
   cookie: {
     httpOnly: true,
+    sameSite: "none", // TODO: Remove this when deployed both backend and frontend on the same domain
     secure: exports.env === "production",
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
   },
