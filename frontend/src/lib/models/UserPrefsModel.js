@@ -5,6 +5,7 @@ import { PeriodEnum } from "lib/Enums";
 /*
   UserPrefsModel
       { 
+        user: UserInfo || null
         selectedPeriod: value of PeriodEnum
         fromDate: js date
         toDate: js date
@@ -17,6 +18,9 @@ import { PeriodEnum } from "lib/Enums";
           { selectedPeriod: value of PeriodEnum, 
             fromDate: should be a valid JS date if the selectedPeriod  is PeriodEnum.CUSTOM, 
             toDate: same as fromDate}
+       setUser(payload)
+         Replace the current user information (i.e. on login)
+         Payload: UserInfo || null
 
     selectors:
       formattedSelectedPeriod: Selector to get the current selected period label (string)
@@ -25,11 +29,16 @@ import { PeriodEnum } from "lib/Enums";
 export default {
   name: "UserPrefsModel",
   state: {
+    user: null,
     selectedPeriod: PeriodEnum.THIRTY_DAYS,
     fromDate: subDays(new Date(), 30),
     toDate: new Date(),
   },
   reducers: {
+    setUser(state, payload) {
+      console.log(payload);
+      return { ...state, user: payload };
+    },
     setSelectedPeriod(state, payload) {
       if (payload.selectedPeriod != null)
         if (Object.values(PeriodEnum).includes(payload.selectedPeriod)) {

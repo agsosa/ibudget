@@ -64,7 +64,7 @@ function DashboardPage({ loading }) {
         ) : (
           <>
             <Heading>
-              {auth.user && auth.user.name
+              {auth.getIsLoggedIn() && auth.user.name
                 ? `Hello, ${auth.user.name}`
                 : "Welcome"}
             </Heading>

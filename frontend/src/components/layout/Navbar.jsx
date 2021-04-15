@@ -158,11 +158,9 @@ export default () => {
     modalRef.current.toggle();
   }
 
-  const isLogged = auth.user;
-
   const links = (
     <NavLinks>
-      {isLogged ? (
+      {auth.getIsLoggedIn() ? (
         <>
           <MemberLinks onAddTransactionClick={handleAddTransactionClick} />
         </>

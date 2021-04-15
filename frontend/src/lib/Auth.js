@@ -4,69 +4,87 @@
   useAuth hook
 
   Usage:
-    AuthProvider
-      ...
+    AuthProvider component
+      Provider for our authContext
+      Wrap the components that will use this hook with <AuthProvider></AuthProvider>
 
-    useAuth
-      ....
+    useAuth hook
+        user: Object with the user information returned by the server
+
+        getIsLoggedIn: Function() that will return true if the user is authenticated
+
+        signIn: Function(username, password) that returns a promise to sign in the user
+
+        signUp: Function(username, password, info) that returns a promise to sign up the user. 
+                The third parameter is the info object passed to the server, this can contain extra information to save
+
+        signOut: Function that returns a promise to sign out the user
+
+        Every promise returned by this hook will ALWAYS resolve with the response from the server ({error: bool, message: string, data?: any}).
+
+        examples:
+          const auth = useAuth();
+
+          auth.getIsLoggedIn();
+          auth.signIn("test", "test").then((response) => console.log(response.error, response.message))
 */
 
-/* eslint-disable */
-
-import React, { useState, useEffect, useContext, createContext } from "react";
+/* eslint-disable react/prop-types */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable spaced-comment */
+import React, { useEffect, useContext, createContext } from "react";
 import * as API from "lib/API";
+import { useSelector, useDispatch } from "react-redux";
 
 const authContext = createContext();
 
-// Context provider for auth
-export function AuthProvider({ children }) {
-  const auth = useProvideAuth();
-  return <authContext.Provider value={auth}>{children}</authContext.Provider>;
-}
-
-// Hook for child components to get the auth object
-export const useAuth = () => {
-  return useContext(authContext);
-};
-
 // Provider hook that creates auth object and handles state
 function useProvideAuth() {
-  const [user, setUser] = useState(null);
+  const user = useSelector((state) => state.UserPrefsModel.user); // Stored user info
 
+  const dispatch = useDispatch();
+  const setUserAction = "UserPrefsModel/setUser";
+
+  // Function to know if the user is authenticated
+  const getIsLoggedIn = () => {
+    return user != null;
+  };
+
+  // Listen for api errors to see if we're still authenticated
   function handleAPIErrors(e) {
     if (e && e.message) {
-      console.log(e.message);
-
-      if (e.message === "Not authenticated") setUser(null);
+      // Remove our user info if we're not authenticated
+      if (e.message === "Not authenticated")
+        dispatch({ type: setUserAction, payload: null });
     }
   }
 
-  React.useEffect(() => {
+  // Manage our API error listener
+  useEffect(() => {
     API.addErrorListener(handleAPIErrors);
 
-    () => API.removeErrorListener(handleAPIErrors);
+    return () => API.removeErrorListener(handleAPIErrors);
   }, []);
 
+  // Sign in with username and password
   const signIn = (username, password) => {
-    return API.request("login", { username, password })
-      .then((response) => {
-        const { data, error } = response;
-
-        if (!error && data) {
-          setUser(data);
+    return new Promise((resolve) => {
+      API.request("login", { username, password }).then((response) => {
+        if (!response.error) {
+          dispatch({ type: setUserAction, payload: response.data || {} });
         }
 
-        return response;
-      })
-      .catch((err) => {
-        return err;
+        resolve(response);
       });
+    });
   };
 
-  const signUp = (username, password, name) => {
+  // Sign up with username and password + possibility to provide extra information
+
+  /*  const signUp = (username, password, info) => {
     return API.request("register", { username, password })
       .then((result) => {
-        setUser(result.data);
+        dispatch({ type: setUserAction, payload: result.data || {} });
         return result;
       })
       .catch((err) => {
@@ -74,16 +92,19 @@ function useProvideAuth() {
       });
   };
 
+  // Sign out
   const signOut = () => {
     return API.request("logout", { username, password })
       .then((result) => {
-        setUser(false);
+        dispatch({ type: setUserAction, payload: null });
         return result;
       })
       .catch((err) => {
         return err;
       });
-  };
+  };*/
+
+  // TODO: Implement password reset
 
   /* 
   const sendPasswordResetEmail = (email) => {
@@ -103,30 +124,27 @@ function useProvideAuth() {
         return true;
       });
   }; 
+
   */
-
-  // Subscribe to user on mount
-  // Because this sets state in the callback it will cause any ...
-  // ... component that utilizes this hook to re-render with the ...
-  // ... latest auth object.
-  /* useEffect(() => {
-    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        setUser(user);
-      } else {
-        setUser(false);
-      }
-    });
-
-    return () => unsubscribe();
-  }, []); */
 
   return {
     user,
+    getIsLoggedIn,
     signIn,
-    signUp,
-    signOut,
+    /* signUp,
+    signOut, */
     // sendPasswordResetEmail,
     // confirmPasswordReset,
   };
 }
+
+// Context provider for auth
+export function AuthProvider({ children }) {
+  const auth = useProvideAuth();
+  return <authContext.Provider value={auth}>{children}</authContext.Provider>;
+}
+
+// Hook for child components to get the auth object
+export const useAuth = () => {
+  return useContext(authContext);
+};
