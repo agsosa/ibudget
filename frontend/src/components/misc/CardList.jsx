@@ -16,7 +16,7 @@
 
       CardList.Item Props:
         - title: to display a title (string, optional)
-        - onViewMoreClick: enable a View More button (callback, optional)
+        - onViewMoreClick: pass a callback to enable a View More button (callback, optional)
         - loading: Display a loading skeleton (bool, optional)
 */
 
@@ -118,7 +118,7 @@ CardItem.defaultProps = {
 
 CardItem.propTypes = {
   title: PropTypes.string,
-  onViewMoreClick: PropTypes.element,
+  onViewMoreClick: PropTypes.func,
   children: PropTypes.node,
   loading: PropTypes.bool,
 };

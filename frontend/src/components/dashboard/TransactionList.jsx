@@ -142,6 +142,7 @@ function TransactionList({ data, limit, isPaginated }) {
             .slice(currentPage * limit, currentPage * limit + limit)
             .map((item) => {
               return React.createElement(TransactionItem, {
+                key: item.id,
                 data: item,
                 onClick: () => {
                   if (clickedTransaction === item) {

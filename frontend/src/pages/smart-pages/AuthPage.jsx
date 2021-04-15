@@ -337,15 +337,17 @@ function AuthPage({ isRegister }) {
         )}
         {/* Form */}
         <FormContainer>
-          {config.form}
-          {loading ? (
-            <CloudLoadingIndicator download isOverlay />
-          ) : (
-            <SubmitButton type="button" onClick={onSubmitButtonClick}>
-              {config.iconComponent}
-              <span className="text">{config.actionLabel}</span>
-            </SubmitButton>
-          )}
+          <form action="#" onSubmit={onSubmitButtonClick}>
+            {config.form}
+            {loading ? (
+              <CloudLoadingIndicator download isOverlay />
+            ) : (
+              <SubmitButton type="submit">
+                {config.iconComponent}
+                <span className="text">{config.actionLabel}</span>
+              </SubmitButton>
+            )}
+          </form>
           {config.bottomLinks}
         </FormContainer>
       </FormContainer>

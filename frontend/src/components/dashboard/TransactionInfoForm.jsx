@@ -10,11 +10,6 @@
 
 import * as React from "react";
 import tw, { styled } from "twin.macro";
-import {
-  Control,
-  Input,
-  Textarea,
-} from "react-bulma-components/lib/components/form";
 import Icon from "@mdi/react";
 import { mdiMinus, mdiPlus } from "@mdi/js";
 import { TransactionTypeEnum, Limits, CategoryEnum } from "ibudget-shared";
@@ -28,7 +23,7 @@ import { getTransactionTypeLabel } from "lib/Helpers";
 /* Start styled components */
 
 const InputContainer = tw.div`flex flex-col md:grid md:grid-cols-2 md:gap-12`;
-const LeftContainer = tw.div`flex-col flex items-center gap-4 md:gap-2`;
+const LeftContainer = tw.div`flex-col flex items-center gap-4 md:gap-3`;
 const RightContainer = tw.div`flex-col flex items-center gap-4`;
 const InputGroup = tw.div`flex flex-col items-center mb-3 w-full sm:w-80`;
 const InputLabel = styled.text(({ missing }) => [
@@ -36,6 +31,13 @@ const InputLabel = styled.text(({ missing }) => [
   missing && tw`font-bold text-red-600`,
 ]);
 const OptionalLabel = tw.text`text-sm font-light`;
+
+const Input = tw.input`border-b-2 px-3 py-3 focus:outline-none transition duration-300 hocus:border-primary-500 w-full`;
+const Textarea = styled(Input).attrs({ as: "textarea" })`
+  ${tw`h-24`}
+`;
+
+const AmountInputContainer = tw.div`relative w-full`;
 
 /* End styled components */
 
@@ -233,7 +235,7 @@ function TransactionInfoForm({ onInfoChange, initialInfo, loading, editMode }) {
         Monto{transactionInfo.amount == null && "*"}
       </InputLabel>
 
-      <Control>
+      <AmountInputContainer>
         <Input
           disabled={loading}
           onChange={onInputChange}
@@ -241,7 +243,7 @@ function TransactionInfoForm({ onInfoChange, initialInfo, loading, editMode }) {
           type="number"
           placeholder="0"
           style={{
-            paddingLeft: 32,
+            paddingLeft: 35,
           }}
           min={Limits.AMOUNT_MIN_NUMBER}
           max={Limits.AMOUNT_MAX_NUMBER}
@@ -255,13 +257,18 @@ function TransactionInfoForm({ onInfoChange, initialInfo, loading, editMode }) {
           }
           title="Money amount"
           size={0.9}
-          style={{ position: "absolute", left: 5, top: "25%", opacity: 0.2 }}
+          style={{
+            position: "absolute",
+            left: "1.5%",
+            top: "28%",
+            opacity: 0.2,
+          }}
           horizontal
           vertical
           rotate={180}
           color="black"
         />
-      </Control>
+      </AmountInputContainer>
     </InputGroup>
   );
 

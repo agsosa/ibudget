@@ -45,6 +45,7 @@ function RadioGroup({ onValueChange, options, value }) {
         options.map((o) => {
           if (o.value != null) {
             return React.createElement(RadioItem, {
+              key: o.value,
               value: o.value,
               label: o.label,
               checked: value === o.value,
