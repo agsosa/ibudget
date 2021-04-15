@@ -6,8 +6,8 @@ import * as config from "lib/Config";
 
 const API_BASE_URL =
   !process.env.NODE_ENV || process.env.NODE_ENV === "development"
-    ? config.DEV_BASE_URL
-    : configROD_BASE_URL;
+    ? config.API_DEV_BASE_URL
+    : config.API_PROD_BASE_URL;
 
 let errorSubscriptions = [];
 
