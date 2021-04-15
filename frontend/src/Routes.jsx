@@ -22,8 +22,8 @@ import { useAuth } from "lib/Auth";
 
 const MainDiv = tw.div`font-display flex flex-col justify-between h-screen min-w-full text-secondary-500`;
 
-// A wrapper for <Route> that redirects to the login
-// screen if you're not yet authenticated. Source: react-router docs
+// A wrapper for <Route> that redirects to the login screen if the user is not logged in
+// Original ource: react-router docs
 function PrivateRoute({ children, ...rest }) {
   const auth = useAuth();
 
@@ -46,6 +46,29 @@ function PrivateRoute({ children, ...rest }) {
   );
 }
 
+// A wrapper for <Route> that redirects to the dashboard if the user is logged in
+function DashboardRouter({ children, ...rest }) {
+  const auth = useAuth();
+
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        !auth.getIsLoggedIn() ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/dashboard",
+              state: { from: location },
+            }}
+          />
+        )
+      }
+    />
+  );
+}
+
 function Routes() {
   return (
     <Router>
@@ -54,12 +77,12 @@ function Routes() {
         <Navbar />
         <AnimationRevealPage>
           <Switch>
-            <Route path="/login">
+            <DashboardRouter path="/login">
               <LoginPage />
-            </Route>
-            <Route path="/register">
+            </DashboardRouter>
+            <DashboardRouter path="/register">
               <RegisterPage />
-            </Route>
+            </DashboardRouter>
 
             <Route path="/how-it-works">
               <HowItWorksPage />
@@ -81,9 +104,9 @@ function Routes() {
               <TransactionsPage />
             </PrivateRoute>
 
-            <Route path="/">
+            <DashboardRouter path="/">
               <HomePage />
-            </Route>
+            </DashboardRouter>
           </Switch>
         </AnimationRevealPage>
         <Footer />
