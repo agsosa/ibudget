@@ -21,4 +21,4 @@ class Database {
   }
 }
 
-module.exports = new Database();
+module.exports = new Database(); // Instance cached on the first require()

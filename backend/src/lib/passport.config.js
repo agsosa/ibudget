@@ -1,7 +1,7 @@
 const LocalStrategy = require("passport-local").Strategy;
 const UserController = require("@controllers/user.controller");
 
-// Configure passport
+// Configure passport-local strategy & serialize/deserialize
 class PassportConfig {
   constructor() {}
 
