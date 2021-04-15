@@ -5,16 +5,16 @@ const controller = require("@controllers/transactions.controller");
 const helpers = require("@controllers/helpers");
 
 // Retrieve all transactions
-router.get("/", helpers.isLoggedIn, controller.findAll);
+router.get("/", helpers.checkAuthenticated, controller.findAll);
 
 // Create a new transaction
-router.post("/", helpers.isLoggedIn, controller.create);
+router.post("/", helpers.checkAuthenticated, controller.create);
 
 // Update a transaction's info (full replace) by id
 // TODO: Implement partialUpdate (patch)
-router.put("/:id", helpers.isLoggedIn, controller.fullUpdate);
+router.put("/:id", helpers.checkAuthenticated, controller.fullUpdate);
 
 // Delete a transaction by id
-router.delete("/:id", helpers.isLoggedIn, controller.delete);
+router.delete("/:id", helpers.checkAuthenticated, controller.delete);
 
 module.exports = router;
