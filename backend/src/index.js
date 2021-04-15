@@ -79,7 +79,7 @@ console.log("\nRunning server on port", config.serverPort);
 process.on("SIGTERM", () => {
   console.log("SIGTERM signal received: shutdown app");
   database.end(() => {
-    console.log("database closed");
+    console.log("Database closed");
     server.close(() => {
       console.log("HTTP server closed");
     });

@@ -37,13 +37,9 @@ function validateTransactionInfo(transaction_info, reject) {
     transaction_info && TransactionModel.infoSchema.validate(transaction_info);
 
   // Joi: If the info is not valid then isValidInfo.error will exist and details.message will exist
-  if (!isValidInfo || isValidInfo.error) {
+  if (isValidInfo.error) {
     if (reject) {
-      reject(
-        `The specified transaction info is not valid. ${
-          isValidInfo ? isValidInfo.error : ""
-        }`
-      );
+      reject(new Error(isValidInfo.error));
     }
 
     return false;
@@ -54,7 +50,7 @@ function validateTransactionInfo(transaction_info, reject) {
 
 function validateTransactionId(id, reject) {
   if (id == null || Number.isNaN(id) || typeof id !== "number") {
-    if (reject) reject("The specified transaction id is not valid");
+    if (reject) reject(new Error("INVALID_TRANSACTION_ID"));
     return false;
   }
   return true;
@@ -156,7 +152,8 @@ TransactionModel.fullUpdate = (id, transaction_info, user_id) => {
     database
       .execute(query, params)
       .then(([rows]) => {
-        if (rows.affectedRows === 0) reject("id not found");
+        if (rows.affectedRows === 0)
+          reject(new Error("TRANSACTION_ID_NOT_FOUND"));
         else {
           // Return the updated object from database if possible
           /* 
@@ -185,7 +182,7 @@ TransactionModel.delete = (id, user_id) => {
     database
       .execute(query, params)
       .then(([rows]) => {
-        if (rows.affectedRows === 0) reject("Transaction not found");
+        if (rows.affectedRows === 0) reject(new Error("TRANSACTION_NOT_FOUND"));
         else resolve({ id });
       })
       .catch((err) => reject(err));
