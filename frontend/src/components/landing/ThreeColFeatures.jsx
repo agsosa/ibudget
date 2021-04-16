@@ -9,10 +9,7 @@ import styled from "styled-components";
 import tw from "twin.macro";
 import { css } from "styled-components/macro"; //eslint-disable-line
 
-import {
-  SectionHeading,
-  Subheading as SubheadingBase,
-} from "third-party/treact/components/misc/Headings";
+import { SectionHeading } from "third-party/treact/components/misc/Headings";
 import { SectionDescription } from "third-party/treact/components/misc/Typography";
 
 import SupportIconImage from "third-party/treact/images/support-icon.svg";
@@ -27,9 +24,8 @@ import SimpleIconImage from "third-party/treact/images/simple-icon.svg";
 const Container = tw.div`relative`;
 
 const ThreeColumnContainer = styled.div`
-  ${tw`flex flex-col items-center md:items-stretch md:flex-row flex-wrap md:justify-center max-w-screen-lg mx-auto py-10 md:py-24 px-5`}
+  ${tw`flex flex-col items-center md:items-stretch md:flex-row flex-wrap md:justify-center max-w-screen-lg mx-auto py-10 md:pt-16 md:pb-24 px-5`}
 `;
-const Subheading = tw(SubheadingBase)`mb-4`;
 const Heading = tw(SectionHeading)`w-full`;
 const Description = tw(SectionDescription)`w-full text-center`;
 
@@ -71,14 +67,13 @@ const Card = styled.div`
  *  If a key for a particular card is not provided, a default value is used
  */
 
-const exampleDesc = `This is just an example.`;
+const exampleDesc = `Lorem ipsum dolor sit amet, consectetur adipiscing elit`;
 
 const cards = [
   {
     imageSrc: ShieldIconImage,
     title: "Secure",
-    description:
-      "We strictly only deal with vendors that provide top notch security.",
+    description: exampleDesc,
   },
   {
     imageSrc: SupportIconImage,
@@ -99,9 +94,7 @@ export default () => {
   return (
     <Container>
       <ThreeColumnContainer>
-        <Subheading>Features</Subheading>
-
-        <Heading>Amazing Features</Heading>
+        <Heading>Features</Heading>
 
         <Description>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do

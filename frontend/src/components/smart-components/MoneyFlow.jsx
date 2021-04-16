@@ -23,7 +23,7 @@ const MoneySmall = styled.text(({ isNegative }) => [
   isNegative ? tw`text-red-600` : tw`text-green-600`,
 ]);
 const Description = tw.text`w-full text-gray-600 text-center text-sm mt-3`;
-const Container = tw.div`w-full flex flex-col items-center -mt-2`; // TODO: This component is repeating, make a common styled js file
+const Container = tw.div`w-full flex flex-col items-center -mt-2`;
 const FlowContainer = tw(Container)`lg:flex-row -mb-5 sm:mb-0 mt-2 `;
 
 /* End style components */

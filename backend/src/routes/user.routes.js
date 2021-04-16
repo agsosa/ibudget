@@ -5,6 +5,7 @@ const UserController = require("@controllers/user.controller");
 
 module.exports = function (passport) {
   // Create user session (login)
+  // TODO: Implement brute force protection
   router.post(
     "/session",
     passport.authenticate("local-login", { failWithError: true }), // IMPORTANT: failWithError is needed to return a json response on error

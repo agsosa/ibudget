@@ -337,7 +337,13 @@ function AuthPage({ isRegister }) {
         )}
         {/* Form */}
         <FormContainer>
-          <form action="#" onSubmit={onSubmitButtonClick}>
+          <form
+            action="#"
+            onSubmit={(e) => {
+              e.preventDefault();
+              onSubmitButtonClick();
+            }}
+          >
             {config.form}
             {loading ? (
               <CloudLoadingIndicator download isOverlay />

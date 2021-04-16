@@ -1,6 +1,6 @@
 // Helper function to send an error response
 exports.sendFailedResponse = (res, message, code) => {
-  // TODO: Implement detailed error codes/messages
+  // TODO: Error msg documentation
   if (typeof message === "object") message = message.message;
 
   return res.status(code).send({

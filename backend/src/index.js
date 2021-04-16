@@ -1,7 +1,6 @@
 // API DOCUMENTATION: https://documenter.getpostman.com/view/13863838/TzCV45Ku
 
-// TODO: Add node-rate-limiter-flexible
-// TODO: Stress test
+// TODO: Implement rate limiter, brute force protection, CSRF protection
 require("dotenv").config();
 require("module-alias/register");
 const express = require("express");
@@ -31,7 +30,7 @@ app.use(cors(config.corsConfig));
 app.use(session(config.sessionConfig));
 app.use(passport.initialize());
 app.use(passport.session());
-// app.use(morgan("combined")); // TODO: CHECK
+// app.use(morgan("combined"));
 
 // Add routes
 app.use("/api/transactions", routes.transactions);
@@ -69,8 +68,7 @@ app.use(function (req, res, next) {
 app.listen(config.serverPort);
 console.log("\nRunning server on port", config.serverPort);
 
-// Graceful shutdown
-// TODO: TEST
+// Graceful shutdown (end database)
 process.on("SIGTERM", () => {
   console.log("SIGTERM signal received: shutdown app");
   database.end(() => {
