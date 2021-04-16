@@ -1,8 +1,10 @@
 /* eslint-disable no-param-reassign */
 
 import * as API from "lib/API";
-import { NotificationTypeEnum } from "lib/Enums";
+import { NotificationTypeEnum, PeriodEnum } from "lib/Enums";
 import { getTransactionAmountWithSign } from "lib/Helpers";
+import subDays from "date-fns/subDays";
+import subMonths from "date-fns/subMonths";
 
 function parseTransactionFromServer(transaction) {
   transaction.date = new Date(transaction.date);
@@ -218,10 +220,40 @@ export default {
       return createSelector(
         slice, // shortcut for (rootState) => rootState.BudgetModel
         (rootState) => rootState.UserPrefsModel,
-        ({ transactions }, userPrefs) =>
-          transactions.filter(
-            (q) => q.date >= userPrefs.fromDate && q.date <= userPrefs.toDate
-          )
+        ({ transactions }, userPrefs) => {
+          let fromDate;
+          let toDate;
+
+          switch (userPrefs.selectedPeriod) {
+            case PeriodEnum.SEVEN_DAYS:
+              fromDate = subDays(new Date(), 7);
+              toDate = new Date();
+              break;
+            case PeriodEnum.THIRTY_DAYS:
+              fromDate = subDays(new Date(), 30);
+              toDate = new Date();
+              break;
+            case PeriodEnum.NINETY_DAYS:
+              fromDate = subDays(new Date(), 90);
+              toDate = new Date();
+              break;
+            case PeriodEnum.TWELVE_MONTHS:
+              fromDate = subMonths(new Date(), 12);
+              toDate = new Date();
+              break;
+            case PeriodEnum.CUSTOM:
+              fromDate = userPrefs.fromDate;
+              toDate = userPrefs.toDate;
+              break;
+            default:
+              fromDate = subDays(new Date(), 30);
+              toDate = new Date();
+          }
+
+          return transactions.filter(
+            (q) => q.date >= fromDate && q.date <= toDate
+          );
+        }
       );
     },
   }),

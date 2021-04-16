@@ -1,5 +1,4 @@
 import subDays from "date-fns/subDays";
-import subMonths from "date-fns/subMonths";
 import lightFormat from "date-fns/lightFormat";
 import { getPeriodLabel } from "lib/Helpers";
 import { PeriodEnum } from "lib/Enums";
@@ -23,22 +22,30 @@ import { PeriodEnum } from "lib/Enums";
        setUser(payload)
          Replace the current user information (i.e. on login)
          Payload: UserInfo || null
+      resetPrefs()
+            Set the state to default (useful for logout)
 
     selectors:
       formattedSelectedPeriod: Selector to get the current selected period label (string)
 
 */
+
+const defaultPrefs = {
+  user: null,
+  selectedPeriod: PeriodEnum.THIRTY_DAYS,
+  fromDate: subDays(new Date(), 30), // Only used if the selectedPeriod is PeriodEnun.CUSTOM
+  toDate: new Date(), // Only used if the selectedPeriod is PeriodEnun.CUSTOM
+};
+
 export default {
   name: "UserPrefsModel",
-  state: {
-    user: null,
-    selectedPeriod: PeriodEnum.THIRTY_DAYS,
-    fromDate: subDays(new Date(), 30),
-    toDate: new Date(),
-  },
+  state: defaultPrefs,
   reducers: {
     setUser(state, payload) {
       return { ...state, user: payload };
+    },
+    resetPrefs() {
+      return defaultPrefs;
     },
     setSelectedPeriod(state, payload) {
       if (payload.selectedPeriod != null)
@@ -46,50 +53,28 @@ export default {
           let fromDate;
           let toDate;
 
-          // Set fromDate and toDate
-          switch (payload.selectedPeriod) {
-            case PeriodEnum.SEVEN_DAYS:
-              fromDate = subDays(new Date(), 7);
-              toDate = new Date();
-              break;
-            case PeriodEnum.THIRTY_DAYS:
-              fromDate = subDays(new Date(), 30);
-              toDate = new Date();
-              break;
-            case PeriodEnum.NINETY_DAYS:
-              fromDate = subDays(new Date(), 90);
-              toDate = new Date();
-              break;
-            case PeriodEnum.TWELVE_MONTHS:
-              fromDate = subMonths(new Date(), 12);
-              toDate = new Date();
-              break;
-            case PeriodEnum.CUSTOM:
-              // If the selected period is custom, we want to use the provided fromDate and toDate via the payload parameter
-              if (payload.fromDate && payload.toDate) {
-                if (fromDate >= toDate) {
-                  const aux = toDate;
-                  fromDate = toDate;
-                  toDate = aux;
-                }
-
-                fromDate = payload.fromDate;
-                toDate = payload.toDate;
+          if (payload.selectedPeriod === PeriodEnum.CUSTOM) {
+            if (payload.fromDate && payload.toDate) {
+              if (fromDate >= toDate) {
+                const aux = toDate;
+                fromDate = toDate;
+                toDate = aux;
               }
-              break;
-            default:
-              return state;
+
+              fromDate = payload.fromDate;
+              toDate = payload.toDate;
+            } else {
+              // eslint-disable-next-line
+              payload.selectedPeriod = PeriodEnum.THIRTY_DAYS; // If we receive a CUSTOM period without valid dates, fallback to thirty days
+            }
           }
 
-          // Save state if the calculated fromDate and toDate are valid
-          if (fromDate && toDate) {
-            return {
-              ...state,
-              selectedPeriod: payload.selectedPeriod,
-              fromDate,
-              toDate,
-            };
-          }
+          return {
+            ...state,
+            selectedPeriod: payload.selectedPeriod,
+            fromDate,
+            toDate,
+          };
         }
 
       return state;
