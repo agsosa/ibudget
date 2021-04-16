@@ -3,7 +3,7 @@
 Web app to track income, expenses and analyze spending with a backend to provide authentication and persistence.
 
 * Live demo: https://ibudgetapp.netlify.app
-* Example account: test@test.com - test
+* Example account [user: test@test.com | password: test]
 
 ## Frontend
 #### Used frameworks/libs:
@@ -46,6 +46,7 @@ SESSION_NAME = <session name>
 
 ## Pending development
 - XSRF protection (!)
+- API rate limit
 - i18next translation files
 - Add social auth and forgot password
 - Unit tests & stress test
