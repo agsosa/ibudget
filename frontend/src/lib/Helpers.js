@@ -265,10 +265,21 @@ export const getTransactionAmountWithSign = (transaction) =>
 
 /**
  * Returns true if the email is a valid email address, otherwise false
- * @param  {String} email The email address
+ * @param  {String} email The email address to validate
  * @return {Boolean}      True if the email is valid, false otherwise
  */
 export function isValidEmail(email) {
   const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return regex.test(String(email).toLowerCase());
+}
+
+/**
+ * Returns true if name is a valid name (letters and space only), otherwise false
+ * @param  {String} email The name to validate
+ * @return {Boolean}      True if the name is valid, false otherwise
+ */
+export function isValidName(name) {
+  const regex = /^[a-z][a-z\s]*$/i;
+
+  return regex.test(name.toLowerCase());
 }
