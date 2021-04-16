@@ -26,7 +26,7 @@ import { useDispatch } from "react-redux";
 import { NotificationTypeEnum } from "lib/Enums";
 import CloudLoadingIndicator from "components/misc/CloudLoadingIndicator";
 import { PropTypes } from "prop-types";
-import { isValidEmail } from "lib/Helpers";
+import { isValidEmail, isValidName } from "lib/Helpers";
 
 /* Start styled components */
 
@@ -219,19 +219,28 @@ function AuthPage({ isRegister }) {
   // Clear error status on input
   React.useEffect(() => {
     if (errorText) setErrorText("");
-  }, [username, password]);
+  }, [username, password, name, confirmPassword]);
+
+  function showErrorText(msg) {
+    window.scrollTo(0, 0);
+    setErrorText(msg);
+  }
 
   // On submit button click handler for props.isRegister
   function onRegisterClick() {
     // Validate form (it will be validated server-side aswell)
 
-    if (!name || name.length < Limits.USER_NICK_MIN_CHARS) {
-      setErrorText("Please type a correct name");
+    if (
+      !name ||
+      name.length < Limits.USER_NICK_MIN_CHARS ||
+      !isValidName(name)
+    ) {
+      showErrorText("Please type a correct name");
       return;
     }
 
     if (!username || !isValidEmail(username)) {
-      setErrorText("Please type a valid email address");
+      showErrorText("Please type a valid email address");
       return;
     }
 
@@ -241,7 +250,7 @@ function AuthPage({ isRegister }) {
       !confirmPassword ||
       password !== confirmPassword
     ) {
-      setErrorText("Please confirm your password");
+      showErrorText("Please confirm your password");
       return;
     }
 
@@ -252,9 +261,9 @@ function AuthPage({ isRegister }) {
       .then((result) => {
         if (!result.error) history.push("/dashboard");
         else if (result.message && result.message === "USERNAME_TAKEN")
-          setErrorText("This email is already registered.");
+          showErrorText("This email is already registered.");
         else if (result.message && result.message.includes("ValidationError")) {
-          setErrorText(
+          showErrorText(
             "One or more fields have an error. Please check and try again."
           );
         } else
@@ -279,7 +288,7 @@ function AuthPage({ isRegister }) {
       password.length >= Limits.PASSWORD_MIN_CHARS;
 
     if (!isValidForm) {
-      setErrorText("Please type a valid email and password");
+      showErrorText("Please type a valid email and password");
       return;
     }
 
@@ -290,7 +299,7 @@ function AuthPage({ isRegister }) {
       .then((result) => {
         if (!result.error) history.push("/dashboard");
         else if (result.message && result.message === "WRONG_CREDENTIALS")
-          setErrorText("Invalid email or password");
+          showErrorText("Invalid email or password");
         else
           dispatch({
             type: "NotificationsQueueModel/pushNotification",
