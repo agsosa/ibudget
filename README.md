@@ -1,19 +1,22 @@
 # iBudget
 
-description blabla
+Web app to track income, expenses and analyze spending with a backend to provide authentication and persistence.
+
+* Live demo: https://ibudgetapp.netlify.app
+* Example account: test@test.com - test
 
 ## Frontend
 #### Used frameworks/libs:
 - React.js (hooks)
 - Rematch (Redux)
-- i18next
+- React Router
 - Tailwind CSS
 - styled-components, twin.macro, Framer Motion
-- Treact landing page components/utilities
 - ant-design charts
+- Treact
 
 #### Tests/Documentation:
-- que
+- wip
 
 ## Backend
 #### Used frameworks/libs:
@@ -21,21 +24,33 @@ description blabla
 - Express.js
 - MySQL
 - Passport (auth)
+- bcrypt
 - Joi (data validation)
 
 #### Tests/Documentation:
 - API documentation (Postman): https://documenter.getpostman.com/view/13863838/TzCV45Ku
 
-## Deployment preparation
-- Set dotenv vars prepare mysql database bla bla
+## Backend configuration
+- Set the required environment variables:
+```DB_HOST = localhost
+DB_PORT = 3306
+DB_USER = <user>
+DB_PASS = <pass>
+DB_DATABASE = ibudget
+SESSION_SECRET = <session secret>
+SESSION_NAME = <session name>
+```
 
-## Misc. information
-#### Configuration
-- bla bla
+- Edit cors policy url at src/lib/config.js
+- Execute sql script at /backend/database.sql
 
-#### How to add a new transaction category
-- Bla bla
-
-### Pending features
+## Pending development
+- XSRF protection (!)
+- i18next translation files
+- Add social auth and forgot password
+- Unit tests & stress test
+- Profiling
+- Optimize bundle size
+- More features
 
 Alkemy
