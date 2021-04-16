@@ -6,7 +6,7 @@ import React from "react";
 import tw from "twin.macro";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import { Link } from "react-router-dom";
-import DesignIllustration from "third-party/treact/images/design-illustration.svg";
+import HeaderIllustration from "images/header_illustration.svg";
 import { APP_NAME } from "lib/Config";
 
 /* Start styled components */
@@ -38,7 +38,7 @@ export default () => {
       "It's time to reclaim control and face your finances. Monitor your income, track your spending and save money. Try it today, it's free!",
     primaryButtonText: "Get Started",
     primaryButtonUrl: "/register",
-    imageSrc: DesignIllustration,
+    imageSrc: HeaderIllustration,
     imageCss: null,
   };
 
