@@ -29,9 +29,9 @@ const TextContainer = tw.span`flex flex-col -mt-24`;
 /* End styled components */
 
 function getStatusText(percent) {
-  if (percent < 1 / 3) return "Malo";
+  if (percent < 1 / 3) return "Bad";
   if (percent < 2 / 3) return "Regular";
-  return "Excelente";
+  return "Good";
 }
 
 function GaugeImpl({ description, totalValue, measureValue }) {

@@ -189,9 +189,7 @@ function TransactionsPage({ loading }) {
                 />
                 <CategoryIcon category={v} small />
                 <CategoryCheckboxLabel>
-                  {v === ALL_FILTER
-                    ? "Todas las categorías"
-                    : getCategoryLabel(v)}
+                  {v === ALL_FILTER ? "All categories" : getCategoryLabel(v)}
                 </CategoryCheckboxLabel>
               </CategoryCheckboxContainer>
             );
@@ -286,11 +284,11 @@ function TransactionsPage({ loading }) {
         </DateRangeContainer>
         {transactionsWithoutPeriodFilter.length > transactions.length && (
           <Hint>
-            Hay{" "}
+            There are{" "}
             {bigNumberFormatter(
               transactionsWithoutPeriodFilter.length - transactions.length
             )}{" "}
-            transaccion(es) fuera del periodo seleccionado
+            transactions excluded by the selected period
           </Hint>
         )}
       </HeaderContainer>
@@ -298,7 +296,7 @@ function TransactionsPage({ loading }) {
         <LeftColumn>
           {/* Left column */}
           <Title>
-            Transacciones
+            Transactions
             {transactions &&
               !loading &&
               ` (${bigNumberFormatter(transactions.length)})`}
@@ -309,10 +307,10 @@ function TransactionsPage({ loading }) {
             <Accordion
               isMulti
               items={[
-                { title: "Orden", contentComponent: SortModeComponent },
-                { title: "Tipo", contentComponent: TypeFilterComponent },
+                { title: "Sort", contentComponent: SortModeComponent },
+                { title: "Type", contentComponent: TypeFilterComponent },
                 {
-                  title: "Categoría",
+                  title: "Category",
                   contentComponent: CategoryFilterComponent,
                 },
               ]}

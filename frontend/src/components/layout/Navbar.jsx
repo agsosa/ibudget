@@ -137,11 +137,11 @@ const MemberLinks = ({ onAddTransactionClick, auth }) => {
   // Called on logout button click
   function handleLogoutClick() {
     confirmAlert({
-      title: "Cerrar sesión",
-      message: "¿Estás seguro de cerrar sesión?",
+      title: "Log Out",
+      message: "Are you sure?",
       buttons: [
         {
-          label: "Confirmar",
+          label: "Confirm",
           onClick: () => {
             auth.signOut();
           },
@@ -187,7 +187,7 @@ const MemberLinks = ({ onAddTransactionClick, auth }) => {
         {dropdownOpen && (
           <AccountDropdown ref={dropdownRef}>
             <AccountDropdownItem onClick={handleLogoutClick}>
-              Cerrar Sesión
+              Log Out
             </AccountDropdownItem>
           </AccountDropdown>
         )}

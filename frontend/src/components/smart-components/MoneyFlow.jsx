@@ -61,18 +61,18 @@ function MoneyFlow() {
             </MoneySmall>
           </Container>
           <Container>
-            <Description>Ingresos</Description>
+            <Description>Income</Description>
             <MoneySmall>+{getMoneyDisplayString(Math.abs(income))}</MoneySmall>
           </Container>
           <Container>
-            <Description>Egresos</Description>
+            <Description>Spending</Description>
             <MoneySmall isNegative>
               -{getMoneyDisplayString(Math.abs(spending))}
             </MoneySmall>
           </Container>
         </FlowContainer>
         <Gauge
-          description="Capacidad de ahorro"
+          description="Savings Capacity"
           totalValue={income}
           measureValue={flow}
         />

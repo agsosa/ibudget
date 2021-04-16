@@ -107,27 +107,27 @@ export function getTransactionTypeSymbol(transactionTypeEnum) {
 export function getCategoryLabel(categoryEnum) {
   switch (categoryEnum) {
     case CategoryEnum.FOOD_DRINKS:
-      return "Comida y Bebidas";
+      return "Food and Drinks";
     case CategoryEnum.SHOPPING:
-      return "Compras";
+      return "Shopping";
     case CategoryEnum.HOUSING:
-      return "Propiedades";
-    case CategoryEnum.TRANSPORTATION:
-      return "Transporte";
-    case CategoryEnum.VEHICLE:
-      return "Vehículo";
-    case CategoryEnum.LIFE_ENTERTAINMENT:
-      return "Entretenimiento";
-    case CategoryEnum.COMMUNICATION_PC:
-      return "Tecnología";
-    case CategoryEnum.FINANCIAL_EXPENSES:
-      return "Gastos Financieros";
-    case CategoryEnum.INVESTMENTS:
-      return "Inversiones";
+      return "Housing";
     case CategoryEnum.INCOME:
-      return "Ingresos";
+      return "Income";
+    case CategoryEnum.TRANSPORTATION:
+      return "Transportation";
+    case CategoryEnum.VEHICLE:
+      return "Vehicle";
+    case CategoryEnum.LIFE_ENTERTAINMENT:
+      return "Entertainment";
+    case CategoryEnum.COMMUNICATION_PC:
+      return "Technology";
+    case CategoryEnum.FINANCIAL_EXPENSES:
+      return "Financial Expenses";
+    case CategoryEnum.INVESTMENTS:
+      return "Investments";
     case CategoryEnum.OTHERS:
-      return "Otros";
+      return "Other";
     default:
       return "";
   }
@@ -141,9 +141,9 @@ export function getCategoryLabel(categoryEnum) {
 export function getTransactionTypeLabel(transactionTypeEnum) {
   switch (transactionTypeEnum) {
     case TransactionTypeEnum.IN:
-      return "Ingreso";
+      return "Income";
     case TransactionTypeEnum.OUT:
-      return "Egreso";
+      return "Spending";
     default:
       return "";
   }
@@ -157,13 +157,13 @@ export function getTransactionTypeLabel(transactionTypeEnum) {
 export function getSortModeLabel(sortModeEnum) {
   switch (sortModeEnum) {
     case SortModeEnum.AMOUNT_ASCENDING:
-      return "Monto (de menor a mayor)";
+      return "Amount (lowest first)";
     case SortModeEnum.AMOUNT_DESCENDING:
-      return "Monto (de mayor a menor)";
+      return "Amount (highest first)";
     case SortModeEnum.DATE_ASCENDING:
-      return "Fecha (mas antiguo primero)";
+      return "Date (oldest first)";
     case SortModeEnum.DATE_DESCENDING:
-      return "Fecha (mas reciente primero)";
+      return "Date (wewest first)";
     default:
       return "";
   }

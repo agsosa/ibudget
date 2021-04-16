@@ -55,7 +55,7 @@ function TransactionInfoForm({ onInfoChange, initialInfo, loading, editMode }) {
     initialInfo || initialTransactionInfo
   );
 
-  const OptionalText = <OptionalLabel>Opcional</OptionalLabel>;
+  const OptionalText = <OptionalLabel>Optional</OptionalLabel>;
 
   React.useEffect(() => {
     if (onInfoChange) onInfoChange(transactionInfo);
@@ -151,7 +151,7 @@ function TransactionInfoForm({ onInfoChange, initialInfo, loading, editMode }) {
   const CategoryInput = (
     <InputGroup>
       <InputLabel missing={transactionInfo.category_id == null}>
-        Categoría{transactionInfo.category_id == null && "*"}
+        Category{transactionInfo.category_id == null && "*"}
       </InputLabel>
       <CategorySelector
         initialValue={transactionInfo.category_id}
@@ -164,7 +164,7 @@ function TransactionInfoForm({ onInfoChange, initialInfo, loading, editMode }) {
   const TypeInput = (
     <InputGroup>
       <InputLabel missing={transactionInfo.type_id == null}>
-        Tipo de Transacción{transactionInfo.type_id == null && "*"}
+        Transaction Type{transactionInfo.type_id == null && "*"}
       </InputLabel>
       <SelectButtonGroup
         disabled={loading || editMode}
@@ -187,7 +187,7 @@ function TransactionInfoForm({ onInfoChange, initialInfo, loading, editMode }) {
 
   const NoteInput = (
     <InputGroup>
-      <InputLabel>Nota {OptionalText}</InputLabel>
+      <InputLabel>Notes {OptionalText}</InputLabel>
 
       <Textarea
         name="notes"
@@ -202,7 +202,7 @@ function TransactionInfoForm({ onInfoChange, initialInfo, loading, editMode }) {
 
   const ConceptInput = (
     <InputGroup>
-      <InputLabel>Concepto {OptionalText}</InputLabel>
+      <InputLabel>Description {OptionalText}</InputLabel>
       <Input
         onChange={onInputChange}
         name="concept"
@@ -217,7 +217,7 @@ function TransactionInfoForm({ onInfoChange, initialInfo, loading, editMode }) {
   const DateInput = (
     <InputGroup>
       <InputLabel missing={transactionInfo.date == null}>
-        Fecha{transactionInfo.date == null && "*"}
+        Date{transactionInfo.date == null && "*"}
       </InputLabel>
       <Calendar
         maxDate={new Date()}
@@ -232,7 +232,7 @@ function TransactionInfoForm({ onInfoChange, initialInfo, loading, editMode }) {
   const AmountInput = (
     <InputGroup>
       <InputLabel missing={transactionInfo.amount == null}>
-        Monto{transactionInfo.amount == null && "*"}
+        Amount{transactionInfo.amount == null && "*"}
       </InputLabel>
 
       <AmountInputContainer>

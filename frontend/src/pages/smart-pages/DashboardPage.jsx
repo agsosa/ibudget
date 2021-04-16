@@ -68,7 +68,7 @@ function DashboardPage({ loading }) {
                 ? `Hello, ${auth.user.name}`
                 : "Welcome"}
             </Heading>
-            <Description>Tu saldo hoy</Description>
+            <Description>Your balance today</Description>
             <Money
               animate={{
                 scale: [1, 0.95, 1.25],
@@ -98,21 +98,21 @@ function DashboardPage({ loading }) {
 
       <CardList loading={loading}>
         <CardList.Item
-          title="Últimas transacciones"
+          title="Latest transactions"
           onViewMoreClick={handleLastTransactionsViewMoreButton}
         >
           <LatestTransactions limit={5} />
         </CardList.Item>
 
-        <CardList.Item title="Tendencia del saldo">
+        <CardList.Item title="Balance Trend">
           <MoneyTrend />
         </CardList.Item>
 
-        <CardList.Item title="Gastos">
+        <CardList.Item title="Expenses">
           <Spending />
         </CardList.Item>
 
-        <CardList.Item title="Flujo del dinero">
+        <CardList.Item title="Money Flow">
           <MoneyFlow />
         </CardList.Item>
       </CardList>

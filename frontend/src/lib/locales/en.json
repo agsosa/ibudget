@@ -1,0 +1,28 @@
+{
+  "translation": {
+    "loremIpsum": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    "landing": {
+      "title": "Take control of your financial future",
+      "subtitle": "It's time to reclaim control and face your finances. Monitor your income, track your spending and save money. Try it today, it's free",
+      "featureHeader": "Effective financial management in",
+      "featureHeaderHighlighted": "one place",
+      "leanMore": "Learn More",
+      "features": "Features",
+      "secure": "Secure",
+      "support": "24/7 Support",
+      "customizable": "Customizable",
+      "reliable": "Reliable",
+      "fast": "Fast",
+      "easy": "Easy"
+    },
+    "navigation": {
+      "register": "Get Started",
+      "login": "Log In",
+      "contactUs": "Contact Us",
+      "privacyPolicy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "howItWorks": "How it Works",
+      "home": "Home"
+    }
+  }
+}
