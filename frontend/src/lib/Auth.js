@@ -44,6 +44,7 @@ function useProvideAuth() {
 
   const dispatch = useDispatch();
   const setUserAction = "UserPrefsModel/setUser";
+  const resetPrefsAction = "UserPrefsModel/resetPrefs";
 
   // Function to know if the user is authenticated
   const getIsLoggedIn = () => {
@@ -95,7 +96,7 @@ function useProvideAuth() {
 
   // Sign out
   const signOut = () => {
-    dispatch({ type: setUserAction, payload: null });
+    dispatch({ type: resetPrefsAction, payload: null });
     API.request("logout");
   };
 
