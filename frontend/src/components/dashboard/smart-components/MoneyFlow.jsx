@@ -35,21 +35,21 @@ function MoneyFlow() {
   }));
   const { periodLabel, transactions } = useSelector(selection);
 
-  const spending = transactions.reduce(
-    (a, b) => (b.type_id === TransactionTypeEnum.OUT ? a + b.amount : a),
-    0
-  );
-  const income = transactions.reduce(
-    (a, b) => (b.type_id === TransactionTypeEnum.IN ? a + b.amount : a),
-    0
-  );
-  const flow = transactions.reduce(
-    (a, b) =>
-      b.type_id === TransactionTypeEnum.OUT ? a - b.amount : a + b.amount,
-    0
-  );
-
   if (transactions && transactions.length >= 1) {
+    const spending = transactions.reduce(
+      (a, b) => (b.type_id === TransactionTypeEnum.OUT ? a + b.amount : a),
+      0
+    );
+    const income = transactions.reduce(
+      (a, b) => (b.type_id === TransactionTypeEnum.IN ? a + b.amount : a),
+      0
+    );
+    const flow = transactions.reduce(
+      (a, b) =>
+        b.type_id === TransactionTypeEnum.OUT ? a - b.amount : a + b.amount,
+      0
+    );
+
     return (
       <Container>
         <FlowContainer>

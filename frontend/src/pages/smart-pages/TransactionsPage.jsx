@@ -4,11 +4,11 @@
 */
 import * as React from "react";
 import tw from "twin.macro";
-import DateRangeSelector from "components/smart-components/DateRangeSelector";
+import DateRangeSelector from "components/dashboard/smart-components/DateRangeSelector";
 import { useSelector } from "react-redux";
 import store from "lib/Store";
 import ContentWithPadding from "components/layout/ContentWithPadding";
-import withFetchTransactions from "components/smart-components/withFetchTransactions";
+import withFetchTransactions from "components/dashboard/smart-components/withFetchTransactions";
 import NoDataIndicator from "components/misc/NoDataIndicator";
 import { CategoryEnum, TransactionTypeEnum } from "ibudget-shared";
 import CheckboxGroup from "react-checkbox-group";

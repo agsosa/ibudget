@@ -12,7 +12,7 @@ import store from "lib/Store";
 import { Provider } from "react-redux";
 import { getPersistor } from "@rematch/persist";
 import { PersistGate } from "redux-persist/lib/integration/react";
-import NotificationQueueController from "components/smart-components/NotificationsQueueController";
+import NotificationQueueController from "components/dashboard/smart-components/NotificationsQueueController";
 import { AuthProvider } from "lib/Auth";
 
 const persistor = getPersistor();

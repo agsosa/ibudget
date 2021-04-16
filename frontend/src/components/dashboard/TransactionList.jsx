@@ -21,7 +21,7 @@ import {
 } from "lib/Helpers";
 import { TransactionTypeEnum } from "ibudget-shared";
 import lightFormat from "date-fns/lightFormat";
-import AddEditTransaction from "components/smart-components/AddEditTransactionModal";
+import AddEditTransaction from "components/dashboard/smart-components/AddEditTransactionModal";
 import CategoryIcon from "./CategoryIcon";
 
 /* Start styled components */

@@ -33,10 +33,12 @@ function Spending() {
   }));
   const { periodLabel, transactions } = useSelector(selection);
 
-  const spending = transactions.reduce(
-    (a, b) => (b.type_id === TransactionTypeEnum.OUT ? a + b.amount : a),
-    0
-  );
+  const spending = transactions
+    ? transactions.reduce(
+        (a, b) => (b.type_id === TransactionTypeEnum.OUT ? a + b.amount : a),
+        0
+      )
+    : 0;
 
   if (transactions && transactions.length >= 1 && spending > 0) {
     /* Build chartData array:

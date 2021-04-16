@@ -15,7 +15,7 @@ import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 import DefaultAvatar from "images/default_avatar.svg";
 import { APP_NAME } from "lib/Config";
 import { PropTypes } from "prop-types";
-import AddEditTransactionModal from "components/smart-components/AddEditTransactionModal";
+import AddEditTransactionModal from "components/dashboard/smart-components/AddEditTransactionModal";
 import { useAuth } from "lib/Auth";
 import { mdiDotsVertical } from "@mdi/js";
 import Icon from "@mdi/react";
