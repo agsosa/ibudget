@@ -54,6 +54,7 @@ SESSION_NAME = <session name>
 - Optimize bundle size
 - More features
 
+## Screenshots
 ![1](https://user-images.githubusercontent.com/23263273/115187022-09476580-a0b9-11eb-876a-cf4a2d724641.png)
 ![2](https://user-images.githubusercontent.com/23263273/115187027-09dffc00-a0b9-11eb-9ebe-df631b6d879d.png)
 ![3](https://user-images.githubusercontent.com/23263273/115187032-0a789280-a0b9-11eb-8348-eea8344a3676.png)
