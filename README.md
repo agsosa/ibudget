@@ -45,7 +45,7 @@ SESSION_NAME = <session name>
 - Execute sql script at /backend/database.sql
 
 ## Pending development
-- XSRF protection (!)
+- XSRF protection (!) or JWT implementation
 - API rate limit
 - i18next translation files
 - Add social auth and forgot password
