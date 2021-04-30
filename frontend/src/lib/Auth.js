@@ -43,8 +43,8 @@ function useProvideAuth() {
   const user = useSelector((state) => state.UserPrefsModel.user); // Stored user info
 
   const dispatch = useDispatch();
-  const setUserAction = "UserPrefsModel/setUser";
-  const resetPrefsAction = "UserPrefsModel/resetPrefs";
+  const setUserAction = "UserPrefsModel/setUser"; // to be used with dispatch
+  const resetPrefsAction = "UserPrefsModel/resetPrefs"; // to be used with dispatch
 
   // Function to know if the user is authenticated
   const getIsLoggedIn = () => {

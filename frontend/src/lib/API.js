@@ -97,7 +97,7 @@ const ENDPOINTS = {
     payload: optional object to be passed to the server (check the axiosCall method or the API docs for the desired endpoint)
   
   returns a promise that will ALWAYS resolve with the response from the server
-  response shape: { error: bool, message: string, data?: any }
+  response shape: { error: bool, message: string, data?: any, statusCode: number }
 */
 export function request(endpoint, payload) {
   const endpointInfo = ENDPOINTS[endpoint];
