@@ -3,7 +3,10 @@
 Web app to track income, expenses and analyze spending with responsive design and a backend to provide authentication and persistence.
 
 * Live demo: https://ibudgetapp.netlify.app
-* Example account [user: test@test.com | password: test]
+
+Example account 
+* user: test@test.com 
+* password: test
 
 ## Frontend
 #### Used frameworks/libs:
