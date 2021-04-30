@@ -30,7 +30,11 @@ Web app to track income, expenses and analyze spending with responsive design an
 #### Tests/Documentation:
 - API documentation (Postman): https://documenter.getpostman.com/view/13863838/TzCV45Ku
 
-## Backend configuration
+## Configuracion/Deployment
+#### Frontend:
+- Modify API_DEV_BASE_URL and API_PROD_BASE_URL in /src/lib/Config.js
+
+#### Backend:
 - Set the required environment variables:
 ```DB_HOST = localhost
 DB_PORT = 3306
