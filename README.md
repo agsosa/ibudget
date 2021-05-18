@@ -1,6 +1,3 @@
-## Video Alkemy: https://streamable.com/7v59bn
-Link alternativo: https://drive.google.com/file/d/1sndG1eQeO02OOZvpAQuWwq-6Ndf8YwV9/view?usp=sharing
-
 # iBudget
 
 Web app to track income, expenses and analyze spending with responsive design and a backend to provide authentication and persistence.
